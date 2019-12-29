@@ -1,0 +1,3232 @@
+##############################################################################
+###                                                                        ###
+###          TUTORIAL #3:  SHELL SCRIPTING BASICS                          ###
+###                                                                        ###
+### This script provides an "interactive lab" for students learning        ###
+### shell scripting concepts in the course OPS435. This                    ###
+### lab consists of a few opening banners, followed by a menu which        ###
+### provides 2 levels of tutorials  - Basic and Practical Application      ###
+###                                                                        ###
+### Author: Murray Edward Saul                                             ###
+### Created: June, 2000                                                    ###
+### Revised: April 2015                                                    ###
+###                                                                        ###
+##############################################################################
+
+
+### Banner Advising User to Exit & Maximize Telnet Window ###
+
+clear
+cat <<+
+*********************************
+*                               *
+*  TELNET WINDOW SHOULD         *
+*  BE MAXIMIZED BEFORE USING    *
+*  THIS TUTORIAL.               *
+*                               *
+*  PRESS <CTRL><C> TO EXIT      *
+*  PRESS <ENTER>   TO CONTINUE  *
+*                               *
+*********************************
++
+
+### pause for user to press ENTER to continue ###
+
+read null
+clear
+cat <<+
+********************************************
+*                                          *
+*  SHELL SCRIPTING BASICS                  *	
+*                                          *
+*  Written by Murray Saul    May 2000      *
+*             Modified:    April 2015      *
+*                                          *
+********************************************
+
+Press <ENTER> to continue or <CTRL><C> to exit
++
+
+read null
+
+clear
+cat <<+
+*****************************************************************************
+*                                                                           * 
+*  TIPS FOR GETTING THE MOST OUT OF TUTORIALS:                              *
+*                                                                           *
+*    · Complete the entire tutorial                                         *   
+*                                                                           *
+*    · Repeat the tutorial on a regular basis for review                    *
+*                                                                           *
+*    · Try to use skills you have developed to accomplish other tasks       *
+*                                                                           *
+*****************************************************************************
+
+Press <ENTER> to continue or <CTRL><C> to exit
++
+
+read null
+
+#### Prompt User for Menu Item ###
+
+until [ $num -eq 2 ] 2> /dev/null
+do
+	clear
+	cat <<+
+
+        MAIN MENU
+
+1. BASIC SCRIPT PROGRAMMING TUTORIAL
+2. SEND FEEDBACK & EXIT TUTORIAL
+
++
+
+### Error Checking ###
+
+	printf "Please Enter a Number >> "
+	read num
+	while [ $num -le 0 -o $num -ge 3 ] 2> /dev/null
+	do
+		printf "Enter a number 1 to 2 >> "
+		read num
+	done
+
+  
+### Exit Process which prompts the User for Feedback ###
+### ALL feedback will be directed to Murray Saul     ###
+### for modification and further implementation      ###
+
+        if [ "$num" -eq 2 ] 2> /dev/null
+                then
+
+                        rm output 2> /dev/null
+
+### Offer a choice to provide feedback ###
+
+                        clear
+                        printf "Do you wish to provide feedback? (y/n) >>  "
+                        read choice
+                        if [ "$choice" = "y" -o "$choice" = "Y" ]
+                        then
+	        		clear
+				cat <<+
+*************************************************************************
+*                                                                       *
+*                   <<< FEEDBACK - RECOMMENDED >>                        *
+*                                                                       *
+*  You are about to send feedback about this tutorial to the author     *
+*  of this tutorial.                                                    *
+*                                                                       *
+*  Take the time to list what you liked about the tutorial, and list    *
+*  improvements for the tutorial. This will be the primary method       *
+*  for the author to make improvements.                                 *
+*                                                                       *
+*  When you type the message, please make sure that you make            *
+*  corrections to the line BEFORE pressing ENTER, since you cannot      *
+*  go back to the previous line to make corrections.                    *
+*                                                                       *
+*************************************************************************
+
++
+			printf "Press <ENTER> to proceed"
+			read null
+
+### Send Comments to Author ###
+
+			clear
+			printf "Type Message Below:\n\n"
+			printf "You cannot move to previous line\n"
+			printf "if you already pressed <ENTER>\n\n"
+			printf "To Send  -> Go to next empty line\n"
+			printf "         -> Press keys <CTRL><D>\n"
+			
+			mail -s "scripting-1 Feedback" murray.saul@senecacollege.ca
+			clear
+	
+			cat <<+	
+************************************************
+*                                              *
+*           Your message has been sent         *
+*         Thank you for your participation     *
+*                                              *
+*       This concludes Basic Shell Scripting   *
+*                                              *
+************************************************
+
+
++
+			exit 0
+			fi
+	cat <<+
+ 
+************************************************
+*                                              *
+*     This concludes Basic Shell Scripting     *
+*                                              *
+************************************************
+
++
+
+	fi
+
+### Case Structure Displaying Tutorial Level ###
+
+	case $num in
+
+### Creating a Basic Script Tutorial ###
+
+	1)
+		until [ "$snum" = "4" ] 2> /dev/null
+		do
+			clear
+	        	cat <<+
+BASIC SCRIPT PROGRAMMING TUTORIAL MENU
+
+1. SCRIPTING BASICS
+   - Commenting / printing
+   - Quoting-out special characters
+
+2. USING VARIABLES
+   - Environment
+   - User-Defined
+   - Positional Parameters
+   - Special Parameters
+   - Command Substitution
+
+3. REDIRECTION
+   - stdin, stdout, stderr
+   - Pipes
+
+4. RETURN TO MAIN MENU
+
++
+
+### Error Checking ###
+
+			printf "Please Enter a Number >> "
+			read snum
+			while [ $snum -le 0 -o $snum -ge 5 ] 2> /dev/null
+			do
+				printf "Enter a number 1 to 4 >> "
+				read snum
+			done
+			case $snum in
+
+### BASIC SUBMENU 1 ###
+			1)
+				clear
+				cat <<+
+SHELL SCRIPTING BASICS
+
+So far, you have created simple shell scripts
+for the previous 2 labs. In order to create
+more powerful/flexible shell scripts, you need
+to learn some additional shell scripting tools.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+Here are some of these "additional shell
+scripting tools" that you will be learning
+in this course:
+
+   - Variables  (learned in this tutorial)
+   - Logic      (taught in week 4)
+   - Loops      (taught in week 5)
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+The best way to learn about shell scripting is
+by hands-on practice. Therefore, as you proceed in this
+tutorial you will be creating a real script that
+will run.
+
+These scripts that you create will NOT be erased
+when you exit this tutorial. You can refer to these
+shell scripts after you complete this tutorial...
+
+Press <ENTER> to continue
++
+
+				read null
+				clear
+				cat <<+
+Before using an editor to create the script, the user
+should consider the following:
+
+  1. Avoid script filenames that are reserved for
+     Linux or Unix commands (check online manual
+     for command if in doubt)
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+Shell scripting considerations / Continued ..
+
+  2. Take time to consider the user that will run
+     the program. For example, on what type of operating
+     system and shell will the shell script be executed?
+     (bash, Korn, Z, C, etc.).
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+CREATING PORTABLE SHELL SCRIPTS
+
+If the shell script is designed for only one type
+of shell, it is a good idea to provide an extension
+to indicate in which shell the shell script
+should run.
+
+Examples of File Extensions:
+
+FILENAME		SHELL
+file_name.sh		Bourne
+file_name.ksh		Korn
+file_name.bash		bash
+file_name.csh		C
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+Although adding a file extension will help
+you identify the shell scripts purpose,
+it may NOT prevent someone running the
+shell script in the wrong shell!
+
+This causes a PROBLEM, since shells have evolved
+over periods of time with there own syntax for
+operations such as mathematical operations.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+If your shell script is run in the wrong
+shell, and has different syntax, then the
+shell script may terminate with an ERROR.
+
+This is bad, since you may have your shell
+script available for sharing on the Internet
+and people may not be aware of what shell
+to run it in...
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+To prevent this problem, we can add a
+"special comment" at the beginning of
+the shell script to force it to be run
+in a shell, specified by a pathname to the
+shell.
+
+If that shell is missing, or not at that
+pathname, your shell script will not run
+indicating the error message "BAD INTERPRETER"
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+In this way, then the user that downloaded
+your shell script will have to make the 
+appropriate adjustments such as:
+
+  - Installing the shell on their system
+  - Edit the pathname to the shell
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+The process of forcing the shell script
+to run in a specified shell, or not run
+at all is referred to as a
+PORTABLE SHELL SCRIPT.
+
+For example:
+
+ - Portable Bash shell script
+ - Portable Korn shell script
+ - Portable C Shell script
+
+Press <ENTER> to continue
++
+				read null
+				clear
+                                cat <<+
+In this tutorial, we are going to create a
+portable Bash shell script called "example_1.bash".
+
+In order to make a portable shell script, you MUST include
+a special comment ON THE FIRST LINE OF THE SCRIPT.
+
+That first line MUST beging with the characters #! 
+FOLLOWED BY THE PATHNAME OF THE SHELL (spaces allowed).
+
+Note: if this "special comment" is placed on any
+other line than the first line, it is ignored
+(i.e. treated like an ordinary comment!)
+
+Press <ENTER> to continue
++
+				read null
+				clear
+                                cat <<+
+These special characters #! have a nick-name
+associated with them called She-bang (#=she,
+!=bang). It is common to call this first line
+the "she-bang" line.
+
+Just as a point of interest, other scripting
+languages (such as Perl) use a she-bang line
+to indicate the pathname of the Perl interpreter...
+
+Press <ENTER> to continue
++
+				read null
+				clear
+                                cat <<+
+Let's determine the pathname of the bash
+shell since we are creating a portable
+bash shell script.
+
+Issue the following command:
+which bash
+
++
+				printf "\tENTER COMMAND HERE >> "
+                       		read com1_1
+                       		until [ "$com1_1" = "which bash" ]
+                       		do
+                               		printf "\thint: which bash\n"
+					printf "\tPLEASE TRY AGAIN   >> "
+                               		read com1_1
+                       		done
+                                pathName=$($com1_1)
+                       		$com1_1
+				cat <<+
+Good. Now we know that "$pathName" is the
+pathname to our Bash shell.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+                                cat <<+
+From this point onwards, let's assume that
+we have used a text editor to create the
+file called "example_1.bash".
+
+You can assume that each time you are prompted
+and enter commands, they will be added to this
+file... (except when you run this shell script)...
+
+Press <ENTER> to continue
++
+				read null
+				clear
+                                cat <<+
+Let's enter the She-bang line on the first line...
+
+Type the following where indicated:
+
+#!/bin/bash  
+
++
+				printf "\tENTER FIRST LINE HERE >> "
+                       		read com1_1
+		until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "#!/bin/bash" ] 2> /dev/null
+                       		do
+                               		printf "\thint: #!/bin/bash\n"
+					printf "\tPLEASE TRY AGAIN   >> "
+                               		read com1_1
+                       		done
+                       		echo $com1_1 > example_1.bash
+				clear
+				cat <<+
+Good.
+
+Next, your script should contain comments in
+order to make it easier for others to read and
+understand how your script works.
+
+The pound symbol "#" placed anywhere on the line
+will cause the shell to ignore text that follows "#".
+
+You can place the # symbol anywhere within the script
+even if the # symbol follows a command, but the comments
+MUST FOLLOW AFTER this symbol. You do NOT have to end
+the comments with the # symbol.
+
+Press <ENTER> to continue
++
+				read null
+                                clear
+				cat <<+
+We now will enter a blank line to separate the 
+She-bang line from comments will be entering.
+
+Press the <ENTER>  key to advance to the next line
+of your script (this tutorial will automatically place
+in blank lines when required from now on...)
+
++
+				printf "\tENTER SECOND LINE HERE >> "
+                        	read com1_1
+                        	until [ `echo "$com1_1" | wc -c` -eq 1 ]
+                        	do
+                               		printf "\thint: <ENTER>\n"
+                               		printf "\tPLEASE TRY AGAIN   >> "
+                               		read com1_1
+                        	done
+                        	echo  >> example_1.bash
+				clear
+				cat <<+
+Now, enter each of the 3 comments as shown
+below (All capitals except for your username & 
+only 1 space between symbols or words):
+
+# COURSE: OPS435
+# USERNAME: $USER
+# SAMPLE SCRIPT #1
+
++
+
+				printf "\tENTER 1st COMMENT  >> "
+                       		read com1_1
+		until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "#COURSE:OPS435" ] 2> /dev/null
+                       		do
+                               		printf "\thint: # COURSE: OPS435\n"
+                               		printf "\tPLEASE TRY AGAIN   >> "
+                               		read com1_1
+                       		done
+                       		echo "$com1_1" >> example_1.bash
+				printf "\tENTER 2nd COMMENT  >> "
+                        	read com1_1
+		until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "#USERNAME:$USER" ] 2> /dev/null
+                        	do
+                               		printf "\thint: # USERNAME: $USER\n"
+                               		printf "\tPLEASE TRY AGAIN   >> "
+                               		read com1_1
+                        	done
+                        	echo "$com1_1"  >> example_1.bash
+				printf "\tENTER 3rd COMMENT  >> "
+                        	read com1_1
+		until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "#SAMPLESCRIPT#1" ] 2> /dev/null
+                        	do
+                               		printf "\thint: # SAMPLE SCRIPT #1\n"
+                               		printf "\tPLEASE TRY AGAIN   >> "
+                               		read com1_1
+                        	done
+                        	echo "$com1_1" >> example_1.bash
+				echo >> example_1.bash
+				clear
+				cat <<+
+Good.
+
+There are various commands to display text when you
+are running your script. The two most popular
+commands are:
+
+echo   -  Used as a "simple" method to display unformatted text.
+          Available in most shells
+
+printf - Used to display text in a formatted method.
+	(very similar to printf command in C programming
+         language, and is available in most shells)
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+Enter the line displayed below:
+
+echo * start *
+
++
+				printf "\tENTER LINE HERE    >> "
+                       		read com1_1
+                       		until [ "$com1_1" = "echo * start *" ]
+                       		do
+                               		printf "\thint: echo * start *\n"
+                               		printf "\tPLEASE TRY AGAIN   >> "
+                               		read com1_1
+                       		done
+				clear
+				cat <<+
+OOPS!
+
+We have a little problem here.
+The "echo" command will not display
+asterisk symbol * as just *.
+
+The * is a special character, and the
+echo command will search for matching
+file names.  Remember the previous
+tutorial regarding "globbing?"
+
+Press <ENTER> to continue
++
+				read null
+				clear
+                                cat <<+
+To demonstrate, issue the following command:
+
+echo * start *
+
++
+				printf "\tENTER COMMAND HERE >> "
+                       		read com1_1
+		until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "echo*start*" ] 2> /dev/null
+                       		do
+                               		printf "\thint: echo * start *\n"
+					printf "\tPLEASE TRY AGAIN   >> "
+                               		read com1_1
+                       		done
+                       		$com1_1
+				cat <<+
+
+YUCK!
+
+But the command was just doing what it was
+supposed to do...
+
+   Question: How can we use "echo" or "printf"
+             to just display "* start *"
+
+   Answer:   By learning how to QUOTE-OUT
+             special characters....
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+QUOTING SPECIAL CHARACTERS
+
+There are 3 techniques to instruct the shell
+to treat "special characters" as just text.
+
+Each technique has advantages and limitations...
+
+Press <ENTER> to continue
++
+				read null
+				clear
+                                cat <<+
+QUOTING TECHNIQUES
+
+Single Quotes: ' .. '
+
+   - Quotes out most special symbols
+     including $ which represents value
+     of variable
+
+Double Quotes: " .. "
+
+   - Quotes out most special symbols
+     but NOT $ which represents value
+     of variable
+
+Backslash: \\
+
+   - Quotes out just the special character
+     following after backslash
+    
+Press <ENTER> to contine
++
+				read null
+				clear
+                                cat <<+
+We will apply various quotation techniques
+in the next section, but for now, let's assume that
+we just REMOVED the line in our shell script
+containing: echo * done * 
+
+Re-type the IMPROVED command using double-quotes:
+
+echo "* start *"
+
++
+				printf "\tENTER COMMAND HERE >> "
+                       		read com1_1
+		until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "echo\"*start*\"" ] 2> /dev/null
+                       		do
+                               		printf "\thint: echo \"* start *\"\n"
+					printf "\tPLEASE TRY AGAIN   >> "
+                               		read com1_1
+                       		done
+                        	echo "$com1_1" >> example_1.bash
+                                clear
+				cat <<+
+Excellent!
+
+Let's view what you have in your script
+so far. As previously mentioned, your
+lines are being directed to a file called
+"example_1.bash"
+
+Issue the command "cat example_1.bash" to view
+its contents:
+
++
+				printf "\tENTER LINE HERE    >> "
+                    		read com1_1
+                    		until [ "$com1_1" = "cat example_1.bash" ]
+                    		do
+                       			printf "\thint: cat example_1.bash\n"
+                       			printf "\tPLEASE TRY AGAIN   >> "
+                      			read com1_1
+                    		done
+                    		$com1_1
+				printf "Press <ENTER> to continue"
+				read null
+				clear
+				cat <<+
+OK, now let's run the shell script.
+
+There are actually a couple of ways to
+run your shell script:
+
+ - As an arugment after the bash shell
+     eg. bash scriptname.bash
+
+ - Add execute permissions (chmod u+x scriptname.bash)
+   and issue scriptname as command (./scriptname.bash)
+
+Press <ENTER> to continue
++
+				read null
+				clear
+                                cat <<+
+We haven't given your shell script execute
+permissions, so let's run your shell script
+by issuing the command:
+
+bash example_1.bash
+
++
+				printf "\tENTER COMMAND HERE    >> "
+                    		read com1_1
+                    		until [ "$com1_1" = "bash example_1.bash" ]
+                    		do
+                       			printf "\thint: bash example_1.bash\n"
+                       			printf "\tPLEASE TRY AGAIN   >> "
+                      			read com1_1
+                    		done
+                    		$com1_1
+				printf "Press <ENTER> to continue"
+				read null
+				cat <<+
+
+
+You should notice that * start * now appears.
+
+Note that the comments do not display. They are
+simply for the shell scripting author, or others
+to view and use...
+
+Press <ENTER> to continue
++
+				read null
+				clear
+                                cat <<+
+This completes the topic SHELL SCRIPTING BASICS
+
+Please proceed with USING VARIABLES
+
+Press <ENTER> to return to
+BASIC SCRIPT PROGRAMMING TUTORIAL MENU
++
+					read null
+;;
+
+### BASIC SUBMENU 2 ###
+
+
+			2) 
+				status=0
+cat > example_1.bash <<+
+#!/bin/bash
+
+#COURSE: OPS435
+#USERNAME:ops435
+#SAMPLE SCRIPT #1
+
+echo "* start *"
++
+
+				clear
+				cat <<+
+USING VARIABLES
+
+Your shell script would be BORING if
+it always ran the same way every time
+it was executed.
+
+Using variables to store data and allow
+for change (hence the term "variable") make
+your shell scripts more flexible and useful.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+                                cat <<+
+There are 3 major categories of variables used
+in scripting:
+
+   - Environment Variables
+   - User-Created Variables
+   - Positional / Special Parameters
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+ENVIRONMENT VARIABLES
+
+Environment variables are used by the shell and
+many of these variables have values assigned.
+
+Environment variables are usually identified as
+UPPERCASE letters.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+The user can see there ENVIRONMENT variables
+(and their values) by issuing the set command
+without an argument.
+
+To demonstrate, issue the following command:
+
+set | more
+
++
+				printf "\tENTER COMMAND HERE    >> "
+                    		read com1_1
+		until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "set|more" ] 2> /dev/null
+                    		do
+                       			printf "\thint: set | more\n"
+                       			printf "\tPLEASE TRY AGAIN   >> "
+                      			read com1_1
+                    		done
+                    		set | more
+				cat <<+
+
+As you can see, there are many ENVIROMENT variables
+used on this system...
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+You can use these ENVIRONMENT variables
+in your commands to help customize your
+shell script.
+
+In order to display the value stored in 
+the variable, just put a \$ before the
+ENVIRONMENT variable name.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+Let's issue a Linux command to display
+the value stored in the USER environment
+variable.
+
+Issue the command:
+
+echo \$USER
+
++
+				printf "\tENTER COMMAND HERE    >> "
+                    		read com1_1
+		until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "echo\$USER" ] 2> /dev/null
+                    		do
+                       			printf "\thint: echo \$USER\n"
+                       			printf "\tPLEASE TRY AGAIN   >> "
+                      			read com1_1
+                    		done
+                    		echo $USER
+				cat <<+
+
+You should notice that it displays your
+username of your Matrix account. That is
+what the USER ENVIRONMENT variable does!
+
+We can use this as a tool to make our
+shell script more interesting...
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+One advantage of shell scripting is that
+we can "practice" our Linux commands prior
+to putting them into a shell script by issuing
+them as commands in the shell first.
+
+For example, issue the command:
+
+finger \$USER
+
++
+				printf "\tENTER COMMAND HERE    >> "
+                    		read com1_1
+		until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "finger\$USER" ] 2> /dev/null
+                    		do
+                       			printf "\thint: finger -s \$USER\n"
+                       			printf "\tPLEASE TRY AGAIN   >> "
+                      			read com1_1
+                    		done
+                    		finger -s $USER
+				printf "Press <ENTER> to continue"
+				read null
+				cat <<+
+
+You should notice that the previous command
+displays information regarding your Matrix
+account (including your Full Name!)
+
+If we want to get the full name, we first
+need just the first line. Do you know of
+a command that will do that?
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+You thought of tail -1 and use a pipe, 
+you are correct!
+
+So now issue the command:
+
+finger \$USER | head -1
+
++
+				printf "\tENTER COMMAND HERE    >> "
+                    		read com1_1
+		until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "finger\$USER|head-1" ] 2> /dev/null
+                    		do
+                       			printf "\thint: finger \$USER | head -1\n"
+                       			printf "\tPLEASE TRY AGAIN   >> "
+                      			read com1_1
+                    		done
+                    		finger $USER | head -1
+				cat <<+
+
+That's starting to look better!
+Now we need to somehow just get the
+second field for your name. We need
+to pipe to another command to get
+your name...
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+The "cut" command is a command that can do
+this. The cut command has some options
+
+   -c  (cut by character position. eg. cut -c1-4)
+   -f  (cut by field number. eg cut -f2)
+   -d  (specify field separator (if not space))
+
+Issue the following command (space between double-quotes):
+
+finger \$USER | head -1 | cut -d":" -f3
+
++
+				printf "\tENTER COMMAND HERE    >> "
+                    		read com1_1
+		until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "finger\$USER|head-1|cut-d\":\"-f3" ] 2> /dev/null
+                    		do
+                       			printf "\thint: finger \$USER | head -1 | cut -d\":\" -f3\n"
+                       			printf "\tPLEASE TRY AGAIN   >> "
+                      			read com1_1
+                    		done
+                                finger $USER | head -1 | cut -d":" -f3
+				cat <<+
+
+Look at that!
+At least we part of your Full name - cool...
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+Let's assume we are editing your previous
+shell script (example1_1.bash).
+
+Let's enter a greeting, but keep on the
+same line. Add the following command shown below:
+
+echo -n "Greetings, "
+
++
+				printf "\tENTER LINE HERE    >> "
+                    		read com1_1
+		until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "echo-n\"Greetings,\"" ] 2> /dev/null
+                    		do
+                       			printf "\thint: echo -n \"Greetings, \"\n"
+                       			printf "\tPLEASE TRY AGAIN   >> "
+                      			read com1_1
+                    		done
+                                echo "$com1_1" >> example_1.bash	
+				cat <<+
+
+OK, now add the command to get
+your name (or part of your name).
+
+i.e. Issue the command:
+
+finger \$USER | head -1 | cut -d":" -f3
+
++
+				printf "\tENTER LINE HERE    >> "
+                    		read com1_1
+		until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "finger\$USER|head-1|cut-d\":\"-f3" ] 2> /dev/null
+                    		do
+                       			printf "\thint: finger \$USER | head -1 | cut -d\":\" -f3\n"
+                       			printf "\tPLEASE TRY AGAIN   >> "
+                      			read com1_1
+                    		done
+                                echo "$com1_1" >> example_1.bash	
+				echo
+                                printf "Press <ENTER> to continue"
+				read null
+                                clear
+				cat <<+
+Now let's run the shell script.
+
+Issue the command:
+
+bash example_1.bash
+
++
+				printf "\tENTER COMMAND HERE    >> "
+                    		read com1_1
+                    		until [ "$com1_1" = "bash example_1.bash" ]
+                    		do
+                       			printf "\thint: bash example_1.bash\n"
+                       			printf "\tPLEASE TRY AGAIN   >> "
+                      			read com1_1
+                    		done
+                    		$com1_1
+				printf "Press <ENTER> to continue"
+				read null
+				cat <<+
+
+Your Shell script should be personalized for
+your account. In fact, you could share this
+shell script with others, and if they have
+a Bash shell, it should be personalized for
+them!
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+A WORD TO THE WISE
+
+I hope you took the time to appreciate the
+simple steps to solve the previous task:
+
+  - Work first from the shell prompt building
+    a pipeline command (step-by-step).
+
+  - Once command works as intended, then include
+    entire command into your shell script.
+
+  - Run shell script to see that it works...
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+USER-DEFINED VARIABLES
+
+Another type of variable are "User-Defined"
+variables that the shell script programmer
+can use for their own purposes in the 
+shell script.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+Rules for User-Defined Variables:
+
+- Variable names CANNOT begin with a number
+
+- Variables are assigned with an equal "=" sign
+  (NO spaces on either side of "=" sign)
+
+- A dollar sign "$" in front of variable name
+  will display the contents of the variable
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+You can also use the "read" command to store
+the data that a user inputs from a terminal
+into a variable. Refer to your course notes
+on useful options to use with the read command...
+
+Let's add a line in your shell script to prompt
+the user for their age. Issue the following command:
+
+	read -p "Please enter your age: " age
+
++
+				printf "\tENTER LINE HERE    >> "
+		                read com1_1
+		until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "read-p\"Pleaseenteryourage:\"age" ] 2> /dev/null
+                		do
+                			printf "\thint: read -p \"Please enter your age: \" age\n"
+                    			printf "\tPLEASE TRY AGAIN   >> "
+                    			read com1_1
+                		done
+			        echo "$com1_1" >> example_1.bash	
+				clear
+				cat <<+
+Now, we will print a sentence displaying
+the contents of the variable "name"
+
+Enter the line shown below:
+
+echo "So you are \$age..."
+
++
+				printf "\tENTER LINE HERE    >> "
+                		read com1_1
+		until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "echo\"Soyouare\$age...\"" ] 2> /dev/null
+                		do
+                			printf "\thint: echo \"So you are \$age...\"\n"
+                			printf "\tPLEASE TRY AGAIN   >> "
+                			read com1_1
+                		done
+			        echo "$com1_1" >> example_1.bash	
+				clear
+				cat <<+
+You can also assign values for variables within
+a script. If text contains spaces or tabs, you
+should quote it when assigningit to a variable.
+
+Enter the line below:
+
+	course="OPS435"
+
++
+				printf "\tENTER LINE HERE    >> "
+                		read com1_1
+                		until [ "$com1_1" = "course=\"OPS435\"" ]
+                		do
+                		printf "\thint: course=\"OPS435\"\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                		read com1_1
+                		done
+				clear
+				cat <<+
+Now enter the line below to display a sentence
+using the value of the variable "course":
+
+	echo "I am currently enrolled in \$course."
+
++
+				printf "\tENTER LINE HERE    >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \"I am currently enrolled in \$course.\"" ]
+                		do
+                			printf "\thint: echo \"I am currently enrolled in \$course.\"\n"
+                    			printf "\tPLEASE TRY AGAIN   >> "
+                    			read com1_1
+                		done
+				echo "echo \"I am currently enrolled in OPS435.\"" >> example_1.bash
+				clear
+
+### Export variables to child process ###
+
+export name course
+
+				cat <<+
+
+Good.
+
+Let's actually run the script.
+
+To run a script, you either make sure that
+the script has executable permissions
+
+or
+
+Type the name of the shell BEFORE the
+script name
+
+Issue the command "bash example_1.bash":
+
++
+				printf "\tENTER LINE HERE    >> "
+                		read com1_1
+                		until [ "$com1_1" = "bash example_1.bash" ]
+                		do
+                			printf "\thint: bash example_1.bash \n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				$com1_1
+				echo
+				printf "Press <ENTER> to continue"
+				read null
+				clear
+				cat <<+
+Good.
+
+A few other considerations you should know about
+user-created variables:
+
+- You use the export command to send values of
+  variables when child processes are created
+  (i.e. running shell scripts inside shell scripts)
+
+- To "reset" the value of a variable called "var",
+  you can issue the command "var=" or "unset var"
+
+- Avoid creating variables with the same name as variables
+  that are already being used by the shell...
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+We have finished with the script "example_1.bash".
+
+This script will be saved in your current directory
+for you to run and observe.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+POSITIONAL PARAMETERS
+
+Another type of variables used in scripts
+are "positional parameters".
+
+These variables store arguments in their relative
+position as numbered variables. Positional parameters
+are very useful to store arguments after a script
+as separate variables.
+
+Press <ENTER> to continue
+
++
+				read null
+				clear
+				cat <<+
+Here are a few notes regarding Positional Parameters:
+
+
+- first 9 arguments are stored as \$1 - \$9 
+
+- Additional 10 - n arguments are stored
+  as \${10} - \${n}
+
+- Positional parameter \$0 stores shell, command,
+  or script that was issued
+
+Press <ENTER> to continue
+
++
+				read null
+				clear
+				cat <<+
+Again, the best way to learn about positional
+parameters is to create a script.
+
+I have created another shell script file called
+"example_2.bash" and have already set up this script to
+run in the bash shell.
+
+Take a few moments to view the contents of this 
+file by issuing the command:
+
+more example_2.bash
+
++
+cat > example_2.bash <<+
+#!/bin/bash
+
+# COURSE: OPS435
+# USERNAME: $USER
+# SAMPLE SCRIPT #2
+
+echo "\\\$0 is: \$0"
+echo "\\\$1 is: \$1"
+echo "\\\$2 is: \$2"
+echo "\\\$3 is: \$3"
++
+
+				printf "\tENTER LINE HERE    >> "
+                		read com1_1
+                		until [ "$com1_1" = "more example_2.bash" ]
+                		do
+                			printf "\thint: more example_2.bash \n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				$com1_1
+				echo
+				printf "Press <ENTER> to continue"
+				read null
+				cat <<+
+
+Note that backslash directly in front of a
+special character (such as $) is used as another
+method to "quote-out" the shell's interpretation of
+special characters, and not just display the value
+that the variables \$1, \$2, \$3 contain.
+
+Press <ENTER> to continue
++
+                                cat <<+
+
+Let's run this new shell script, but with arguments
+after the script name to see what happens.
+
+Issue the following command below:
+
+	bash example_2.bash I am hungry
+
++
+				printf "\tENTER LINE HERE    >> "
+                		read com1_1
+                		until [ "$com1_1" = "bash example_2.bash I am hungry" ]
+                		do
+                			printf "\thint: bash example_2.bash I am hungry \n"
+                    			printf "\tPLEASE TRY AGAIN   >> "
+                    			read com1_1
+                		done
+				clear
+				$com1_1
+				echo
+				printf "Press <ENTER> to continue"
+				read null
+				cat <<+
+
+You should notice that the positional
+parameters have stored the arguments
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+You can also use the set command within
+the script to assign arguments that
+appear after the "set" command.
+
+
+Press <ENTER> to continue
+
++
+				read null
+				clear
+				cat <<+
+Let's demonstrate the use of the "set"
+command. Let's just pretend we are at the
+shell prompt (i.e. we are not working with
+the shell script...)
+
+Issue the command "set pens pencils erasers":
+
++
+				printf "\tENTER LINE HERE    >> "
+                		read com1_1
+                		until [ "$com1_1" = "set pens pencils erasers" ]
+                		do
+                		printf "\thint: set pens pencils erasers\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				$com1_1
+				cat <<+
+
+Now, issue the following 3 commands below,
+and note the results:
+
+	echo \$1
+	echo \$2
+	echo \$3
+
+Press <ENTER> to continue
+
++
+				printf "\tENTER 1st COMMAND    >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \$1" ]
+                		do
+                		printf "\thint: echo \$1\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				echo "$1"
+				printf "\tENTER 2nd COMMAND    >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \$2" ]
+                		do
+                		printf "\thint: echo \$2\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				echo "$2"
+				printf "\tENTER 3rd COMMAND    >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \$3" ]
+                		do
+                		printf "\thint: echo \$3\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				echo "$3"
+				printf "Press <ENTER> to continue"
+				read null
+				cat <<+
+
+So we can set positional parameters in a shell
+script when it is running. Just realize that
+if you do this, the positional parameters that
+may have stored the shell script's argument when
+issued will be lost (unless you use "user-defined"
+variables to store them first!)
+
+Press <ENTER> to continue
++
+				read null
+				cat <<+
+
+You can "shift" the values of positional
+parameters to the "left" when using the
+"shift" command.
+
+Issue the following command:
+
+shift
+
++
+				printf "\tENTER COMMAND HERE    >> "
+                		read com1_1
+                		until [ "$com1_1" = "shift" ]
+                		do
+                		printf "\thint: shift\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				$com1_1
+				cat <<+
+
+Now, issue the following command:
+
+	echo \$1
+
++
+				printf "\tENTER COMMAND HERE   >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \$1" ]
+                		do
+                		printf "\thint: echo \$1\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				echo "$1"
+                                cat <<+
+
+You should notice that \$1 is different
+this time (i.e. "pencils" instead of "pens").
+
+This has happened since the shift command
+as "shifted" the order of the positional parameters
+one position to the left.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+A couple of important notes:
+
+  1. Once positional parameters are shifted,
+     they CANNOT be "unshifted".
+
+  2. Placing a number AFTER the shift command
+     indicates the numbers of shifts to the
+     left.
+
+Press <ENTER> to continue
+
++
+				read null
+				clear
+				cat <<+
+SPECIAL PARAMETERS
+ 
+There are some special parameters which
+we will applying in next week's
+tutorial.
+
+We will demonstrate just a few of these
+special parameters. It is recommended to
+refer to your course notes for a COMPLETE
+SET OF special parameters....
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+The variable \$* is used to display all
+stored positional parameters.
+
+Issue the following command:
+
+	echo \$*
+
++
+
+				printf "\tENTER COMMAND    >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \$*" ]
+                		do
+                		printf "\thint: echo \$*\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				echo "$*"
+				printf "Press <ENTER> to continue"
+				echo
+				read null
+				cat <<+
+
+Notice that all positional parameters are
+displayed above. This can be useful for
+such operations as command substitution if
+you want the positional parameters to be used
+as arguments for a particular command.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+The variable \$# indicates the number
+of positional parameters that are "stored".
+
+Issue the command:
+
+	echo \$#
+
++
+
+				printf "\tENTER COMMAND    >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \$#" ]
+                		do
+                		printf "\thint: echo \$*\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				echo "$#"
+				printf "Press <ENTER> to continue"
+				echo
+				read null
+				cat <<+
+
+Notice that the number of positional parameters
+are displayed. This is a useful feature to check
+if the user has entered the correct number of
+arguments after the script in order for the script
+to properly run.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+The \$0 variable is useful to display
+the script name (when running) or the
+name of the shell if issued from the
+shell prompt.
+
+Issue the following command:
+
+echo \$0
+
++
+
+				printf "\tENTER COMMAND    >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \$0" ]
+                		do
+                		printf "\thint: echo \$0\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				echo $0
+                                cat <<+
+
+Notice this is the pathname of the
+tutorial file you ran (seems like a
+long time ago) when you started this
+tutorial...
+
+Press <ENTER> to continue
+
++
+				read null
+				clear
+				cat <<+
+If you get confused when assigning and displaying
+positional parameters, you can always practice
+these techniques at the shell prompt first!
+
+Press <ENTER> to continue
++
+                                read null
+				clear
+                                cat <<+
+COMMAND SUBSTITUTION (Very Useful)
+
+In the Review tutorial of lab #4, you used the
+command "ls -F | grep / | wc -l" to display
+the number of directories in your current directory
+
+The "wc -l" command counted the number of lines
+from standard output that displayed one line
+at a time, therefore counting each directory
+which provided a total.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+Let's issue a similar command to count the total
+number of files and directories in the directory
+
+Issue the command:
+
+	ls | wc -l
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "ls | wc -l" ]
+                		do
+                			printf "\thint: ls | wc -l\n"
+                    			printf "\tPLEASE TRY AGAIN   >> "
+                    			read com1_1
+                		done
+				ls | wc -l
+				echo
+				printf "Press <ENTER> to continue"
+				read null
+				clear
+				cat<<+
+It may be useful to issue another command
+that counts the number of lines within EACH file
+or directory.
+
+One of the many ways to accomplish this task is to use
+COMMAND SUBSTITUTION.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+				
+Command substitution is a process to expand
+the results of a command to be as arugments
+for another command.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+There is different syntax for command substitution
+for different shells:
+
+Shell			Command Substitution Syntax
+----------		---------------------------
+Bourne			command1 \`command2\`
+Bash and korn		command1 \$(command2)
+
+
+Where command2's standard output will become arguments
+for command 1. There are advantages for using Korn & Bash
+shell syntax, but for now, we will use the Bourne shell
+syntax for command substitution.
+
+Note: \` is referred to as left-quote or back-quote symbol
+         for Bourne Shell Command Substitution
+         (shared with the ~ key)
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+
+Let's use command substitution to get a count
+of lines for each file or directory in your
+current directory.
+
+Issue the command:
+
+	wc -l \`ls\`
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "wc -l \`ls\`" ]
+                		do
+                			printf "\thint: wc -l \`ls\`\n"
+                    			printf "\tPLEASE TRY AGAIN   >> "
+                    			read com1_1
+                		done
+				wc -l `ls`
+				echo
+				printf "Press <ENTER> to continue"
+				read null
+				clear
+				cat <<+
+Another use for command substitution is to
+use the set command to store standard output
+of a command as positional parameters.
+
+We are going to use command substitution to 
+store the standard output of the "date" command
+into positional parameters.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+First, issue the command "date" to see what the
+standard output of this command will be:
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "date" ]
+                		do
+                		printf "\thint: date\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				echo
+				$com1_1
+				echo
+				cat <<+
+
+Now, let's use command substitution to store
+that standard output into positional parameters.
+We will use the Bash Shell syntax this time...
+
+Issue the command "set \$(date)":
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "set \$(date)" ]
+                		do
+                		printf "\thint: set \$(date)\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				set $(date)
+				cat <<+
+
+Now, issue the following 3 commands below,
+and note the results:
+
+	echo \$1
+	echo \$2
+	echo \$3
+
++
+				printf "\tENTER 1st COMMAND    >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \$1" ]
+                		do
+                		printf "\thint: echo \$1\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				echo "$1"
+				printf "\tENTER 2nd COMMAND    >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \$2" ]
+                		do
+                		printf "\thint: echo \$2\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				echo "$2"
+				printf "\tENTER 3rd COMMAND    >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \$3" ]
+                		do
+                		printf "\thint: echo \$3\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				echo "$3"
+				echo
+				printf "Press <ENTER> to continue"
+				read
+				clear
+				cat <<+
+As you recently learned, the "shift" command
+shifts one positional parameter to the left.
+
+You can type shift followed by a number to shift
+a positional parameter to the left by the specified number.
+
+Issue the command "echo \$1":
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \$1" ]
+                		do
+                		printf "\thint: echo \$1\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				echo "$1"
+				echo
+				cat <<+
+
+Before shifting, let's display the number of positional
+parameters by issuing the following command:
+
+     echo \$#
+
++
+
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \$#" ]
+                		do
+                		printf "\thint: echo \$#\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				echo "$#"
+				cat <<+
+
+Let's try the shift command on our positional
+parameters.
+
+Issue the command "shift 2"
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "shift 2" ]
+                		do
+                		printf "\thint: shift 2\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				$com1_1	
+				cat <<+
+
+Now, re-issue the command "echo \$1":
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \$1" ]
+                		do
+                		printf "\thint: echo \$1\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				echo "$1"
+				echo
+				cat <<+
+
+
+Notice that the first positional parameter's value
+has been replaced with the third. A shift of parameters
+to the left twice has occurred!
+
+Now issue the command:
+
+	echo \$#
+
++
+
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \$#" ]
+                		do
+                		printf "\thint: echo \$#\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				echo "$#"
+				cat <<+
+
+Notice that the number of positional parameters
+has been reduced by two! When using command substitution,
+there were originally six positional parameters.
+
+After shifting twice (i.e. shift 2), the original
+positional parameters (\$1 and \$2) are lost!
+
+The only way to restore them is to re-issue the
+set \`date\` command!
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+Another use for command substitution is to
+store results of commands into a variable.
+
+Issue the following command:
+
+	num=\`ls | wc -l\`
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "num=\`ls | wc -l\`" ]
+                		do
+                		printf "\thint:num=\`ls | wc -l\`\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				num=`ls | wc -l`
+				cat <<+
+
+Now issue the command:
+	
+	echo "The number of contents are \$num"
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \"The number of contents are \$num\"" ]
+                		do
+                		printf "\thint:echo \"The number of contents are \$num\"\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				echo "The number of contents are $num"
+				printf "Press <ENTER> to continue"
+				read null
+				clear
+				cat <<+
+Good. Wow, that was a long section!
+
+This completes the topic USING VARIABLES
+
+Proceed to the tutorial: REDIRECTION
+
+Press <ENTER> to return to
+BASIC SCRIPT PROGRAMMING TUTORIAL MENU
++
+				read null
+;;
+3)
+clear
+cat <<+
+EVERYTHING IS A FILE TO UNIX/LINUX
+
+The Unix and Linux operating systems interprets
+all of the elements of the computer system as files.
+
+This ability for Unix to relate all parts of the
+computer system of files give the user great power
+and flexibility when working within that operating
+system.
+
+Press <ENTER> to continue
++
+			read null
+			clear
+			cat <<+
+Your terminal is actually the "default" device
+that accepts "standard input" (keyboard or mouse),
+as well as "standard output" (monitor).
+
+Therefore by default, when you issue a command and
+press <ENTER>, the Unix operating sysetm interprets
+your "standard input" from your terminal's keyboard
+and displays "standard output" on your terminal's monitor
+
+Let's find out about your terminal. Issue the
+command "who am i" below:
+
++
+			printf "\tENTER COMMAND HERE ] "
+			read com1_1
+			until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "whoami" ]
+
+			do
+				printf "\thint: place space between each word\n"
+				printf "\t      who am i\n\n"
+				printf "\tPLEASE TRY AGAIN   ] "
+				read com1_1
+			done
+			
+			set `who am i` >/dev/null
+			if [ $# -lt 4 ] 2> /dev/null
+			then
+				printf "matrix! $USER	/dev/pts/0	";date +"%a %d  %H:%M"
+				set `echo "matrix!${USER}	pts/0	";date +"%a %d  %H:%M"`
+			else
+				who am i
+				set `who am i`
+			fi
+			printf "\nPress <ENTER> to continue\n"
+			read null	
+			cat <<+
+
+The name $2 which is displayed in the output
+above refers to your device (or terminal).
+All devices that are connected to this system,
+are stored as files in the directory "/dev".
+
+To prove that your terminal exists as a file,
+issue the command "ls /dev/pts" below:
+
++
+			printf "\tENTER COMMAND HERE ] "
+			read com1_1
+			until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "ls/dev/pts" ]
+
+			do
+				printf "\tls /dev/pts\n"
+				printf "\tPLEASE TRY AGAIN   ] "
+				read com1_1
+			done
+			$com1_1
+			printf "\nPress <ENTER> to continue\n"
+			read null
+			cat <<+
+
+You may notice many files that are
+numbered. Somewhere in this list above
+you should at least see a file called "`echo $2 | sed 's/pts\///'`".
+
+This file represents your computer terminal.
+
+Press <ENTER> to continue
++
+			read null
+			clear
+			cat <<+
+The "file" command can be used to determine
+the file type. For example, if the file is a
+directory to store files, or if a file is used
+to store text, programs, etc.
+
+Let's prove that the file called /dev/pts is
+a directory. Issue the command displayed
+below:
+
+	file /dev/pts
+
++
+			printf "\tENTER COMMAND HERE ] "
+			read com1_1
+			until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "file/dev/pts" ]
+
+			do
+				printf "\tfile /dev/pts\n"
+				printf "\tPLEASE TRY AGAIN   ] "
+				read com1_1
+			done
+			$com1_1
+			printf "\nPress <ENTER> to continue\n"
+			read null
+			cat <<+
+Notice that the file command indicates that
+the directory /dev/pts is a directory. From now on,
+if you are uncertain of what a file represents
+in the Unix or Linux operating system, just use
+the file command.
+
+Press <ENTER> to continue.
++
+			read null
+			clear
+			cat <<+
+Now let's determine what type of file
+is /dev/${2}.
+
+Issue the following command:
+
+	file /dev/$2
+
++
+			printf "\tENTER COMMAND HERE ] "
+			read com1_1
+			until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "file/dev/$2" ]
+
+			do
+				printf "\tfile /dev/$2\n"
+				printf "\tPLEASE TRY AGAIN   ] "
+				read com1_1
+			done
+			$com1_1
+			printf "\nPress <ENTER> to continue\n"
+			read null
+			cat <<+
+Notice that the file it a "special character"
+file. This indicates that the file is used
+to represent computer hardware. The file with
+the pathname /dev/$2 is actually the terminal
+that you are currently using!
+
+Press <ENTER> to continue
++
+			read null
+			clear
+			cat <<+
+Now that you have learned that the Unix
+operating system interprets things (even your
+terminal) as a file, we can perform some very
+interesting operations such as redirecting
+output to other files.
+
+Press <ENTER> to continue
++
+			read null
+			clear
+			cat <<+
+REDIRECTON
+
+Before demonstrating how to redirect, you need
+to know what can be redirected. Here is a list
+of things that can be redirected in Unix:
+
+
+Standard Input  - Data read from a file, shell script
+(STD INPUT)       program, or terminal (eg. keyboard)
+
+Standard Output - Data (output) as a result of a command
+(STD OUTPUT)      issued or program executed
+
+Standard Error  - Error message as a result of improper
+(STD ERROR)       syntax of command
+
+
+Press <ENTER> to continue
++
+			read null
+			clear
+			cat <<+
+To demonstrate the concept of Standard Input,
+let's create a file called "testfile" with
+the follow contents. 
+
+This is line 1
+This is line 2
+This is line 3
+
++
+				printf "\tENTER COMMAND HERE ] "
+				read com1_1
+				until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "cat>testfile" ]
+				do
+					printf "\thint: cat > testfile\n"
+					printf "\tPLEASE TRY AGAIN   ] "
+					read com1_1
+				done
+				printf "\nEnter contents below & press <CTRL><D> on last empty line\n"
+				cat > testfile		
+				printf "\n\nWell Done, the file was created\n\n"	
+				printf "\nPress <ENTER> to continue"
+				read null
+				clear
+				cat <<+
+Type "cat testfile" below to view contents:
+
++
+				printf "\tENTER COMMAND HERE ] "
+				read com1_1
+				until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "cattestfile" ]
+				do
+					printf "\thint: cat testfile\n"
+					printf "\tPLEASE TRY AGAIN   ] "
+					read com1_1
+				done
+				$com1_1
+				printf "\nPress <ENTER> to continue"
+				read null
+				clear
+			cat <<+
+STANDARD INPUT
+
+In the previous example, the contents of the
+file called "testfile" was used as STANDARD
+INPUT for the "cat" command.
+
+Some commands may not allow the name of the
+file to be contained as an argument. In that
+case, a symbol can be used to sent or direct
+the STANDARD INPUT to the command.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+The less-than sign "<" can be used to
+direct STANDARD INPUT into a Unix command.
+
+This may seem silly (and may break the
+"keep it short and simple") but issue the
+following command:
+
+	cat < testfile
+
++
+				printf "\tENTER COMMAND HERE ] "
+				read com1_1
+				until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "cat<testfile" ]
+				do
+					printf "\thint: cat < testfile\n"
+					printf "\tPLEASE TRY AGAIN   ] "
+					read com1_1
+				done
+				cat < testfile
+				printf "\nPress <ENTER> to continue"
+				read null
+				cat <<+
+
+Although the command was redundant,
+it worked! The reason why it worked
+was that the STANDARD INPUT was directed
+to the Unix command cat.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+Let's introduce to you another command
+called "mail". In your Matrix account,
+you can send yourself a simple
+mail message to your learn account by issuing
+the command "mail ${USER}@learn.senecac.on.ca".
+
+Try this by issuing the command:
+
+	mail ${USER}@learn.senecac.on.ca
+
++
+				printf "\tENTER COMMAND HERE ] "
+				read com1_1
+				until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "mail${USER}@learn.senecac.on.ca" ]
+				do
+				printf "\thint: mail ${USER}@learn.senecac.on.ca\n"
+					printf "\tPLEASE TRY AGAIN   ] "
+					read com1_1
+				done
+				printf "Enter Subject & Type Message Below:\n\n"
+				printf "To Send  -> Press <ENTER> followed by a period\n"
+				printf "            and then press <ENTER> twice \n\n"
+				mail ${USER}@learn.senecac.on.ca
+				printf "\nPress <ENTER> to continue"
+				read null
+				clear
+				cat <<+
+Wouldn't it be nice if you could send yourself
+an e-mail message with a file attachment
+(such as the file called "testfile").
+
+You can. Simply direct the file called
+"testfile" into the mail command. Try
+the following command displayed below:
+
+	mail -s "my message" ${USER}@learn.senecac.on.ca < testfile
+
++
+				printf "\tENTER COMMAND HERE ] "
+				read com1_1
+				until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "mail-s\"mymessage\"${USER}@learn.senecac.on.ca<testfile" ]
+				do
+					printf "\thint: mail -s \"my message\" ${USER}@learn.senecac.on.ca < testfile\n"
+					printf "\tPLEASE TRY AGAIN   ] "
+					read com1_1
+				done
+				mail -s "my message" ${USER}@learn.senecac.on.ca < testfile
+				printf "\nPress <ENTER> to continue"
+				read null
+				clear
+				cat <<+
+You have now sent yourself a contents
+of file "testfile" your learn account within
+an e-mail message.
+
+By the way, the -s option forces a subject line
+since there will be no prompting for subject line
+because < symbol indicates stdin comes from a file,
+NOT the terminal...
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+NEAT TRICK:
+
+You can actually use << to redirect stdin
+from the command itself!!
+
+eg.
+
+      cat <<+
+      line 1
+      line 2
+      line 3
+      +
+
+This will redirect stdin between the +
+signs, into the cat command.
+
+Press <ENTER> to continue
++
+            read null
+            clear
+            cat <<+
+This method of redirecting stdin is called
+the "Here Document" since stdin is redirected
+from command itself (i.e. "Here!").
+
+You can use this with any Linux command that
+reads stdin (eg. grep, sort, head, tail, uniq,
+awk, sed, etc...)
+
+Press <ENTER> to continue
++
+           read null
+           clear
+           cat <<+
+STANDARD OUTPUT
+
+Standard output is referred to the output
+that is generated in terms of executing the
+Unix command.
+
+To demonstrate the concept of STANDARD OUTPUT,
+issue the command displayed below:
+
+	date
+
++
+				printf "\tENTER COMMAND HERE ] "
+				read com1_1
+				until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`"  = "date" ]
+				do
+					printf "\thint: date\n"
+					printf "\tPLEASE TRY AGAIN   ] "
+					read com1_1
+				done
+				date
+				printf "\nPress <ENTER> to continue"
+				read null
+				clear
+				cat <<+
+By default, the output from the "date" command
+is displayed on your terminal by default.
+
+Since your terminal is a file, you have the
+ability to redirect the standard output from
+Unix commands to any file you wish (such as
+a file to store the results for later use)
+
+The greater than symbol ">" is to redirect
+output to another file (possible overwriting
+the previous contents of the file).
+
+Issue the Linux command "date > listing":
+
++
+			printf "\tENTER COMMAND HERE ] "
+			read com1_1
+			until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`"  = "date>listing" ]
+			do
+				printf "\thint: date > listing\n"
+				printf "\tPLEASE TRY AGAIN   ]"
+				read com1_1
+			done
+			date > listing
+			cat <<+
+Good.
+
+Now use the "cat" command to view the file "listing":
+
++
+			printf "\tENTER COMMAND HERE ] "
+			read com1_1
+			until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "catlisting" ]
+			do
+				printf "\thint: cat listing\n"
+				printf "\tPLEASE TRY AGAIN   ] "
+				read com1_1
+			done
+			$com1_1
+			printf "\nPress <ENTER> to continue"
+			read null
+			clear
+			cat <<+
+Two greater signs ">>" are used to redirect
+standard output to a file, but append (or add
+to the bottom) of a file.
+
+To demonstrate, let add standard output to the bottom
+of the file we already made called "listing". Issue
+the following command:
+
+	pwd >> listing
+
++
+
+			printf "\tENTER COMMAND HERE ] "
+			read com1_1
+			until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "pwd>>listing" ]
+			do
+				printf "\thint: pwd >> listing\n"
+				printf "\tPLEASE TRY AGAIN   ] "
+				read com1_1
+			done
+			pwd >> listing
+			cat <<+
+
+Now, issue the "cat" command to view the contents
+of the file "listing"
+
++
+
+			printf "\tENTER COMMAND HERE ] "
+			read com1_1
+			until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "catlisting" ]
+			do
+				printf "\thint: cat listing\n"
+				printf "\tPLEASE TRY AGAIN   ] "
+				read com1_1
+			done
+			$com1_1
+			echo
+			printf "Press <ENTER> to continue"
+			read null
+			cat <<+
+
+You should have noticed that the standard output
+of the "pwd" command was added to the bottom of
+the file "listing" (instead of overwriting the file).
+
+Press <ENTER> to continue
++
+			read null
+			clear
+			cat <<+
+Let's review some of these redirection symbols:
+
+  <     redirects standard input from a file
+
+  <<    redirects standard input from command
+
+  >	redirects standard output to file
+	(overwrites previous contents of
+	 already existing file)
+
+  >>	redirects standard output to file
+	(adds to bottom of existing contents)
+
+
+Press <ENTER> to continue
++
+			read null
+			clear
+			cat <<+
+STANDARD ERROR
+
+You can also redirect error messages
+that are generated from commmand that may
+not operate properly.
+
+These error messages are referred to as
+the STANDARD ERROR and can be redirected
+to other files instead of the terminal
+(which is done by default).
+
+Press <ENTER> to continue
++
+			read null
+			clear
+			cat <<+
+Redirecting the STANDARD ERROR is similar
+to redirecting STANDARD OUTPUT, except the
+number "2" is placed before the greater than
+sign.
+
+eg.
+
+	cat file_1 file_2 file_3 2> error_file
+
+
+The "2" before represent STANDARD ERROR, and
+the "1" represents STANDARD OUTPUT, but no number
+in front of the greater than sign is assumed to
+represent STANDARD OUTPUT by deault.
+
+Press <ENTER> to continue
++
+			read null
+			clear
+			cat <<+
+To demonstrate the redirection of STANDARD ERROR,
+issue the following command:
+
+	cat testfile nofile
+
++
+			printf "\tENTER COMMAND HERE ] "
+			read com1_1
+			until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "cattestfilenofile" ]
+			do
+				printf "\thint: cat testfile nofile\n"
+				printf "\tPLEASE TRY AGAIN   ] "
+				read com1_1
+			done
+			$com1_1
+			echo
+			printf "Press <ENTER> to continue"
+			read null
+			cat <<+
+
+You should have noticed that both the STANDARD
+OUTPUT and STANDARD ERROR appears on your
+terminal.
+
+Why?
+
+The file "testfile" exists, but the file "nofile"
+does not; therefore, resulting in an error message.
+
+Press <ENTER> to continue
++
+			read null
+			clear
+			cat <<+
+Now let's redirect the STANDARD OUTPUT to the
+file called "good". Issue the command
+displayed below:
+
+	cat testfile nofile > good
+
++
+			printf "\tENTER COMMAND HERE ] "
+			read com1_1
+			until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "cattestfilenofile>good" ]
+			do
+				printf "\thint: cat testfile nofile > good\n"
+				printf "\tPLEASE TRY AGAIN   ] "
+				read com1_1
+			done
+			cat testfile nofile > good
+			echo
+			printf "Press <ENTER> to continue"
+			read null
+			cat <<+
+You should notice that even though STANDARD OUTPUT
+was redirected (stored) in a file called "good",
+the STANDARD ERROR is diplayed on your terminal.
+
+Press <ENTER> to continue
++
+			read null
+			cat <<+
+Let's issue the command again, but this
+time you will redirect the STANDARD OUTPUT
+to a file called "good" (you can erase
+previous conents in that file) and redirect
+STANDARD ERROR to a file called "error".
+
+Issue the following command:
+
+	cat testfile nofile > good 2> error
+
++
+			printf "\tENTER COMMAND HERE ] "
+			read com1_1
+			until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "cattestfilenofile>good2>error" ]
+			do
+				printf "\thint: cat testfile nofile > good 2> error\n"
+				printf "\tPLEASE TRY AGAIN   ] "
+				read com1_1
+			done
+			cat testfile nofile > good 2> error
+			echo
+			printf "Press <ENTER> to continue"
+			read null
+			cat <<+
+You should notice NO output or error messages on
+your terminal.
+
+Why?
+
+STANDARD OUTPUT was redirected into a file called "good",
+and STANDARD ERROR was redirected (stored) into a file
+called "error"
+
+Press <ENTER> to continue
++
+			read null
+			clear
+			cat << +
+Let's confirm that STANDARD OUTPUT and STANDARD
+ERROR was redirected.
+
+Issue the command:
+
+	cat good
+
++
+			printf "\tENTER COMMAND HERE ] "
+			read com1_1
+			until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "catgood" ]
+			do
+				printf "\thint: cat good\n"
+				printf "\tPLEASE TRY AGAIN   ] "
+				read com1_1
+			done
+			$com1_1
+			echo
+			printf "Press <ENTER> to continue"
+			read null
+			cat <<+
+Issue the command:
+
+	cat error
+
++
+			printf "\tENTER COMMAND HERE ] "
+			read com1_1
+			until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "caterror" ]
+			do
+				printf "\thint: cat error\n"
+				printf "\tPLEASE TRY AGAIN   ] "
+				read com1_1
+			done
+			$com1_1
+			echo
+			printf "Press <ENTER> to continue"
+			read null
+			cat <<+
+
+Notice that this displays the
+contents of the file "error" and
+is not tell you that your command that
+you just issued was wrong!
+
+Press <ENTER> to continue
++
+			read null
+			clear
+			cat <<+
+Let's get some practise redirecting
+STANDARD OUTPUT.
+
+We want to view all users on the system.
+
+Issue the command "who > temp":
+
++
+			printf "\tENTER COMMAND HERE ] "
+			read com1_1
+			until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "who>temp" ]
+
+			do
+				printf "\thint: who > temp\n"
+				printf "\tPLEASE TRY AGAIN   ] "
+				read com1_1
+			done
+			who -T > temp
+			printf "\nPress Enter to Continue"
+			read null
+			cat <<+
+
+Now, issue the command to search the "temp"
+file to display users that match $USER
+(your username) by issuing the command:
+
+	grep "$USER" temp
+
++
+			printf "\tENTER COMMAND HERE ] "
+			read com1_1
+			until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "grep\"$USER\"temp" ]
+
+			do
+				printf "\thint: grep \"$USER\" temp\n"
+				printf "\tPLEASE TRY AGAIN   ] "
+				read com1_1
+			done
+			grep "$USER" temp	
+			printf "\nPress Enter to Continue"
+			read null
+			cat <<+
+
+Good.
+
+We now have a temporary file called "temp" that
+is taking up space. To prevent wasted space on your
+account, it is a good idea to remove this file.
+
+Issue the following command to remove the "temp" file
+
+	rm temp
+
++
+			printf "\tENTER COMMAND HERE ] "
+			read com1_1
+			until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "rmtemp" ]
+
+			do
+				printf "\thint: rm temp\n"
+				printf "\tPLEASE TRY AGAIN   ] "
+				read com1_1
+			done
+			$com1_1	
+			printf "\nPress Enter to Continue"
+			read null
+			clear
+			cat <<+
+USING PIPES
+
+There is another useful Unix tool which is
+called a "pipe". A pipe is used to redirect
+STANDARD OUTPUT to another Unix command for
+further processing.
+
+One advantage of using pipes is to avoid
+using temporary files that have to be removed.
+
+Issue the command:
+
+	who | grep "$USER"
+
++
+			printf "\tENTER COMMAND HERE ] "
+			read com1_1
+			until [ "`echo "$com1_1" | sed 's/ //g' | sed 's/	//g'`" = "who|grep\"$USER\"" ]
+
+			do
+				printf "\thint: who | grep \"$USER\"\n"
+				printf "\tPLEASE TRY AGAIN   ] "
+				read com1_1
+			done
+			who | grep "$USER"
+			printf "\nPress Enter to Continue"
+			read null
+			cat <<+
+
+You should notice a listing of all users
+on the system that match your username.
+
+Note that you didn't have to create a
+temporary file!
+
+Press <ENTER> to continue
++
+			read null
+			clear
+			cat <<+
+This completes the topic REDIRECTION
+
+Press <ENTER> to return to the
+BASIC SHELL CONCEPTS TUTORIAL MENU
++
+			read null
+				esac
+				done
+				unset snum
+				;;
+	a)
+		until [ "$snum" = "3" ] 2> /dev/null
+		do
+			clear
+			cat <<+
+	REVIEW TUTORIAL
+
+1. REVIEW QUESTIONS - PART I
+2. REVIEW QUESTIONS - PART II
+3. RETURN TO MAIN MENU
+
++
+			printf "Please Enter a Number >> "
+			read snum
+			while [ $snum -le 0 -o $snum -ge 4 ] 2> /dev/null
+			do
+				printf "Enter a number 1 to 3 >> "
+				read snum
+			done
+			case $snum in
+
+### FIRST PRACTICAL APPLICATION SUBMENU ###
+
+			1)
+				count=0
+				clear
+				cat <<+
+REVIEW QUESTIONS - PART I
+
+If you are not able to provide the Linux command
+to accomplish the task after 3 tries, a "hint" with
+the actual command will appear.
+ 
+Press <ENTER> to continue BASIC SCRIPT REVIEW
++
+			read null
+			clear
+			cat <<+
+QUESTION 1
+
+Issue a command to create a variable called
+temperature that stores the value 26.
+
++
+			printf "\tENTER COMMAND HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "temperature=26" ]
+            		do
+            			if [ "$count" -ge "2" ]
+               				then
+               					printf "\thint: temperature=26\n"
+               			fi
+                		printf "\tPLEASE TRY AGAIN   >> "
+				read com1_1
+            			count=`expr $count + 1`
+            		done
+            		count=0
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+                	echo "REVIEW QUESTIONS - PART I" >> output
+                	echo >> output
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 2
+
+Issue a command to display the sentence:
+
+"Today's temperature is 26"
+
+where 26 is stored in the variable "temperature"
+
++
+			printf "\tENTER COMMAND HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "echo \"Today's temperature is \$temperature\"" ]
+            		do
+               			if [ "$count" -ge "2" ]
+               				then
+               					printf "\thint: echo \"Today's temperature is \$temperature\"\n"
+               			fi
+            			printf "\tPLEASE TRY AGAIN   >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+            		count=0
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 3
+
+Issue a command to clear the value of the
+variable called "temperature"
+
++
+			printf "\tENTER COMMAND HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "temperature=" -o "$com1_1" = "unset temperature" ]
+            		do
+            			if [ "$count" -ge "2" ]
+               				then
+               					printf "\thint: temperature= or unset temperature\n"
+               			fi
+                		printf "\tPLEASE TRY AGAIN   >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+            		count=0
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 4
+
+Issue a command to input from the keyboard
+a value which will be stored into a variable
+called "type"
+
++
+			printf "\tENTER COMMAND HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "read type" ]
+            		do
+            			if [ "$count" -ge "2" ]
+               				then
+               					printf "\thint: read type\n"
+               			fi
+                		printf "\tPLEASE TRY AGAIN   >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+            		count=0
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 5
+
+Issue a command to move the fifth positional
+parameter to the second positional parameter
+
++
+			printf "\tENTER COMMAND HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "shift 3" ]
+            		do
+            			if [ "$count" -ge "2" ]
+               				then
+               					printf "\thint: shift 3\n"
+               			fi
+                		printf "\tPLEASE TRY AGAIN   >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+            		count=0
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+Good.
+
+This completes REVIEW QUESTIONS - PART I
+
+Please proceed with ADVANCED SCRIPT REVIEW
+
+Press <ENTER> to return to
+REVIEW TUTORIAL MENU
++
+		read null
+;;
+		2)
+			count=0
+			clear
+			cat <<+
+REVIEW QUESTIONS - PART II
+
+If you are not able to provide the Linux command
+to accomplish the task after 3 tries, a "hint" with
+the actual command will appear.
+ 
+Press <ENTER> to continue ADVANCED SCRIPT REVIEW
++
+			read null
+			clear
+			cat <<+
+QUESTION 1
+
+Enter the command to appear ON THE FIRST LINE of
+your script to run the script in the bash shell,
+regardless of your default shell:
+
+(Hint: bash shell is located in path /bin/bash)
+
++
+			printf "\tENTER COMMAND HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "#!/bin/bash" ]
+            		do
+            			if [ "$count" -ge "2" ]
+               				then
+               					printf "\thint: #!/bin/bash\n"
+               			fi
+                		printf "\tPLEASE TRY AGAIN   >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+            		count=0
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "REVIEW QUESTIONS - PART II" >> output
+			echo >> output
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 2
+
+Issue a command to display all positional
+parameters.
+
++
+				printf "\tENTER COMMAND    >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \$*" ]
+            			do
+            				if [ "$count" -ge "2" ]
+               					then
+               						printf "\thint: echo \$*\n"
+               				fi
+                			printf "\tPLEASE TRY AGAIN   >> "
+                			read com1_1
+            				count=`expr $count + 1`
+            			done
+            			count=0
+				printf "You are correct\n\n"
+				printf "Press <ENTER> to continue"
+				echo "$com1_1" >> output
+				echo >> output
+				read null
+				clear
+				cat <<+
+QUESTION 3
+
+Issue a command to display the number
+of positional parameters.
+
++
+				printf "\tENTER COMMAND    >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \$#" ]
+            			do
+            				if [ "$count" -ge "2" ]
+               					then
+               						printf "\thint: echo \$#\n"
+               				fi
+                			printf "\tPLEASE TRY AGAIN   >> "
+                			read com1_1
+            				count=`expr $count + 1`
+            			done
+            			count=0
+				printf "You are correct\n\n"
+				printf "Press <ENTER> to continue"
+				echo "$com1_1" >> output
+				echo >> output
+				read null
+				clear
+				cat <<+
+QUESTION 4
+
+Assume the following commands have just
+been issued:
+
+set tom dick harry sam
+shift
+echo \$1
+
+What will be displayed?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "dick" ]
+            		do
+            			if [ "$count" -ge "2" ]
+               				then
+               					printf "\thint: dick\n"
+				fi
+				printf "\tPLEASE TRY AGAIN   >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+            		count=0
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 5
+
+Assume the following command have just
+been issued:
+
+set tom dick harry sam
+shift 2
+echo \$2
+
+What will be displayed?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "sam" ]
+            		do
+            			if [ "$count" -ge "2" ]
+               				then
+               					printf "\thint: sam\n"
+				fi
+				printf "\tPLEASE TRY AGAIN   >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+            		count=0
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 6
+
+Assume the following command have just
+been issued:
+
+set tom dick harry sam
+shift
+echo \$*
+
+What will be displayed?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "dick harry sam" ]
+            		do
+            			if [ "$count" -ge "2" ]
+               				then
+               					printf "\thint: dick harry sam\n"
+				fi
+				printf "\tPLEASE TRY AGAIN   >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+            		count=0
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 7
+
+Assume the following command have just
+been issued:
+
+set tom dick harry sam
+shift 3
+echo \$#
+
+What will be displayed?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "1" ]
+            		do
+            			if [ "$count" -ge "2" ]
+               				then
+               					printf "\thint: 1\n"
+				fi
+				printf "\tPLEASE TRY AGAIN   >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+            		count=0
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+You have completed the REVIEW QUESTIONS - PART II
+
+You may proceed to the MAIN MENU to send
+feedback and exit tutorial
+
+Press <ENTER> to return to the 
+REVIEW TUTORIAL MENU
++
+				read null
+;;
+                esac
+                done
+                unset snum
+		;;
+esac
+done             

@@ -1,0 +1,1364 @@
+#!/bin/bash
+
+##############################################################################
+###                                                                        ###
+###                     LOOPS                                              ###
+###                                                                        ###
+###                                          The structure of the          ###
+### lab consists of a few opening banners, followed by a menu which        ###
+### provides 2 levels of tutorials  - Basic and Practical Application      ###
+###                                                                        ###
+### The author of this script is using this tutorial to send students'     ###
+### results back to him for monitoring purposes. If you are not one        ###
+### of his students, indicate that you do NOT belong to his class when     ###
+### prompted.                                                              ###
+###                                                                        ###
+### Author: Murray Edward Saul                                             ###
+### Date: Feb 5, 2001                                                      ###
+### Modified: June 2008                                                    ###
+###                                                                        ###
+##############################################################################
+
+
+### Banner Advising User to Exit & Maximize Telnet Window ###
+
+clear
+cat <<+
+*********************************
+*                               *
+*  TELNET WINDOW SHOULD         *
+*  BE MAXIMIZED BEFORE USING    *
+*  THIS TUTORIAL.               *
+*                               *
+*  PRESS <CTRL><C> TO EXIT      *
+*  PRESS <ENTER>   TO CONTINUE  *
+*                               *
+*********************************
++
+
+### pause for user to press ENTER to continue ###
+
+read null
+clear
+
+### change to user's home directory ###
+
+cd
+
+
+
+
+clear
+cat <<+
+*****************************************************************************
+*                                                                           *
+*  ADVANCED SHELL SCRIPTING: LOOPS                                          *	
+*                                                                           *
+*  These tutorials may be used for:                                         *
+*                                                                           *
+*       -  Practise to enhance your Linux shell commands and scripting      *
+*                                                                           *
+*  Written by Murray Saul  Feb, 2001                                        *
+*  Modified: April 2015                                                     *
+*                                                                           *
+*****************************************************************************
+
+Press <ENTER> to continue or <CTRL><C> to exit
++
+
+read null
+
+
+### Banner (explanation of evaluation & feedback) ###
+
+clear
+cat <<+
+*****************************************************************************
+*                                                                           *
+*    ALL TUTORIALS HAVE THE FOLLOWING STRUCTURE:                            *
+*                                                                           *
+*    1. BASIC TUTORIAL        - Provides user to learn a skill              *
+*                                                                           *
+*    2. PRACTICAL APPLICATION - Reinforces learned skill with exercises     *
+*                                                                           * 
+*****************************************************************************
+
+Press <ENTER> to continue or <CTRL><C> to exit
+
++
+
+read null
+
+clear
+cat <<+
+*****************************************************************************
+*                                                                           * 
+*  TIPS FOR GETTING THE MOST OUT OF TUTORIALS:                              *
+*                                                                           *
+*    · Complete the entire tutorial                                         *   
+*                                                                           *
+*    · Repeat the tutorial on a regular basis for review                    *
+*                                                                           *
+*    · Try to use skills you have developed to accomplish other tasks       *
+*                                                                           *
+*****************************************************************************
+
+Press <ENTER> to continue or <CTRL><C> to exit
++
+
+read null
+
+### Banner (layout of tutorial's structure ###
+
+clear
+cat <<+
+*****************************************************************************
+*                                                                           *
+*  A FEEDBACK section has been added to the end of each tutorial to         *
+*  allow ALL USERS to provide comments to improve the quality of the        *
+*  tutorial.                                                                *
+*                                                                           *
+*****************************************************************************
+
+Press <ENTER> to continue or <CTRL><C> to exit
++
+
+
+read null
+
+#### Prompt User for Menu Item ###
+
+#### Remove existing lab6_test directory
+
+if [ -d lab6_test ]
+then
+	rmdir lab6_test 2> /dev/null
+fi
+
+until [ $num -eq 3 ] 2> /dev/null
+do
+	clear
+	cat <<+
+
+        MAIN MENU
+
+1. LOOPS TUTORIAL
+2. REVIEW TUTORIAL
+3. SEND FEEDBACK & EXIT TUTORIAL
+
++
+
+### Error Checking ###
+
+	printf "Please Enter a Number >> "
+	read num
+	while [ $num -le 0 -o $num -ge 4 ] 2> /dev/null
+	do
+		printf "Enter a number 1 to 3 >> "
+		read num
+	done
+
+  
+### Exit Process which prompts the User for Feedback ###
+### ALL feedback will be directed to Murray Saul     ###
+### for modification and further implementation      ###
+
+
+
+
+
+
+### Send output file to Appropriate Instructor ###
+
+        if [ "$num" -eq 3 ] 2> /dev/null
+                then
+
+### Remove directory lab6_test
+
+
+
+
+
+                        rm output 2> /dev/null
+			rm lab6_test 2> /dev/null
+
+### Offer a choice to provide feedback ###
+
+                        clear
+                        printf "Do you wish to provide feedback? (y/n) >>  "
+                        read choice
+                        if [ "$choice" = "y" -o "$choice" = "Y" ]
+                        then
+	        		clear
+				cat <<+
+*************************************************************************
+*                                                                       *
+*                   <<< FEEDBACK - RECOMMENDED >>                        *
+*                                                                       *
+*  You are about to send feedback about this tutorial to the author     *
+*  of this tutorial.                                                    *
+*                                                                       *
+*  Take the time to list what you liked about the tutorial, and list    *
+*  improvements for the tutorial. This will be the primary method       *
+*  for the author to make improvements.                                 *
+*                                                                       *
+*  When you type the message, please make sure that you make            *
+*  corrections to the line BEFORE pressing ENTER, since you cannot      *
+*  go back to the previous line to make corrections.                    *
+*                                                                       *
+*************************************************************************
+
++
+			printf "Press <ENTER> to proceed"
+			read null
+
+### Send Comments to Author ###
+
+			clear
+			printf "Type Message Below:\n\n"
+			printf "You cannot move to previous line\n"
+			printf "if you already pressed <ENTER>\n\n"
+			printf "To Send  -> Go to next empty line\n"
+			printf "         -> Press keys <CTRL><D>\n"
+			
+			mail -s "Scripting-3 - Feedback" murray.saul@senecacollege.ca
+			fi
+	
+			clear
+			cat <<+	
+************************************************
+*                                              *
+*           Your message has been sent         *
+*         Thank you for your participation     *
+*                                              *
+************************************************
+
+
++
+			exit 0
+fi
+
+### Case Structure Displaying Tutorial Level ###
+
+	case $num in
+
+
+### Basic Tutorial Level ###
+
+	1)
+		until [ "$snum" = "3" ] 2> /dev/null
+		do
+	        	clear
+			cat <<+
+   ADVANCED SCRIPT PROGRAMMING TUTORIAL
+
+1. LOOPING CONTROL FLOW STATEMENTS 
+   - Purpose
+   - Indeterminant loops (while, until)
+   - Determinant loops (for)
+
+2. ADDITIONAL LOOPING EXAMPLES
+   - break, exit, continue
+
+3. RETURN TO MAIN MENU
+
++
+
+### Error Checking ###
+
+			printf "Please Enter a Number >> "
+			read snum
+			while [ $snum -le 0 -o $snum -ge 4 ] 2> /dev/null
+			do
+				printf "Enter a number 1 to 3 >> "
+				read snum
+			done
+			case $snum in
+
+### FIRST PRACTICAL APPLICATION SUBMENU ###
+
+			1)
+				clear
+				cat <<+
+CONTROL FLOW STATEMENTS
+
+Review purpose of control - flow - stmts
+(backward linkage)
+(include CASE statement?)
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+LOOPS
+
+Loops are used for repetition. There are two 
+categories of loops:
+
+Determinate Loops   - number of cycles are known
+
+Indeterminate Loops - number of cycles are unknown
+
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+FOR LOOP
+
+The "for" loop is used when the number of cycles
+to execute a series of commands is known. There are 
+two methods in which the for loop can be used:
+
+Method 1: Loop for arguments immediately after "for" command
+
+Method 2: Loop for arguments "set" or issued as arguments 
+          during script execution 
+
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+FOR LOOP - METHOD #1
+
+Usage:	for var in arg1 arg2 arg3 ... argn
+    	do
+		   action (using \$var)
+	done
+
+Note that value of argument is stored in
+variable "var" for each argument. For loop
+stops after series of commands is executed
+for last argument.
+
+To demonstrate, issue the following command:
+
+	for object in apples oranges bananas;do echo "object is \$object";done
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+            			until [ "$com1_1" = "for object in apples oranges bananas;do echo \"object is \$object\";done" ]
+				do
+               				printf "\thint: for object in apples oranges bananas;do echo \"object is \$object\";done\n"
+					printf "\tPLEASE TRY AGAIN   >> "
+					read com1_1
+            			done
+				for object in apples oranges bananas;do echo "object is $object";done
+				printf "\nPress Enter to Continue\n"
+				read null
+				clear
+				cat <<+
+FOR LOOP - METHOD #2
+
+Usage:	for var
+    	do
+		   action (using \$var)
+	done
+
+If there are positional parameters as a result
+of using the set command within the script,
+then the for loop will perform a cycle for
+each positional parameter. If a script contains
+a for loop and the script has been executed with
+arguments, then the arguments will be stored as
+positional parameters and the for loop will cycle
+for each positional parameter.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+We can also demonstrate the use of a for
+loop using the second method at the shell prompt.
+It is important NOT to mix-up the second method
+of a for loop when running in the shell or running
+in a script - they are two separate processes and
+not related!
+
+In order to demonstrate this second method, we
+will use the set command at the shell prompt to store
+some data into positional parameters.
+
+Issue the following command:
+
+	set this lab is long
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+            			until [ "$com1_1" = "set this lab is long" ]
+				do
+               				printf "\thint: set this lab is long\n"
+					printf "\tPLEASE TRY AGAIN   >> "
+					read com1_1
+            			done
+				$com1_1
+				printf "\nPress Enter to Continue\n"
+				read null
+				cat <<+
+
+Let's issue the command echo \$*
+to verify the contents of the positional parameters:
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+            			until [ "$com1_1" = "echo \$*" ]
+				do
+               				printf "\thint: echo \$*" ]
+					printf "\tPLEASE TRY AGAIN   >> "
+					read com1_1
+            			done
+				echo $*
+				printf "\nPress Enter to Continue\n"
+				read null
+				clear
+				cat <<+
+Good.
+
+Now issue the following command to use
+the positional parameters (that were previously
+dispalyed) in a loop:
+
+	for arg_name;do printf "\$arg_name";done
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+            			until [ "$com1_1" = "for arg_name;do printf \"\$arg_name\";done" ]
+				do
+               				printf "\thint: for arg_name;do printf \"\$arg_name\";done\n"
+					printf "\tPLEASE TRY AGAIN   >> "
+					read com1_1
+            			done
+				for arg_name;do printf "$arg_name";done
+				printf "\nPress Enter to Continue\n"
+				read null
+				cat <<+
+
+Notice that all the positional parameters
+were used. Does this mean that since they
+were used in a for loop, they no longer exist?
+
+The answer is NO.
+
+Issue the echo \$* command below to prove
+that the positional parameters still exist:
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+            			until [ "$com1_1" = "echo \$*" ]
+				do
+               				printf "\thint: echo \$*" ]
+					printf "\tPLEASE TRY AGAIN   >> "
+					read com1_1
+            			done
+				echo $*
+				printf "\nPress Enter to Continue\n"
+				read null
+				clear
+				cat <<+
+When you have time, try creating scripts
+that use the for loop to cycle for positional
+parameters (either using the "set" command
+or as arguments after running your script).
+
+Also take time to use the set command at the
+shell prompt and then run your script (without
+arguments) to prove that positional parameters
+assigned from the shell prompt are NOT passed
+to your script.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+WHILE & UNTIL LOOPS
+
+while and until loops are indeterminate loops
+and are used when the number of cycles to execute
+are unknown.
+
+For Example:
+
+Use a indeterminate loop to ask the user to re-enter
+a command until they enter the command with the
+correct syntax (like this tutorial...)
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+WHILE LOOP
+
+The "while" statement is used to loop a
+series of commands until the test condition
+is false.
+
+Usage:	while test-condition
+    	do
+		   action
+	done
+
+Note that action takes place between "do" and
+"done" statements.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+UNTIL LOOP
+
+Unlike while, the "until" loop is used to loop a
+series of commands until the test condition
+is true.
+
+Usage:	until test-condition
+    	do
+		   action
+	done
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+Good.
+
+This completes CONTROL-FLOW STATEMENTS
+
+Please proceed with ADDITIONAL SCRIPTING TOOLS
+
+Press <ENTER> to return to
+ADVANCED SCRIPT PROGRAMMING TUTORIAL MENU
++
+				read null
+;;
+			2)
+				clear
+				cat <<+
+BREAK STATEMENT
+
+The "break" command is used to break out of
+a loop. Although you may have been taught in
+C programming that it is bad to use the break
+command, it is useful in UNIX and Linux shell scripting.
+
+eg.
+
+	for var in 1 2 3 4
+	do
+		if [ $var -eq 3 ]
+		then
+			break
+		fi 
+		echo "\$var is $var"
+	done
+
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+Let's issue the following command to demonstrate
+the break statement. Issue the following command:
+
+	for var in 1 2 3 4;do if [ \$var -eq 3 ];then break;fi;echo "\\\$var is \$var";done
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+				for var in 1 2 3 4;do if [ $var -eq 3 ];then break;fi;echo "\$var is $var";done
+				printf "\nPress Enter to Continue\n"
+				read null
+				cat <<+
+
+Notice since the for loop breaks
+when \$var is 3, only the first
+two values are displayed.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+
+CONTINUE STATEMENT
+
+The "continue" command is used to skip that
+particular execution of the loop, to the "done"
+statement, and repeat loop for next argument or
+test condition.
+
+	for var in 1 2 3 4
+	do
+		if [ \$# -eq 3 ]
+		then
+			continue
+		fi
+	done
+
+  
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+To demonstrate the use of the continue
+statement, issue the following command:
+
+	for var in 1 2 3 4;do if [ \$var -eq 3 ];then continue;fi;echo "\\\$var is \$var";done
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+				for var in 1 2 3 4;do if [ $var -eq 3 ];then continue;fi;echo "\$var is $var";done
+				printf "\nPress Enter to Continue\n"
+				read null
+				cat <<+
+
+Notice that the for loop only skipped the
+display when the value of \$var is 3
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+	
+EXIT STATEMENT
+
+The "exit" command is used to terminate the
+script.
+
+eg.
+
+	if [ \$# -eq 0 ]
+	    then
+		echo "Please enter some arguments after command" 1>&2
+		exit 1
+	fi		
+
+Note that message is redirected to the terminal as an
+error message. In addition, the script is terminated
+with an exit status of 1 (which represents a false value
+which means that the command was unsuccessful).
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+You have completed ADDITIONAL LOOPING TOOLS
+
+If you feel comfortable with this lab content,
+you may proceed to the REVIEW TUTORIAL in the
+MAIN MENU
+
+Press <ENTER> to return to the 
+ADVANCED SCRIPT PROGRAMMING TUTORIAL MENU
++
+		read null
+;;
+
+      2)
+				clear
+				cat <<+
+Submenu 2
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+You have completed the ADDITIONAL LOOPING TOOLS
+
+If you feel comfortable with this lab content,
+you may proceed to the REVIEW TUTORIAL in the
+MAIN MENU
+
+Press <ENTER> to return to the 
+LOOPING TUTORIAL MENU
++
+		read null
+;;
+
+
+
+
+		esac
+		done
+		unset snum
+		;;
+
+	2)
+		until [ "$snum" = "3" ] 2> /dev/null
+		do
+			clear
+			cat <<+
+	REVIEW TUTORIAL
+
+1. REVIEW QUESTIONS - PART I
+2. REVIEW QUESTIONS - PART II
+3. RETURN TO MAIN MENU
+
++
+			printf "Please Enter a Number >> "
+			read snum
+			while [ $snum -le 0 -o $snum -ge 4 ] 2> /dev/null
+			do
+				printf "Enter a number 1 to 3 >> "
+				read snum
+			done
+			case $snum in
+
+### FIRST PRACTICAL APPLICATION SUBMENU ###
+
+			1)
+				count=0
+				clear
+				cat <<+
+REVIEW QUESTIONS - PART I
+
+If you are not able to provide the Linux command
+to accomplish the task after 3 tries, a "hint" with
+the actual command will appear.
+ 
+Press <ENTER> to continue BASIC SCRIPT REVIEW
++
+			read null
+			clear
+			char="abc"
+			cat <<+
+QUESTION 1
+
+This tutorial has already issued the following command:
+
+	char=abc
+
+Issue the command to test if the variable char
+contains the string "abc" (do not use square brackets).
+
++
+			printf "\tENTER COMMAND HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "test \$char = abc" -o "$com1_1" = "test \$char = \"abc\"" ]
+            		do
+            			if [ "$count" -ge "2" ]
+               				then
+               					printf "\thint: test \$char = \"abc\"\n"
+               			fi
+                		printf "\tPLEASE TRY AGAIN   >> "
+				read com1_1
+            			count=`expr $count + 1`
+            		done
+            		count=0
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+                	echo "REVIEW QUESTIONS" >> output
+                	echo >> output
+			echo "REVIEW QUESTIONS - PART I" >> output
+			echo >> output
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 2
+
+If a command is successfully executed on the
+command line, what value will be displayed when "echo 
+\$?" is issued?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "0" ]
+            		do
+               			if [ "$count" -ge "2" ]
+               				then
+               					printf "\thint: 0\n"
+               			fi
+            			printf "\tPLEASE TRY AGAIN   >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+            		count=0
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			number=10
+			cat <<+
+QUESTION 3
+
+This tutorial has just issued the command:
+
+	number=10
+
+Issue a command to display "greater" if number is
+greater than 10, and otherwise display "less or equal". 
+Use square brackets to test the condition.
+
++
+			printf "\tENTER COMMAND HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "if [ \$number -gt 10 ];then echo \"greater\";else echo \"less or equal\";fi" ]
+            		do
+            			if [ "$count" -ge "2" ]
+               			then
+               					printf "\thint: if [ \$number -gt 10 ];then echo \"greater\";else echo \"less or equal\";fi\n"
+               			fi
+                		printf "\tPLEASE TRY AGAIN   >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+            		count=0
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 4
+
+Use a for loop to display the following arguments
+in the order displayed below:
+
+pens
+pencils
+erasers
+
+Note: these arguments have NOT been stored as positional
+parameters and you are to use a variable called "item"
+
++
+			printf "\tENTER COMMAND HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "for item in pens pencils erasers;do echo \"\$item\";done" ]
+            		do
+            			if [ "$count" -ge "2" ]
+               			then
+               					printf "\thint: for item in pens pencils erasers;do echo \"\$item\";done\n"
+               			fi
+                		printf "\tPLEASE TRY AGAIN   >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+            		count=0
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 5
+
+Which control-flow statement is used to
+loop until the test condition is true?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "until" ]
+            		do
+            			if [ "$count" -ge "2" ]
+               				then
+               					printf "\thint: until\n"
+               			fi
+                		printf "\tPLEASE TRY AGAIN   >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+            		count=0
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 6
+
+Which control-flow statement is used to
+terminate a shell script and return a status of 2?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "exit 2" ]
+            		do
+            			if [ "$count" -ge "2" ]
+               				then
+               					printf "\thint: exit 2\n"
+               			fi
+                		printf "\tPLEASE TRY AGAIN   >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+            		count=0
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 7
+
+Which control-flow statement will terminate
+the execution of a loop?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "break" ]
+				do
+            			if [ "$count" -ge "2" ]
+               				then
+               					printf "\thint: break\n"
+               			fi
+                		printf "\tPLEASE TRY AGAIN   >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+            		count=0
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 8
+
+Which control-flow statement is used to skip
+the execution of part of a loop?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "continue" ]
+            		do
+            			if [ "$count" -ge "2" ]
+               				then
+               					printf "\thint: continue\n"
+               			fi
+                		printf "\tPLEASE TRY AGAIN   >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+            		count=0
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+Good.
+
+This completes REVIEW QUESTIONS - PART I
+
+Please proceed with REVIEW QUESTIONS - PART II
+
+Press <ENTER> to return to
+REVIEW TUTORIAL MENU
++
+		read null
+;;
+		2)
+			count=0
+			clear
+			cat <<+
+REVIEW QUESTIONS - PART II
+
+QUESTION 1
+
+What is the control-flow statement used to provide a
+set of nested if-the-else structures?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "elif" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "REVIEW QUESTIONS - PART II" >> output
+			echo >> output
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 2
+
+What is the statement to end an if statement block?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "fi" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 3
+
+What is the control-flow statement that will
+continue a loop until the test condition is false?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "while" ]
+            		do
+            			printf "\tPLEASE TRY AGAIN  >> "
+            			read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 4
+
+What is the name of the control-flow statement
+that is a determinate loop (i.e. the number
+of loops are knows).
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "for" ]
+			do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+			done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 5
+
+What is typed on the first line of an "until" control-
+flow structure to test that the variable "var" is
+greater than the number 3 (use square brackets).
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "until [ \$var -gt 3 ]" ]
+            		do
+				printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 6
+
+What is the statement to end a "case" block?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "esac" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 7
+
+What is typed on the first line of a "for-loop"
+that will loop for previously assigned positional
+parameters as a variable called "choice"?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "for choice" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 8
+
+What is the statement that follows an "if" statement
+in order to take action?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "then" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 9
+
+What is the statement that follows a "for" statement
+in order to take action?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "do" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 10
+
+What command is used to terminate a script?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "exit" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 11
+
+What variable is used to display the status of
+the most recently executed command?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "\$?" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 12
+
+What variable is used to display the number of
+assigned positional parameters?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "\$#" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 13
+
+What is the statement that follows the "while"
+and "until" statements in order to take action?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "do" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 14
+
+What statement will terminate the execution of a loop?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "break" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 15
+
+What variable is used to display the current PID?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "\$\$" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			read null
+			echo "$com1_1" >> output
+			echo >> output
+			clear
+			cat <<+
+QUESTION 16
+
+What symbol is used to represent the default selection
+of a case statement?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "*" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 17
+
+What variable is used to produce one string for
+each of the arguments, each argument in quotes?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "\$@" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			echo "$USER" >> output
+			read null
+			clear
+			cat <<+
+You have completed REVIEW QUESTIONS - PART II
+
+You may proceed to the MAIN MENU to send
+feedback and exit tutorial
+
+Press <ENTER> to return to the 
+REVIEW TUTORIAL MENU
++
+				read null
+;;
+                esac
+                done
+                unset snum
+		;;
+esac
+done             
+

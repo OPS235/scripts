@@ -1,0 +1,1274 @@
+#!/bin/bash
+##############################################################################
+###                                                                        ###
+###              Introduction to Seneca Computer Study's Servers           ###
+###                                                                        ###
+### This script provides an "interactive lab" for first semester           ###
+### CPA / CPO students that will be using Seneca's Unix & Linux servers.   ###
+### The purpose of this tutorial is to provide the student with a          ###
+### "hands-on" approach when working in this system (UNIX/LINUX).          ###
+###                                                                        ###
+### The author of this script is using this tutorial to send students'     ###
+### results back to him for monitoring purposes. If you are not one        ###
+### of his students, indicate that you do NOT belong to his class when     ###
+### prompted.                                                              ###
+###                                                                        ###
+### Author: Murray Edward Saul                                             ###
+### Date: Sept - Dec, 2000    Revised: Sept 2009                           ### 
+###                                                                        ###
+##############################################################################
+
+
+
+### Banner Advising User to Exit & Maximize Telnet Window ###
+
+clear
+cat <<+
+*********************************
+*                               *
+*  TELNET WINDOW SHOULD         *
+*  BE MAXIMIZED BEFORE USING    *
+*  THIS TUTORIAL.               *
+*                               *
+*  PRESS <CTRL><C> TO ABORT     *
+*  PRESS <ENTER>   TO CONTINUE  *
+*                               *
+*********************************
++
+
+### pause for user to press ENTER to continue ###
+
+stty erase "^H"
+read null
+
+### Opening Banner (purpose & author) ###
+
+clear
+cat <<+
+*****************************************************************************
+*                                                                           *
+*  LINUX BASICS                                                             *
+*                                                                           *
+*  These tutorials may be used for practise to allow you to issue common    *
+*  Linux operating system commands.                                         *
+*                                                                           *
+*  Written by Murray Saul  Sept - Dec 2000 Revised: Sept 2009               *
+*                                                                           *
+*****************************************************************************
+
+Press <ENTER> to continue or <CTRL><C> to exit
++
+
+read null
+
+clear
+cat <<+
+*****************************************************************************
+*                                                                           * 
+*  TIPS FOR GETTING THE MOST OUT THIS TUTORIAL:                             *
+*                                                                           *
+*    � Complete the entire tutorial                                         *   
+*                                                                           *
+*    � Repeat the tutorial on a regular basis for review                    *
+*                                                                           *
+*    � Try to use skills you have developed to accomplish other tasks       *
+*                                                                           *
+*****************************************************************************
+
+Press <ENTER> to continue or <CTRL><C> to exit
++
+
+read null
+
+### Banner (layout of tutorial's structure ###
+
+clear
+cat <<+
+*****************************************************************************
+*                                                                           *
+*  A FEEDBACK section has been added to the end of each tutorial to         *
+*  allow ALL USERS to provide comments to improve the quality of this       *
+*  tutorial.                                                                *
+*                                                                           *
+*****************************************************************************
+
+Press <ENTER> to continue or <CTRL><C> to exit
++
+read null
+
+
+# Remove any temp files remaining after aborted tutorial
+
+rm [0-9]*[0-9].c [0-9]*[0-9] 2> /dev/null
+
+
+
+
+### Create and compile C program to test for CTRL keys pressed ###
+
+cat > $HOME/$$.c <<+
+
+/* C program created, compiled and run within lab1 online
+   tutorial to check if correct <CTRL> key is pressed. */
+
+
+#include <ncurses.h>
+#include <string.h>
+int main(int argc, char *argv[])
+{
+	int c, flag, value;
+
+	initscr();
+	noecho();
+	raw();
+	keypad(stdscr, 1);
+
+	if ( strcmp (argv[1],"19") == 0 )
+		value = 19;
+	if ( strcmp (argv[1],"17") == 0 )
+		value = 17;
+
+	if ( value == 19)
+	{
+		move (0,0);
+		printw ("<CTRL><s> - Locks the computer terminal's display");
+		move (2,0);
+		printw ("Press <CTRL><s> in the prompt below to");
+		move (3,0);
+		printw ("lock the terminal:");
+	}
+	else
+	{
+		move (0,0);
+		printw ("<CTRL><q> - Unlocks the computer terminal's display");
+		move (2,0);
+		printw ("Try entering some characters below.");
+		move (3,0);
+		printw ("When finished, press <CTRL><q> to unlock terminal");
+
+	}
+
+	move (6,30);
+	printw ("Enter text Here >> ");
+	move (6,49);
+
+	c = getch();		/* read character pressed */
+	
+	while ( c != value )
+	{
+		if ( value == 19 )
+		{
+			move (2,0);
+			printw ("INVALID KEY.\n");
+			move (3,0);
+			printw ("Hold down <CTRL> then press letter s\n");
+		}
+		
+		c = getch();
+	}
+			
+
+
+	if ( c == value )	/* test for ESC key pressed */
+		flag = 0;	/* true for UNIX operating system */
+	else		
+		flag = 1;	/* false for UNIX operating system */
+	endwin(); 
+	return flag;
+}
++
+
+cc $HOME/$$.c -o $HOME/$$ -lncurses 2> /dev/null
+
+#### Prompt User for Menu Item ###
+
+until [ $num -eq 3 ] 2> /dev/null
+do
+	cd ~
+	clear
+	cat <<+
+
+   LINUX BASICS - MAIN MENU
+
+1. INTRODUCTION TO MATRIX
+2. REVIEW TUTORIAL
+3. SEND FEEDBACK & EXIT TUTORIAL
+
++
+
+### Error Checking ###
+
+	printf "Please Enter a Number >> "
+	read num
+	while [ $num -le 0 -o $num -ge 4 ] 2> /dev/null
+	do
+		printf "Enter a number 1 to 3 >> "
+		read num
+	done
+
+  
+### Exit Process which prompts the User for Feedback ###
+### ALL feedback will be directed to Murray Saul     ###
+### at murray.saul@senecac.on.ca with subject:       ###
+### "UNIX1 - Feedback" for evaluation,               ###
+### modification and further implementation          ###
+
+
+	if [ $num -eq 3 ] 2> /dev/null
+		then
+			### Send Appropriate Instructor E-Mail ###
+
+
+			### Remove Temporary Files ###
+
+			rm $PWD/*$$ $PWD/$$.c $PWD/temp.$$ 2> /dev/null
+
+			clear
+			cat <<+
+*************************************************************************
+*                                                                       *
+*                   <<< FEEDBACK - RECOMMENDED >>                       *
+*                                                                       *
+*  You are about to send feedback about this tutorial to the author     *
+*  of this tutorial.                                                    *
+*                                                                       *
+*  Take the time to list what you liked about the tutorial, and list    *
+*  improvements for the tutorial. This will be the primary method       *
+*  for the author to make improvements.                                 *
+*                                                                       *
+*  When you type the message, please make sure that you make            *
+*  corrections to the line BEFORE pressing ENTER, since you cannot      *
+*  go back to the previous line to make corections.                     *
+*                                                                       *
+*************************************************************************
+
++
+			printf "Press <ENTER> to proceed"
+			read null
+
+### Send Comments to Author ###
+
+			clear
+			printf "Type Message Below:\n\n"
+			printf "You cannot move to previous line\n"
+			printf "if you already pressed <ENTER>\n\n"
+			printf "To Send  -> Move to next line and Press <CTRL><d>\n\n"
+			mail -s "Linux Basics - Feedback" murray.saul@senecacollege.ca
+			clear
+	
+			cat <<+	
+************************************************
+*                                              *
+*          This concludes Linux Basics         *
+*                                              *
+************************************************
+
+
++
+			exit 0
+	fi
+
+### Case Structure Displaying Tutorial Level ###
+
+	case $num in
+
+### Basic Linux Tutorial Submenu ###
+
+		1)
+			until [ "$snum" = "3" ] 2> /dev/null
+			do
+				clear
+	        	cat <<+
+    MATRIX SERVER TUTORIAL MENU
+
+1.  INTRODUCTION TO MATRIX SERVER
+    - Background of Matrix Server
+    - Purpose of LINUX Shell
+    - Issuing Commands at LINUX Shell Prompt 
+
+2.  BASIC LINUX COMMANDS
+    - Simple Linux Commands
+    - Changing Your Matrix Account Password
+
+3.  RETURN TO MAIN MENU
+
++
+
+### Error Checking ###
+
+				printf "Please Enter a Number >> "
+				read snum
+				while [ $snum -le 0 -o $snum -ge 4 ] 2> /dev/null
+				do
+					printf "Enter a number 1 to 3 >> "
+					read snum
+				done
+				case $snum in
+
+### BASIC SUBMENU 1 ###
+				1)
+					clear
+					cat <<+
+INTRODUCTION TO SENECA'S COMPUTER SERVERS
+
+Welcome to Seneca's Computer lab!
+
+This tutorial will provide you with "hands-on" practice
+when working with the MATRIX computer system.
+
+Press <ENTER> to continue
++
+					read null
+					clear
+					cat <<+
+WHAT IS MATRIX?
+
+
+Matrix is a Linux cluster (collection of servers).
+It runs SuSe Linux  which is a distribution or 'flavour'
+of Unix. The full domain name of matrix is matrix.senecac.on.ca.
+
+The main purpose of Matrix is to hold student files so
+they can be accessed from the labs (by logging into a Linux
+workstation) or from home (by using the telnet application).
+Matrix is used to teach Unix. Students can also use graphical
+Linux while within the Seneca College computer labs to learn
+about the Graphical User Interface (GUI). This provides an
+alternative to using Microsoft Windows Operating System.
+
+BIF students will be using the Matrix server to practice 
+Linux operating system commands, and performing assigments
+for the BIF713 course...
+
+Press <ENTER> to continue
++
+					read null
+					clear
+					cat <<+
+UNIX / LINUX OPERATING SYSTEMS
+
+All computer systems require an operating system
+to control the computer hardware, to schedule
+important routine tasks, and to allow the user
+to interact with the computer system.
+
+The UNIX & LINUX operating systems are well suited for
+students due to their many features:
+
+    � Accomodates multiple users
+    � Provides for user communication
+    � Allows for sharing of files
+    � Provides easy access to the Internet
+
+In fact, the UNIX and LINUX operating systems are
+quite similar to each other!
+
+Press <ENTER> to continue
++
+					read null
+					clear
+					cat <<+
+SHELLS
+
+One method to communicate with the UNIX
+and LINUX operating systems is to enter
+commands (or program names) at a prompt or
+"shell".
+
+The shell is an interface between the UNIX/LINUX
+operating system and the user. When the
+shell is in operation, it provides a prompt
+and waits for the user to type in a command
+and press the ENTER key.
+
+Press <ENTER> to continue
+
++
+					read null
+					clear
+					cat <<+
+The shell will not run or "execute" a command
+that the user types until the ENTER key is pressed.
+
+This allows the user to edit or make
+corrections to their commands in case they
+make a mistake before they press ENTER.
+
+Press <ENTER> to continue
++
+					read null
+					clear
+					cat <<+
+You can backspace at the shell prompt
+by pressing one of these keys:
+
+     <BACKSPACE>
+or   <CTRL><BACKSPACE>
+or   <CTRL><h>
+
+Type the following text: "I made a mistike"
+
+
+If you notice strange characters such as "]"
+or "^H", simply try another key combination above!
+
+When you want to continue with this tutorial,
+press <ENTER>
+
++
+	            printf "\tType \"I made a mistike\" Here   >> "
+		    read null
+		    cat <<+
+
+It is recommended to memorize all key combinations
+
+<BACKSPACE>
+<CTRL><BACKSPACE>
+<CTRL><h>
+
+because different systems may vary on which
+of those key combination will work.
+
+Press <ENTER> to continue
++
+	            read null
+		    clear
+		    cat <<+
+Here are some other useful shell editing keys:
+
+<CTRL><w> - Deletes a word
+
+Type the following text: "This is not bad!"
+and THEN press <CTRL><W> to see what happens. When
+you want to continue with this tutorial, press <ENTER>
+
++
+	            printf "\tType \"This is not bad!\" Here   >> "
+		    read null
+		    cat <<+
+
+<CTRL><u> - Deletes entire line
+
+Type the following text: "Oops! I messed up!"
+and THEN press <CTRL><U> to see what happens. When you want
+to continue with this tutorial, press <ENTER>
+
++
+	            printf "\tType \"Oops! I messed up!\" Here   >> "
+		    read null
+$HOME/$$ 19 2> /dev/null
+$HOME/$$ 17 2> /dev/null
+		clear
+		cat <<+
+Good, the computer terminal's display has
+become "unlocked".
+
+Press <ENTER> to continue
++
+		read null
+		clear
+		cat <<+
+WARNING
+
+Your terminal will actually store whatever you type in
+the keyboard, which may be "played back" after you press
+<CTRL><q>.
+
+If you are working in MATRIX and you notice that your
+terminal has stopped working, press <CTRL><q> before
+typing anything else!
+
+
+Press <ENTER> to continue
++
+					read null
+					clear
+					cat <<+
+Congratulations!
+
+You are now ready to learn some of the
+basic Linux operating system commands.
+
+This completes the topic INTRODUCTION TO MATRIX SERVER 
+
+Please proceed with BASIC UNIX COMMANDS
+
+Press <ENTER> to return to MATRIX & ZENIT SERVERS TUTORIAL MENU
++
+					read null
+;;
+
+### BASIC SUBMENU 2 ###
+
+2) 
+		printf "\n*** SIMPLE UNIX COMMANDS ***\n\n" >> $HOME/output.$$
+		clear
+			cat <<+
+SIMPLE LINUX COMMANDS
+
+Since this may be your first time using
+Unix or Linux, we will introduce you to
+a few simple operating system commands.
+
+The Unix and Linux operating systems are
+case-sensitive. This means that the operating
+systems treat (interpret) lowercase and uppercase
+differently from each other. Most Unix and Linux
+operating system commands are in lowercase.
+
+Press <ENTER> to continue
++
+		read null
+		clear
+		cat <<+
+Let's demonstrate what happens if we enter a
+Unix or Linux command that is in uppercase.
+
+Issue the following command:
+
+        PWD
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "PWD" ]
+                		do
+                		    printf "\thint: PWD\n"
+                		    printf "\tPLEASE TRY AGAIN   >> "
+                		    read com1_1
+                		done
+				printf "$com1_1\n" >> $HOME/output.$$
+                		$com1_1 2> temp.$$
+				printf "bash"
+				cat temp.$$ | cut -c35- 
+				cat <<+
+
+You should notice an error message
+that appears above. This particular
+error message indicates that the shell
+(called "bash") cannot find the command
+called "PWD".
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+Try issuing the same command, but in lowercase
+
+eg.	pwd
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "pwd" ]
+                		do
+                		    printf "\thint: pwd\n"
+                		    printf "\tPLEASE TRY AGAIN   >> "
+                		    read com1_1
+                		done
+				printf "$com1_1\n" >> $HOME/output.$$
+                		$com1_1
+				cat <<+
+
+The text above indicates that you
+are in your home directory. This home
+directory, which is called "$(echo $HOME | cut -d "/" -f3)"
+is considered to be your personal storage
+space that allows you to store your own work.
+
+The text "home" indicates the directory
+that stores all students' home directories
+including yours - $(echo $HOME | cut -d "/" -f3). 
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+CHANGE DIRECTORY LOCATIONS
+
+You do not have to remain in your home
+directory all the time. You should be
+able to move to any directory that is
+contained within your home directory, or
+move to other users' directories
+(provided they have given you access).
+
+Press <ENTER> to continue
++
+				read null
+				cat <<+
+
+Before changing directories, let's see what
+contents are contained in your home directory by 
+issuing the command displayed below:
+
+	ls
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "ls" ]
+                		do
+                		    printf "\thint: ls\n"
+                		    printf "\tPLEASE TRY AGAIN   >> "
+                		    read com1_1
+                		done
+				printf "$com1_1\n" >> $HOME/output.$$
+                		$com1_1
+				cat <<+
+
+You should notice a listing of filenames
+displayed above. The ls command provides
+a compact listing of just the names of the files.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+In order to provide more information
+regarding each file contained in your
+home directory, issue the following command
+displayed below:
+
+	ls -l
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "ls -l" ]
+                		do
+                		    printf "\thint: ls -l\n"
+                		    printf "\tPLEASE TRY AGAIN   >> "
+                		    read com1_1
+                		done
+				printf "$com1_1\n" >> $HOME/output.$$
+                		$com1_1
+				cat <<+
+
+We will discuss next week more about the
+contents of this command, but you can see
+more information provided for each file.
+
+Press <ENTER> to continue
++
+                		read null
+				clear
+				cat <<+
+CHANGING DIRECTORIES
+
+You may want to change to other user's
+directories (if you are permitted by
+the user) to view and later copy files.
+
+For example, let's change to the
+"bin" directory by issuing the following command:
+
+	cd /bin
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "cd /bin" ]
+                		do
+                		    printf "\thint: cd /bin\n"
+                		    printf "\tPLEASE TRY AGAIN   >> "
+                		    read com1_1
+                		done
+				printf "$com1_1\n" >> $HOME/output.$$
+                		$com1_1
+				cat <<+
+
+Now issue a command to verify that
+you changed to the "bin" directory
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "pwd" ]
+                		do
+                		    printf "\thint: pwd\n"
+                		    printf "\tPLEASE TRY AGAIN   >> "
+                		    read com1_1
+                		done
+				printf "$com1_1\n" >> $HOME/output.$$ 2> /dev/null
+                		$com1_1
+				cat <<+
+
+Now issue a command to display the files
+that are contained in the "bin" directory.
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "ls" -o "$com1_1" = "ls -l" ]
+                		do
+                		    printf "\thint: ls or ls -l\n"
+                		    printf "\tPLEASE TRY AGAIN   >> "
+                		    read com1_1
+                		done
+				printf "$com1_1\n" >> $HOME/output.$$ 2> /dev/null
+                		$com1_1
+				printf "\nPress <ENTER> to continue"
+				read null
+				clear
+				cat <<+
+RETURNING TO USER'S HOME DIRECTORY
+
+Let's now return to your home directory.
+
+Issue the following command:
+
+	cd
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "cd" ]
+                		do
+                		    printf "\thint: cd\n"
+                		    printf "\tPLEASE TRY AGAIN   >> "
+                		    read com1_1
+                		done
+				printf "$com1_1\n" >> $HOME/output.$$ 2> /dev/null
+                		$com1_1
+				cat <<+
+
+Now issue a command to verify that you
+have changed back to your home directory.
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "pwd" ]
+                		do
+                		    printf "\thint: pwd\n"
+                		    printf "\tPLEASE TRY AGAIN   >> "
+                		    read com1_1
+                		done
+				printf "$com1_1\n" >> $HOME/output.$$
+                		$com1_1
+				cat <<+
+
+Very Good!
+
+We will be learning more about directories
+and how to copy files from one directory to
+another later in this course.
+
+We will now learn a few other simple but
+useful commands.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+DISPLAYING USER IDENTITY
+
+Enter the following command to display
+your username (handy if you forget who you are)
+
+	whoami
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "whoami" ]
+                		do
+                		    printf "\thint: whoami\n"
+                		    printf "\tPLEASE TRY AGAIN   >> "
+                		    read com1_1
+                		done
+				printf "$com1_1\n" >> $HOME/output.$$
+                		$com1_1
+				cat <<+
+
+The username for the owner of this
+account is displayed above. If you
+want to findout more information about
+this user, enter the command:
+
+	finger $USER
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "finger $USER" ]
+                		do
+                		    printf "\thint: finger $USER\n"
+                		    printf "\tPLEASE TRY AGAIN   >> "
+                		    read com1_1
+                		done
+				clear
+				printf "$com1_1\n" >> $HOME/output.$$
+                		$com1_1
+				cat <<+
+
+You should see more information regarding this
+user. At least, you can identify the user's full name!
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+DISPLAYING BIF713 INSTRUCTORS' TIMETABLE
+
+Let's obtain information regarding
+your instructor for this course.
+
+If you selected "No Instructor", the instructor
+"Murray Saul" will be used as a demonstration.
+
+Enter the following command:
+
+	finger $id_name
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$(echo "$com1_1" | tr '[a-z]' '[A-Z]')" = "$(echo "finger $id_name" | tr '[a-z]' '[A-Z]')" ] 2> /dev/null
+                		do
+                		    printf "\thint: finger $id_name\n"
+                		    printf "\tPLEASE TRY AGAIN   >> "
+                		    read com1_1
+                		done
+				printf "$com1_1\n" >> $HOME/output.$$
+                		$com1_1
+				cat <<+
+
+You should see your instructor's timetable
+appear on the screen. If you are logged in
+to Matrix, you may obtain the timetable for
+your BIF713 instructor.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+DISPLAY CURRENT USERS ON SERVER
+
+To display all users that are currently
+logged on to the server, enter the following
+command:
+
+	who
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "who" ]
+                		do
+                		    printf "\thint: who\n"
+                		    printf "\tPLEASE TRY AGAIN   >> "
+                		    read com1_1
+                		done
+				printf "$com1_1\n" >> $HOME/output.$$
+                		$com1_1
+				cat <<+
+
+In the first column of each line represents
+a user that is logged on to the server.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+VIEW DATE AND TIME
+
+To display the current date and time,
+enter the following command:
+
+	date
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "date" ]
+                		do
+                		    printf "\thint: date\n"
+                		    printf "\tPLEASE TRY AGAIN   >> "
+                		    read com1_1
+                		done
+				printf "$com1_1\n" >> $HOME/output.$$
+                		$com1_1
+				cat <<+
+
+You should notice that the current date
+and time is displayed above. Note that the
+date displayed above represents the date
+on the server, and NOT the date on your PC
+in front of you.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+VIEWING A CALENDAR
+
+To display a calendar for the current month,
+enter the following command:
+
+	cal
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "cal" ]
+                		do
+                		    printf "\thint: cal\n"
+                		    printf "\tPLEASE TRY AGAIN   >> "
+                		    read com1_1
+                		done
+				printf "$com1_1\n" >> $HOME/output.$$
+                		$com1_1
+				cat <<+
+
+You should notice just the calendar for
+this current month - $(date +"%B").
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+VIEWING A CALENDAR
+
+To display an entire calendar for the year 2002,
+enter the following command:
+
+	cal 2002
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "cal 2002" ]
+                		do
+                		    printf "\thint: cal 2002\n"
+                		    printf "\t      A space between \"cal\" and \"2002\"\n"
+                		    printf "\tPLEASE TRY AGAIN   >> "
+                		    read com1_1
+                		done
+				printf "$com1_1\n" >> $HOME/output.$$
+                		$com1_1
+				cat <<+
+
+You will notice all months appear for
+the year 2002. Unfortunately, all of the
+contents of the calendar may not appear on the
+terminal at the same time.
+
+You will learn later in this course to
+selectively move to all parts of the
+output.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+VIEWING A CALENDAR
+
+To display the calendar the month of August
+for the year 1963, enter the following command:
+
+	cal 08 1963
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "cal 08 1963" -o "$com1_1" = "cal 8 1963" ]
+				do
+                		    printf "\thint: cal 08 1963\n"
+                		    printf "\tPLEASE TRY AGAIN   >> "
+                		    read com1_1
+                		done
+				printf "$com1_1\n" >> $HOME/output.$$
+                		$com1_1
+				printf "\nPress <ENTER> to continue"
+				read null
+				clear
+				cat <<+
+PASSWORDS
+
+It is important to protect your MATRIX
+and ZENIT accounts from unauthorized
+access.
+
+CONSEQUENCES OF UNAUTHORIZED ACCESS
+
+- Loss of Data
+- Copy of Your Work
+- Suspension of Account to Illegal Activity
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+PASSWORD TIPS
+
+Avoid passwords that are words (contained in
+any language dictionary spelled forwards or
+backwards).
+
+Avoid passwords that consist only of a series
+of numbers.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+PASSWORD TIPS
+
+Creating Good Passwords:
+
+- Think of an easy-to-remember phrase consisting
+  of several words, and take the first letter
+  from each Word.
+
+e.g. Autumn Leaves Turn Red Yellow Orange
+
+	password: altryo
+
+- Capitalize the first and middle letter and
+  add some numbers and should include some
+  special character like -, _, .
+
+	better password AlT.ry0
+
+- If you forget your password, try to construct
+  it from the phrase and your modification rules.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+PASSWORD CHANGE
+
+On typical Unix or Linux systems, a user changes
+their password by entering the command:
+
+passwd
+
+When changing your password, you will be
+asked for the original password for verification.
+If you entered the original password correctly,
+You will be asked to enter the new password in
+twice.
+
+The new password may not be accepted if it does
+NOT contain a minimum number of characters, does
+not contain special characters, or is too similar
+to the original password.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+CHANGING MATRIX PASSWORD
+
+At Seneca College, the procedure to change
+your Matrix password is different from
+the above-mentioned procedure.
+
+Since Your Matrix userid and Learn e-mail
+userid are the same, your Matrix password
+is automatically changed when you change
+your Learn e-mail password. Therefore, you
+should change your Learn e-mail password
+(thus your Matrix password) from your
+Learn e-mail application.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+Well Done!
+
+It is strongly recommended to practise these Linux commands
+on your own after you have completed this tutorial. In this way,
+you get used to using these Linux commands as a tool when you use
+this operating system.
+
+Press <ENTER> to continue
++
+read null
+clear
+cat <<+
+This completes the topic BASIC LINUX COMMANDS
+
+Please proceed with the REVIEW TUTORIAL
+
+Press <ENTER> to return to INTRODUCTION TO MATRIX & ZENIT SERVERS
++
+				read null
+				;;
+
+				esac
+				done
+				unset snum
+				;;
+
+### Review Tutorial ###
+
+2)
+		printf "\n*** REVIEW QUESTIONS ***\n\n" >> $HOME/output.$$
+		count=0
+		clear
+		cat <<+
+REVIEW QUESTIONS
+
+The purpose of this section is to reinforce
+your skills with issuing LINUX commands covered
+in the previous section.
+
+You will be asked to enter a single UNIX command for the
+following situations. If you are unable to successfully
+issue the LINUX command after 3 attempts, the answer
+will be provided.
+
+Press <ENTER> to continue
++
+		read null
+		clear
+		cat <<+
+Issue a LINUX command to display your
+Login username.
+
++
+		printf "\tENTER COMMAND HERE >>  "
+         	read com1_1
+         	until [ "$com1_1" = "whoami" ] 2> /dev/null
+         	do
+                 if [ "$count" -ge "2" ]
+                         then
+                                 printf "\thint: whoami\n"
+                 fi
+                 printf "\tPLEASE TRY AGAIN   >> "
+                 read com1_1
+                 count=`expr $count + 1`
+         	done
+         	count=0
+		printf "$com1_1\n" >> $HOME/output.$$
+		$com1_1
+         	printf "\nPress <ENTER> to continue" 
+		read null
+		clear
+		cat <<+
+Issue a command to display your instructor's
+timetable. If you selected no instructor, then
+use demo instructor "Murray Saul"
+
++
+		 printf "\tENTER COMMAND HERE >>  "
+         read com1_1
+         until [ "$(echo "$com1_1" | tr '[a-z]' '[A-Z]')" = "$(echo "finger ${id_name}" | tr '[a-z]' '[A-Z]')" ] 2> /dev/null
+         do
+                 if [ "$count" -ge "2" ]
+                         then
+                                 printf "\thint: finger $id_name\n"
+                 fi
+                 printf "\tPLEASE TRY AGAIN   >> "
+                 read com1_1
+                 count=`expr $count + 1`
+         	done
+         	count=0
+		printf "$com1_1\n" >> $HOME/output.$$
+		 $com1_1
+         	printf "\nPress <ENTER> to continue" 
+	 	read null
+		clear
+		cat <<+
+Issue a command to display the current time and date.
+
++
+		 printf "\tENTER COMMAND HERE >>  "
+         read com1_1
+         until [ "$com1_1" = "date" ]
+         do
+                 if [ "$count" -ge "2" ]
+                         then
+                                 printf "\thint: date\n"
+                 fi
+                 printf "\tPLEASE TRY AGAIN   >> "
+                 read com1_1
+                 count=`expr $count + 1`
+         	done
+         	count=0
+		printf "$com1_1\n" >> $HOME/output.$$
+		 $com1_1
+         	printf "\nPress <ENTER> to continue" 
+		 read null
+		 clear
+		 cat <<+
+Issue a command to display the calendar for
+the month of February 2000
+
++
+		 printf "\tENTER COMMAND HERE >>  "
+         read com1_1
+         until [ "$com1_1" = "cal 02 2000" -o "$com1_1" = "cal 2 2000" ]
+         do
+                 if [ "$count" -ge "2" ]
+                         then
+                                 printf "\thint: cal 02 2000\n"
+                 fi
+                 printf "\tPLEASE TRY AGAIN   >> "
+                 read com1_1
+                 count=`expr $count + 1`
+         	done
+         	count=0
+		printf "$com1_1\n" >> $HOME/output.$$
+		 $com1_1
+         	printf "\nPress <ENTER> to continue" 
+		 read null
+		 clear
+		 cat <<+
+Issue a command to display a list of files
+in your current directory.
+
++
+		 printf "\tENTER COMMAND HERE >>  "
+         read com1_1
+         until [ "$com1_1" = "ls" -o "$com1_1" = "ls -l" ]
+         do
+                 if [ "$count" -ge "2" ]
+                         then
+                                 printf "\thint: ls or ls -l\n"
+                 fi
+                 printf "\tPLEASE TRY AGAIN   >> "
+                 read com1_1
+                 count=`expr $count + 1`
+         	done
+         	count=0
+		printf "$com1_1\n" >> $HOME/output.$$
+		 $com1_1
+         	printf "\nPress <ENTER> to continue" 
+		 read null
+		 clear
+		 cat <<+
+You have completed the REVIEW TUTORIAL
+
+You can Send Feedback and exit this tutorial
+
+Press <ENTER> to return to the MAIN MENU
++
+		read null
+		unset snum
+
+;;
+
+esac
+done
+

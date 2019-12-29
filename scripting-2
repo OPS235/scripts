@@ -1,0 +1,1480 @@
+#!/bin/bash
+
+##############################################################################
+###                                                                        ###
+###                LOCIC AND MATHEMATICAL EXPRESSIONS                      ###
+###                                                                        ###
+### This script provides an "interactive lab" for students learning        ###
+### shell scripting concepts in the course OPS435. This                    ###
+### lab consists of a few opening banners, followed by a menu which        ###
+### provides 2 levels of tutorials  - Basic and Practical Application      ###
+###                                                                        ###
+### Author: Murray Edward Saul                                             ###
+### Date: Feb 5, 2001                                                      ###
+### Modified: April 2015                                                   ###
+###                                                                        ###
+##############################################################################
+
+
+### Banner Advising User to Exit & Maximize Telnet Window ###
+
+clear
+cat <<+
+*********************************
+*                               *
+*  TELNET WINDOW SHOULD         *
+*  BE MAXIMIZED BEFORE USING    *
+*  THIS TUTORIAL.               *
+*                               *
+*  PRESS <CTRL><C> TO EXIT      *
+*  PRESS <ENTER>   TO CONTINUE  *
+*                               *
+*********************************
++
+
+### pause for user to press ENTER to continue ###
+
+read null
+clear
+
+### change to user's home directory ###
+
+cd
+
+clear
+cat <<+
+*****************************************************************************
+*                                                                           *
+*  LOGIC & MATHEMATICAL EXPRESSIONS                                         *	
+*                                                                           *
+*  These tutorials may be used for:                                         *
+*                                                                           *
+*       -  Enhance your Linux shell commands and scripting skills           *
+*                                                                           *
+*  Written by Murray Saul  Feb, 2001                                        *
+*  Modified: April 2015                                                     *
+*****************************************************************************
+
+Press <ENTER> to continue or <CTRL><C> to exit
++
+
+read null
+
+
+### Banner (explanation of evaluation & feedback) ###
+
+clear
+cat <<+
+*****************************************************************************
+*                                                                           *
+*    ALL TUTORIALS HAVE THE FOLLOWING STRUCTURE:                            *
+*                                                                           *
+*    1. BASIC TUTORIAL        - Provides user to learn a skill              *
+*                                                                           *
+*    2. PRACTICAL APPLICATION - Reinforces learned skill with exercises     *
+*                                                                           * 
+*****************************************************************************
+
+Press <ENTER> to continue or <CTRL><C> to exit
+
++
+
+read null
+
+clear
+cat <<+
+*****************************************************************************
+*                                                                           * 
+*  TIPS FOR GETTING THE MOST OUT OF TUTORIALS:                              *
+*                                                                           *
+*    · Complete the entire tutorial                                         *   
+*                                                                           *
+*    · Repeat the tutorial on a regular basis for review                    *
+*                                                                           *
+*    · Try to use skills you have developed to accomplish other tasks       *
+*                                                                           *
+*****************************************************************************
+
+Press <ENTER> to continue or <CTRL><C> to exit
++
+
+read null
+
+### Banner (layout of tutorial's structure ###
+
+clear
+cat <<+
+*****************************************************************************
+*                                                                           *
+*  A FEEDBACK section has been added to the end of each tutorial to         *
+*  allow ALL USERS to provide comments to improve the quality of the        *
+*  tutorial.                                                                *
+*                                                                           *
+*****************************************************************************
+
+Press <ENTER> to continue or <CTRL><C> to exit
++
+
+
+read null
+
+#### Prompt User for Menu Item ###
+
+#### Remove existing lab6_test directory
+
+if [ -d lab6_test ]
+then
+	rmdir lab6_test 2> /dev/null
+fi
+        clear
+	cat <<+
+
+        MAIN MENU
+
+1. ADVANCED SCRIPTING (LOGIC & MATH EXPRESSIONS)
+2. REVIEW TUTORIAL
+3. SEND FEEDBACK & EXIT TUTORIAL
+
++
+
+### Error Checking ###
+
+	printf "Please Enter a Number >> "
+	read num
+	while [ $num -le 0 -o $num -ge 4 ] 2> /dev/null
+	do
+		printf "Enter a number 1 to 3 >> "
+		read num
+	done
+
+  
+### Exit Process which prompts the User for Feedback ###
+### ALL feedback will be directed to Murray Saul     ###
+###                    for evaluation,               ###
+### modification and further implementation          ###
+
+
+
+
+
+
+
+        if [ "$num" -eq 3 ] 2> /dev/null
+                then
+
+### Remove directory lab6_test
+
+
+                        rm output 2> /dev/null
+			rm lab6_test 2> /dev/null
+
+### Offer a choice to provide feedback ###
+
+                        clear
+                        printf "Do you wish to provide feedback? (y/n) >>  "
+                        read choice
+                        if [ "$choice" = "y" -o "$choice" = "Y" ]
+                        then
+	        		clear
+				cat <<+
+*************************************************************************
+*                                                                       *
+*                   <<< FEEDBACK - RECOMMENDED >>                        *
+*                                                                       *
+*  You are about to send feedback about this tutorial to the author     *
+*  of this tutorial.                                                    *
+*                                                                       *
+*  Take the time to list what you liked about the tutorial, and list    *
+*  improvements for the tutorial. This will be the primary method       *
+*  for the author to make improvements.                                 *
+*                                                                       *
+*  When you type the message, please make sure that you make            *
+*  corrections to the line BEFORE pressing ENTER, since you cannot      *
+*  go back to the previous line to make corrections.                    *
+*                                                                       *
+*************************************************************************
+
++
+			printf "Press <ENTER> to proceed"
+			read null
+
+### Send Comments to Author ###
+
+			clear
+			printf "Type Message Below:\n\n"
+			printf "You cannot move to previous line\n"
+			printf "if you already pressed <ENTER>\n\n"
+			printf "To Send  -> Go to next empty line\n"
+			printf "         -> Press keys <CTRL><D>\n"
+			
+			mail -s "Scripting-2 - Feedback" murray.saul@senecacollege.ca
+			fi
+	
+			clear
+			cat <<+	
+************************************************
+*                                              *
+*           Your message has been sent         *
+*         Thank you for your participation     *
+*                                              *
+************************************************
+
+
++
+			exit 0
+fi
+
+### Case Structure Displaying Tutorial Level ###
+
+	case $num in
+
+
+### Basic Tutorial Level ###
+
+	1)
+		until [ "$snum" = "4" ] 2> /dev/null
+		do
+	        	clear
+			cat <<+
+   ADVANCED SCRIPTING TUTORIAL
+
+1. TESTING CONDITIONS (LOGIC)
+   - test statement (options)
+   - test status variable (\$?)
+   - if / else statements 
+   - Comparison Operators / Compound Criteria
+
+2. OTHER LOGIC STATEMENTS 
+   - elif
+   - case
+
+3. MATHEMATICAL EXPRESSIONS
+
+4. RETURN TO MAIN MENU
+
++
+
+### Error Checking ###
+
+			printf "Please Enter a Number >> "
+			read snum
+			while [ $snum -le 0 -o $snum -ge 5 ] 2> /dev/null
+			do
+				printf "Enter a number 1 to 4 >> "
+				read snum
+			done
+			case $snum in
+
+### FIRST PRACTICAL APPLICATION SUBMENU ###
+
+			1)
+				clear
+				cat <<+
+TESTING CONDITONS
+
+One major command in Unix and Linux
+is the test command. This command is used to
+test a condition and assign a value to indicate
+if the condition is true or if the condition is false.
+
+The "test" utility is used with the if,
+elif, while and until statements.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+Let's use the test command to test a condition.
+First, let's store the text "seneca" into a
+variable called "name"
+
+Issue the following command:
+
+	name="seneca"
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+            			until [ "$com1_1" = "name=\"seneca\"" ]
+            			do
+               				printf "\thint: name=\"seneca\"\n"
+				printf "\tPLEASE TRY AGAIN   >> "
+			    	read com1_1
+            			done
+				name="seneca"
+				printf "\nPress Enter to Continue\n"
+				read null
+				cat <<+
+
+Now let's test the condition to see if
+the contents of the name are equal to "seneca".
+
+Issue the following command:
+
+	test \$name = "seneca"
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+            			until [ "$com1_1" = "test \$name = \"seneca\"" ]
+            			do
+               				printf "\thint: test \$name = \"seneca\"\n"
+					printf "\tPLEASE TRY AGAIN   >> "
+					read com1_1
+            			done
+				$com1_1
+				printf "\nPress Enter to Continue\n"
+				read null
+				clear
+				cat <<+
+Good.
+
+Notice that no value was displayed when
+testing the condition to see if it was
+true or false.
+
+The \$? variable is used to display a zero (0)
+if the test condition is TRUE, and display a
+non-zero (1,2,3 ...) if the test condition is
+FALSE.
+
+NOTE THAT THESE RULES ARE DIFFERENT THAN C
+PROGRAMMING. Why do you think that you returned
+the value 0 at the end of your main function in C?
+The zero value sends back to the UNIX operating
+a message of TRUE (or that the program ran successfully)
+
+Issue the following command:
+
+	echo \$?
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+            			until [ "$com1_1" = "echo \$?" ]
+            			do
+               				printf "\thint: echo \$?\n"
+					printf "\tPLEASE TRY AGAIN   >> "
+					read com1_1
+            			done
+				echo $?
+				printf "\nPress Enter to Continue\n"
+				read null
+				cat <<+
+
+The zero value displayed above indicates that
+the test condition is true.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+IF STATEMENT
+
+The if statement performs an action if
+the test condition is true. The test
+condition is used in conjunction with
+the if statement.
+
+Usage:	if test condition
+	    then
+	    	action
+	fi
+
+Notice that "fi" a backwards "if" is used to
+mark the end of the if block.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+You can actually use a series of semi-colons ";"
+to join all elements in the if block.
+
+eg
+
+	if test condition;then action;fi
+
+WARNING:
+
+Although we will be using the above method in
+this tutorial, it is better to follow the
+format as suggested by your instructor. This allows
+for indentation of code blocks to make your shell
+script easier to read.
+
+
+Issue the following command:
+
+if test \$name = "seneca";then echo "Name is \$name";fi
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+            			until [ "$com1_1" = "if test \$name = \"seneca\";then echo \"Name is \$name\";fi" ]
+            			do
+               				printf "\thint: if test \$name = \"seneca\";then echo \"Name is \$name\";fi\n" ]
+					printf "\tPLEASE TRY AGAIN   >> "
+					read com1_1
+            			done
+				if test $name = "seneca";then echo "Name is $name";fi
+				printf "\nPress Enter to Continue\n"
+				read null
+				cat <<+
+
+Notice that the test condition was true;
+therefore, the shell script performed the true
+action (i.e. display "Name is $name")
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+The test command can be used with the
+following options:
+
+Option                  Purpose
+-----------------       ----------------
+-f filename             test if file exists
+-d directory name       test if directory exists
+-r filename             test if file is readable
+-w filename             test if file is writable
+-x filename             test if file is executable
+-s filename             test if file is non-empty
+-z "string"             test if string is zero length
+-n "string"             test if string is non-zero length
+
+Note: An exclamation point "!" indicates the opposite:
+
+Test command            Purpose
+-----------------       ----------------------------------
+test ! -d \$d_name       Test if \$d_name is not a directory
+
+
+Let's use a couple of options with
+the test command for demonstration.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+First, issue the following command to create
+a directory in your current directory:
+
+	mkdir lab6_test
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+            			until [ "$com1_1" = "mkdir lab6_test" ]
+            			do
+               				printf "\thint: mkdir lab6_test\n"
+					printf "\tPLEASE TRY AGAIN   >> "
+					read com1_1
+            			done
+				$com1_1
+				printf "\nPress Enter to Continue\n"
+				read null
+				cat <<+
+
+Good.
+
+Now issue the following command to test
+if the directory "lab6_test" exists and
+display a message to confirm it's existence.
+
+	if test -d lab6_test;then echo "lab6_test exists";fi
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+            			until [ "$com1_1" = "if test -d lab6_test;then echo \"lab6_test exists\";fi" ]
+            			do
+               				printf "\thint: if test -d lab6_test;then echo \"lab6_test exists\";fi\n" 
+					printf "\tPLEASE TRY AGAIN   >> "
+					read com1_1
+            			done
+            			if test -d lab6_test;then echo "lab6_test exists";fi
+				printf "\nPress Enter to Continue\n"
+				read null
+				cat <<+
+
+Notice that the test condition is
+true so the message is displayed.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+Let's try storing the name of the
+directory into a variable, and then
+using the variable in the if statement
+we just used.
+
+First, issue the command:
+
+	d_name="lab6_test"
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+            			until [ "$com1_1" = "d_name=\"lab6_test\"" ]
+            			do
+               				printf "\thint: d_name=\"lab6_test\"\n"
+					printf "\tPLEASE TRY AGAIN   >> "
+					read com1_1
+            			done
+				d_name="lab6_test"
+				printf "\nPress Enter to Continue\n"
+				read null
+				cat <<+
+
+Second, issue the command:
+
+	if test -d \$d_name;then echo "\$d_name is a directory";fi
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+            			until [ "$com1_1" = "if test -d \$d_name;then echo \"\$d_name is a directory\";fi" ]
+            			do
+               				printf "\thint: if test -d \$d_name;then echo \"\$d_name is a directory\";fi\n"
+					printf "\tPLEASE TRY AGAIN   >> "
+					read com1_1
+            			done
+            			if test -d $d_name;then echo "$d_name is a directory";fi
+				printf "\nPress Enter to Continue\n"
+				read null
+				clear
+				cat <<+
+Square brackets can be used to represent
+the test command:
+
+Examples:
+
+test commmand			[] to Represent test command
+------------------------	----------------------------
+if test condition	        if [ condition ]
+if test -d directory_name       if [ -d directory_name ]
+if test -d $d_name		if [ -d $d_name ]
+if test ! -d $d_name		if [ ! -d $d_name ]
+
+NOTE: the condition and options contained
+      in square bracket MUST have one space
+      between the square brackets!
+
+Press <ENTER> to continue
++
+				read null
+				cat <<+
+
+Issue the following command:
+
+	if [ -d \$d_name ];then echo "\$d_name is a directory";fi
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+            			until [ "$com1_1" = "if [ -d \$d_name ];then echo \"\$d_name is a directory\";fi" ]
+            			do
+               				printf "\thint: if [ -d \$d_name ];then echo \"\$d_name is a directory\";fi\n" ]
+					printf "\tPLEASE TRY AGAIN   >> "
+					read com1_1
+            			done
+            			if [ -d $d_name ];then echo "$d_name is a directory";fi
+				printf "\nPress Enter to Continue\n"
+				read null
+				clear
+				cat <<+
+ELSE STATEMENT
+
+The "else" statement can be used to represent
+an alternative action to be taken if the condition
+is false.
+
+eg.	if [ condition ]
+	     then
+	         action if condition is true (zero)
+	     else
+	         action if condition is false (non-zero)
+	fi
+
+
+Notice that there is no "then" statement following
+the else statement and that "fi" is used to end the
+if-else block (commonly missed by students).
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+To demonstrate the if-else statement,
+issue the following command:
+
+	if [ -f \$d_name ];then echo "\$d_name is a file";else echo "\$d_name is not a file";fi
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+            			until [ "$com1_1" = "if [ -f \$d_name ];then echo \"\$d_name is a file\";else echo \"\$d_name is not a file\";fi" ]
+            			do
+               				printf "\thint: if [ -f \$d_name ];then echo \"\$d_name is a file\";else echo \"\$d_name is not a file\";fi\n" ]
+					printf "\tPLEASE TRY AGAIN   >> "
+					read com1_1
+            			done
+            			if [ -f $d_name ];then echo "$d_name is a file";else echo "$d_name is not a file";fi
+				printf "\nPress Enter to Continue\n"
+				read null
+				cat <<+
+
+Notice that since \$d_name ($d_name)
+is a directory, the test condition is false
+thus displaying the message above.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+COMPARISON OPERATORS
+
+So far, we have compared text, and if
+directories or files exist. But we also
+want to compare numeric values.
+
+To demonstrate, let's store the number 5
+into a variable called "num". Issue the
+following command:
+
+	num=5
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+            			until [ "$com1_1" = "num=5" ]
+            			do
+               				printf "\thint: num=5\n"
+					printf "\tPLEASE TRY AGAIN   >> "
+					read com1_1
+            			done
+				num=5
+				printf "\nPress Enter to Continue\n"
+				read null
+				cat <<+
+
+Good.
+
+Now issue the command below:
+
+	if [ \$num > 6 ];then echo "greater than";else echo "less than";fi
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+            			until [ "$com1_1" = "if [ \$num > 6 ];then echo \"greater than\";else echo \"less than\";fi" ]
+				do
+               				printf "\thint: if [ \$num > 6 ];then echo \"greater than\";else echo \"less than\";fi\n"
+					printf "\tPLEASE TRY AGAIN   >> "
+					read com1_1
+            			done
+				if [ $num > 6 ];then echo "greater than";else echo "less than";fi
+				printf "\nPress Enter to Continue\n"
+				read null
+				cat <<+
+
+Do you notice something wrong?
+
+The text displays "greater than" but
+the variable \$num that stores 5 is
+less than 6 and therefore should display
+the message "less than" - what is going on?
+
+Answer: When comparing values or string using
+the test command, traditional symbols such
+as <, <=, >, >= may not apply. In fact it may
+redirect to a file called "6" in your directory...
+
+Press <ENTER> to continue
++
+			read null
+			clear
+			cat <<+
+In order to compare values or strings
+you need to use numeric comparison operators:
+
+Numerical Comparison Operator
+-----------------------------
+-eq	Equal to	("=" should also work)
+
+-ne	Not Equal to
+
+-le	Less than or Equal to
+
+-lt	Less than
+
+-ge	Greater than or Equal to
+
+-gt	Greater than
+
+Press <ENTER> to continue
++
+			read null
+			clear
+			cat <<+
+Let's try the previous command with the
+numerical comparison operator -gt. Issue the
+following command:
+
+	if [ \$num -gt 6 ];then echo "greater than";else echo "less than";fi
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+            			until [ "$com1_1" = "if [ \$num -gt 6 ];then echo \"greater than\";else echo \"less than\";fi" ]
+				do
+               				printf "\thint: if [ \$num -gt 6 ];then echo \"greater than\";else echo \"less than\";fi\n"
+					printf "\tPLEASE TRY AGAIN   >> "
+					read com1_1
+            			done
+				if [ $num -gt 6 ];then echo "greater than";else echo "less than";fi
+				printf "\nPress Enter to Continue\n"
+				read null
+				cat <<+
+Since \$num (which stores 5) is less
+than 6, the text "less than" appears.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+COMPOUND CRITERIA
+
+Symbols are also used as compound statements
+to join test conditions:
+
+     Symbol	Description
+
+	-a	Used as the "and" statement
+
+	-o	Used as the "or" statement 
+
+
+eg.	if [ "\$choice" = "n" -o "\$choice" = "N" ]
+	    then
+	         echo "Sorry, there are no bananas"
+	fi
+ 
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+Good.
+
+This completes TESTING CONDITIONS
+
+Please proceed with LOGIC STATEMENTS
+
+Press <ENTER> to return to
+ADVANCED SCRIPT PROGRAMMING TUTORIAL MENU
++
+				read null
+;;
+			2)
+				clear
+				cat <<+
+LOGIC STATEMENTS
+
+In addition to the "if" and "if-else" statements,
+there are other control-flow statements that
+alter the execution of a shell script.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+ELIF STATEMENT
+
+The "elif" statement (NOT else if - watch syntax!)
+is used to construct a set of nested if statements
+
+eg.		if [ "\$choice" = "a" -o "\$choice" = "A" ]
+		     then
+			echo "The word is Apple"
+		elif [ "\$choice" = "b" -o "\$choice" = "B" ]
+		     then
+			echo "The word is Banana"		
+		else
+			echo "Yes, there are bananas"
+		fi
+
+Notice that there is a "then" command used for
+"elif" statement.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+CASE STATEMENT (BRANCH or SWITCH)
+
+The "case" statement is used to provide
+for multiple decision paths based on
+constants or "patterns".
+
+Usage:	case $var in
+		pattern1)
+			action
+			;;
+		pattern2)
+			action
+			;;
+		*)
+			;;
+		esac
+	
+Note that "esac" statement (backwards "case") ends
+the case block. The last pattern "*" is used as the
+final "catch all", i.e. the "*" condition is always true 
+and its branch of code will be executed if none of the
+branches above it are executed.
+
+Press <ENTER> to continue
++
+			read null
+			clear
+			cat <<+
+Let's demonstrate the use of the case
+statement.
+
+First, let's set the variable num to 4.
+Issue the following command:
+
+	num=4
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+            			until [ "$com1_1" = "num=4" ]
+				do
+               				printf "\thint: num=4\n"
+					printf "\tPLEASE TRY AGAIN   >> "
+					read com1_1
+            			done
+				num=4
+				printf "\nPress Enter to Continue\n"
+				read null
+					cat <<+
+
+Issue the following command:
+
+	case \$num in 4) echo "too low";;5) echo "correct";;6) echo "too high";;esac
+
++
+				printf "\tENTER COMMAND HERE >>  "
+            			read com1_1
+            			until [ "$com1_1" = "case \$num in 4) echo \"too low\";;5) echo \"correct\";;6) echo \"too high\";;esac" ]
+				do
+               				printf "\thint: case \$num in 4) echo \"too low\";;5) echo \"correct\";;6) echo \"too high\";;esac\n"
+					printf "\tPLEASE TRY AGAIN   >> "
+					read com1_1
+            			done
+				case $num in 4) echo "too low";;5) echo "correct";;6) echo "too high";;esac
+				printf "\nPress Enter to Continue\n"
+				read null
+				clear
+				cat <<+
+Good.
+
+This completes LOGICE STATEMENTS
+
+Please proceed with MATHEMATICAL EXPRESSIONS
+
+Press <ENTER> to return to
+ADVANCED SCRIPT PROGRAMMING TUTORIAL MENU
++
+				read null
+;;
+			3)
+				clear
+				cat <<+
+MATHEMATICAL EXPRESSIONS
+
+When performing mathematical calculations, the
+shell needs to "convert" textual numbers into
+values.
+
+The Bash and Korn shells have this "conversion
+program" built into the shell, but the Bourne
+shell does not.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+For this course, we will only use the 
+Bash/Korn shell syntax for mathematical operations
+since it is the most efficient method.
+
+
+In order to perform mathematical operations in
+the Bash/Korn shells, you would use syntax possibly
+in this format:
+
+        result=\$(( math operation ))
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+You can use variables (with or without \$)
+within the double-brackets.
+
+You can also use many mathematical operators
+including:
+
+     +   addition
+     -   subtraction
+     *   multiplication
+     /   division (quotient)
+     %   modulus (remainder)
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+Let's provide a demonstration.
+We are going to store a couple of 
+numerical values in variables called
+"num1" and "num2".
+
+First, issue the following command:
+
+num1=5
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "num1=5" ]
+                		do
+                		printf "\thint:num1=5\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				num1=5
+                                cat <<+
+
+Now issue the next command:
+
+num2=10
+
++
+				printf "\tENTER COMMAND HERE >> "
+                		read com1_1
+                		until [ "$com1_1" = "num2=10" ]
+                		do
+                		printf "\thint:num2=10\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+				num2=10
+                                cat <<+
+
+
+Very Good.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+Now lets issue a series of commands
+to demonstrate how to perform mathematical
+operations. Issue these series of commands:
+
+echo "sum is \$((num1 + num2))"
+echo "difference is \$((num1 - num2))"
+echo "product is \$((num1 * num2))"
+echo "quotient is \$((num1 / num2))"
+echo "remainder is \$((num1 % num2))"
+
++
+				printf "\tENTER 1st COMMAND    >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \"sum is \$((num1 + num2))\"" ]
+                		do
+                		printf "\thint: echo \"sum is \$((num1 + num2))\"\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+                                echo "sum is $((num1 + num2))"
+                                echo
+				printf "\tENTER 2nd COMMAND    >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \"difference is \$((num1 - num2))\"" ]
+                		do
+                		printf "\thint: echo \"difference is \$((num1 - num2))\"\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+                                echo "difference is $((num1 - num2))"
+                                echo
+				printf "\tENTER 3rd COMMAND    >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \"product is \$((num1 * num2))\"" ]
+                		do
+                		printf "\thint: echo \"product is \$((num1 * num2))\"\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+                                echo "product is $((num1 * num2))"
+                                echo
+				printf "\tENTER 4th COMMAND    >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \"quotient is \$((num1 / num2))\"" ]
+                		do
+                		printf "\thint: echo \"quotient is \$((num1 / num2))\"\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+                                echo "quotient is $((num1 / num2))"
+                                echo
+				printf "\tENTER 5th COMMAND    >> "
+                		read com1_1
+                		until [ "$com1_1" = "echo \"remainder is \$((num1 % num2))\"" ]
+                		do
+                		printf "\thint: echo \"remainder is \$((num1 % num2))\"\n"
+                    		printf "\tPLEASE TRY AGAIN   >> "
+                    		read com1_1
+                		done
+                                echo "remainder is $((num1 % num2))"
+                                echo
+                                printf "Press <ENTER> to continue"
+				read null
+				cat <<+
+
+You may have noticed that the quotient
+was 0 instead of .5 (i.e. 5/10). Why?
+
+The shell has a limitation in terms of
+math. It cannot work with decimals. On
+the other hand you will be learning
+utilities in the second half of this 
+course such as "awk" which provide
+these capabilities.
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+Well Done!
+
+This completes the topic MATHEMATICAL OPERATIONS
+
+You are finished with the
+BASIC SCRIPT PROGRAMMING TUTORIAL
+
+If you are comfortable with this basic tutorial,
+you should proceed to the REVIEW TUTORIAL
+located in the MAIN MENU
+
+Press <ENTER> to continue
++
+read null
+;;
+		esac
+		done
+		unset snum
+		;;
+
+	2)
+		until [ "$snum" = "3" ] 2> /dev/null
+		do
+			clear
+			cat <<+
+	REVIEW TUTORIAL
+
+1. REVIEW QUESTIONS - PART I
+2. REVIEW QUESTIONS - PART II
+3. RETURN TO MAIN MENU
+
++
+			printf "Please Enter a Number >> "
+			read snum
+			while [ $snum -le 0 -o $snum -ge 4 ] 2> /dev/null
+			do
+				printf "Enter a number 1 to 3 >> "
+				read snum
+			done
+			case $snum in
+
+### FIRST PRACTICAL APPLICATION SUBMENU ###
+
+			1)
+				count=0
+				clear
+				cat <<+
+REVIEW QUESTIONS - PART I
+
+If you are not able to provide the Linux command
+to accomplish the task after 3 tries, a "hint" with
+the actual command will appear.
+ 
+Press <ENTER> to continue BASIC SCRIPT REVIEW
++
+			read null
+			clear
+			char="abc"
+			cat <<+
+QUESTION 1
+
+This tutorial has already issued the following command:
+
+	char=abc
+
+Issue the command to test if the variable char
+contains the string "abc" (do not use square brackets).
+
++
+			printf "\tENTER COMMAND HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "test \$char = abc" -o "$com1_1" = "test \$char = \"abc\"" ]
+            		do
+            			if [ "$count" -ge "2" ]
+               				then
+               					printf "\thint: test \$char = \"abc\"\n"
+               			fi
+                		printf "\tPLEASE TRY AGAIN   >> "
+				read com1_1
+            			count=`expr $count + 1`
+            		done
+            		count=0
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+                	echo "REVIEW QUESTIONS" >> output
+                	echo >> output
+			echo "REVIEW QUESTIONS - PART I" >> output
+			echo >> output
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 2
+
+If a command is successfully executed on the
+command line, what value will be displayed when "echo 
+\$?" is issued?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "0" ]
+            		do
+               			if [ "$count" -ge "2" ]
+               				then
+               					printf "\thint: 0\n"
+               			fi
+            			printf "\tPLEASE TRY AGAIN   >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+            		count=0
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			number=10
+			cat <<+
+QUESTION 3
+
+This tutorial has just issued the command:
+
+	number=10
+
+Issue a command to display "greater" if number is
+greater than 10, and otherwise display "less or equal". 
+Use square brackets to test the condition.
+
++
+			printf "\tENTER COMMAND HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "if [ \$number -gt 10 ];then echo \"greater\";else echo \"less or equal\";fi" ]
+            		do
+            			if [ "$count" -ge "2" ]
+               			then
+               					printf "\thint: if [ \$number -gt 10 ];then echo \"greater\";else echo \"less or equal\";fi\n"
+               			fi
+                		printf "\tPLEASE TRY AGAIN   >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+            		count=0
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+Good.
+
+This completes REVIEW QUESTIONS - PART I
+
+Please proceed with REVIEW QUESTIONS - PART II
+
+Press <ENTER> to return to
+REVIEW TUTORIAL MENU
++
+		read null
+;;
+		2)
+			count=0
+			clear
+			cat <<+
+REVIEW QUESTIONS - PART II
+
+QUESTION 1
+
+What is the control-flow statement used to provide a
+set of nested if-the-else structures?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "elif" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "REVIEW QUESTIONS - PART II" >> output
+			echo >> output
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 2
+
+What is the statement to end an if statement block?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "fi" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 3
+
+What is typed on the first line of an "until" control-
+flow structure to test that the variable "var" is
+greater than the number 3 (use square brackets).
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "until [ \$var -gt 3 ]" ]
+            		do
+				printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 4
+
+What is the statement to end a "case" block?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "esac" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 5
+
+What is the statement that follows an "if" statement
+in order to take action?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "then" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 6
+
+What variable is used to display the status of
+the most recently executed command?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "\$?" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 7
+
+What variable is used to display the number of
+assigned positional parameters?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "\$#" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 8
+
+What variable is used to display the current PID?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "\$\$" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			read null
+			echo "$com1_1" >> output
+			echo >> output
+			clear
+			cat <<+
+QUESTION 9
+
+What symbol is used to represent the default selection
+of a case statement?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "*" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			read null
+			clear
+			cat <<+
+QUESTION 10
+
+What variable is used to produce one string for
+each of the arguments, each argument in quotes?
+
++
+			printf "\tENTER ANSWER HERE >>  "
+            		read com1_1
+            		until [ "$com1_1" = "\$@" ]
+            		do
+                		printf "\tPLEASE TRY AGAIN  >> "
+                		read com1_1
+            			count=`expr $count + 1`
+            		done
+			printf "You are correct\n\n"
+			printf "Press <ENTER> to continue" 
+			echo "$com1_1" >> output
+			echo >> output
+			echo "$USER" >> output
+			read null
+			clear
+			cat <<+
+You have completed REVIEW QUESTIONS - PART II
+
+You may proceed to the MAIN MENU to send
+feedback and exit tutorial
+
+Press <ENTER> to return to the 
+REVIEW TUTORIAL MENU
++
+				read null
+;;
+                esac
+                done
+                unset snum
+		;;
+esac
+done             
+

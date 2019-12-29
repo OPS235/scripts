@@ -1,0 +1,2065 @@
+#!/bin/bash
+
+
+##############################################################################
+###                                                                        ###
+###                LAB #11:   SED UTILITY                                  ###
+###                                                                        ###
+###                                          The structure of the          ###
+### lab consists of a few opening banners, followed by a menu which        ###
+### provides 2 levels of tutorials  - Basic and Practical Application      ###
+###                                                                        ###
+### The author of this script is using this tutorial to send students'     ###
+### results back to him for monitoring purposes. If you are not one        ###
+### of his students, indicate that you do NOT belong to his class when     ###
+### prompted.                                                              ###
+###                                                                        ###
+### Author: Murray Edward Saul                                             ###
+### Date: July 11, 2000                                                    ###
+### Modified: April 2015                                                   ###
+###                                                                        ###
+##############################################################################
+
+
+### Banner Advising User to Exit & Maximize Telnet Window ###
+
+clear
+cat <<+
+*********************************
+*                               *
+*  TELNET WINDOW SHOULD         *
+*  BE MAXIMIZED BEFORE USING    *
+*  THIS TUTORIAL.               *
+*                               *
+*  PRESS <CTRL><C> TO EXIT      *
+*  PRESS <ENTER>   TO CONTINUE  *
+*                               *
+*********************************
++
+
+### pause for user to press ENTER to continue ###
+
+read null
+
+### Opening Banner (purpose & author) ###
+
+clear
+cat <<+
+*****************************************************************************
+*                                                                           *
+*  THE SED UTILITY                                                          *
+*                                                                           *
+*  These tutorials may be used for:                                         *
+*                                                                           *
+*       -  Practise to enhance your Linux shell commands and scripting      *
+*                                                                           *
+*  Written by Murray Saul  July, 2000                                       *
+*  Modified: April 2015                                                     *
+*                                                                           *
+*****************************************************************************
+
+Press <ENTER> to continue or <CTRL><C> to exit
++
+
+read null
+
+
+### Banner (explanation of evaluation & feedback) ###
+
+clear
+cat <<+
+*****************************************************************************
+*                                                                           *
+*    ALL TUTORIALS HAVE THE FOLLOWING STRUCTURE:                            *
+*                                                                           *
+*    1. BASIC TUTORIAL        - Provides user to learn a skill              *
+*                                                                           *
+*    2. PRACTICAL APPLICATION - Reinforces learned skill with exercises     *
+*                                                                           * 
+*****************************************************************************
+
+Press <ENTER> to continue or <CTRL><C> to exit
+
++
+
+read null
+
+clear
+cat <<+
+*****************************************************************************
+*                                                                           * 
+*  TIPS FOR GETTING THE MOST OUT OF TUTORIALS:                              *
+*                                                                           *
+*    · Complete the entire tutorial                                         *   
+*                                                                           *
+*    · Repeat the tutorial on a regular basis for review                    *
+*                                                                           *
+*    · Try to use skills you have developed to accomplish other tasks       *
+*                                                                           *
+*****************************************************************************
+
+Press <ENTER> to continue or <CTRL><C> to exit
++
+
+read null
+
+### Banner (layout of tutorial's structure ###
+
+clear
+cat <<+
+*****************************************************************************
+*                                                                           *
+*  A FEEDBACK section has been added to the end of each tutorial to         *
+*  allow ALL USERS to provide comments to improve the quality of the        *
+*  tutorial.                                                                *
+*                                                                           *
+*****************************************************************************
+
+Press <ENTER> to continue or <CTRL><C> to exit
++
+
+
+read null
+
+until [ $num -eq 3 ] 2> /dev/null
+do
+	clear
+	cat <<+
+
+        MAIN MENU
+
+1. SED UTILITY TUTORIAL
+2. REVIEW TUTORIAL
+3. SEND FEEDBACK & EXIT TUTORIAL
+
++
+
+### Error Checking ###
+
+	printf "Please Enter a Number >> "
+	read num
+	while [ $num -le 0 -o $num -ge 4 ] 2> /dev/null
+	do
+		printf "Enter a number 1 to 3 >> "
+		read num
+	done
+
+  
+### Exit Process which prompts the User for Feedback ###
+### ALL feedback will be directed to Murray Saul     ###
+###                            for evaluation,       ###
+### modification and further implementation          ###
+
+
+### Send output file to Appropriate Instructor ###
+
+        if [ "$num" -eq 3 ] 2> /dev/null
+                then
+
+
+                        rm output new_fords results sample
+ 
+### Offer a choice to provide feedback ###
+ 
+                        clear
+                        printf "Do you wish to provide feedback? (y/n) >>  "
+			read choice
+                        if [ "$choice" = "y" -o "$choice" = "Y" ]
+                        then
+                                clear
+                                cat <<+ 
+*************************************************************************
+*                                                                       *
+*                   <<< FEEDBACK - RECOMMENDED >>                        *
+*                                                                       *
+*  You are about to send feedback about this tutorial to the author     *
+*  of this tutorial.                                                    *
+*                                                                       *
+*  Take the time to list what you liked about the tutorial, and list    *
+*  improvements for the tutorial. This will be the primary method       *
+*  for the author to make improvements.                                 *
+*                                                                       *
+*  When you type the message, please make sure that you make            *
+*  corrections to the line BEFORE pressing ENTER, since you cannot      *
+*  go back to the previous line to make corections.                     *
+*                                                                       *
+*************************************************************************
+
++
+			printf "Press <ENTER> to proceed"
+			read null
+
+### Send Comments to Author ###
+
+			clear
+			printf "Type Message Below:\n\n"
+			printf "You cannot move to previous line\n"
+			printf "if you already pressed <ENTER>\n\n"
+			printf "To Send  -> Go to next empty line\n"
+			printf "         -> Press keys <CTRL><D>\n"
+			
+			mail -s "scripting-4 - Feedback" murray.saul@senecacollege.ca
+			clear
+	
+			cat <<+	
+************************************************
+*                                              *
+*           Your message has been sent         *
+*         Thank you for your participation     *
+*                                              *
+************************************************
+
+
++
+			exit 0
+		fi
+	fi
+
+### Case Structure Displaying Tutorial Level ###
+
+	case $num in
+
+### Basic Linux Tutorial Submenu ###
+
+		1)
+			until [ "$snum" = "3" ] 2> /dev/null
+			do
+				clear
+	        	cat <<+
+    SED UTILITY TUTORIAL MENU
+
+1.  STREAMING EDITOR (SED) - BASIC
+    - Purpose
+    - Using Functions
+    - Regular Expressions
+    - Common SED Commands (Examples)
+
+2.  STREAMING EDITOR (SED) - ADVANCED
+   - Multiple Expressions
+   - Using Script-Files
+   - Examples
+
+3.  RETURN TO MAIN MENU
+
++
+
+### Error Checking ###
+
+			printf "Please Enter a Number >> "
+			read snum
+			while [ $snum -le 0 -o $snum -ge 4 ] 2> /dev/null
+			do
+				printf "Enter a number 1 to 3 >> "
+				read snum
+			done
+# copy tutorial11 to $HOME
+
+cp ~ops435/tutorials/tutorial11 $HOME
+
+# change to user's $HOME directory
+cd
+
+
+			case $snum in
+
+### BASIC SUBMENU 1 ###
+			1)
+				clear
+				cat <<+
+STREAM EDITOR (SED) - BASIC
+The sed editor is a "non-interactive" editor.
+ 
+In other words, the editor is not used to
+edit and modify the contents of the file that
+is being read from. This editor differ from other
+editors such as vi, nled or pico.
+ 
+All lines in a file is read by the sed utility.
+If a search pattern for sed is specified such
+as a line number address or a regular expression,
+sed then carries out the task or "instruction"
+ 
+sed can be used to modify standard output and
+can be used as a filter to modify standard output
+for further processing. 
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+STRUCTURE OF SED UTILITY	
+
+     sed [-n] '/pattern/ instruction' [file-list]
+     sed [-n] 'address instruction' [file-list]
+or
+     sed [-n] -f script-file [file-list]
+ 
+The first method uses single or double quotes
+to denote search and processing instructions.
+This method is good to carrying out less-complex
+processing tasks in a one-line Linux command.
+ 
+The second method causes sed to execute
+search and instruction processes in a script
+file for more complex tasks. We will discuss
+this method in lab #10
+
+
+Press <ENTER> to continue
++
+				read null
+				clear
+
+### copy practice file "data" to user's current directory
+
+				cp ~murray.saul/bif703//labs/data .
+				cat <<+
+A file called "data" has been automatically copyied to
+your current directory.
+
+We will use this file to practice using sed commands.
+
+Enter the Linux command "cat data" to display the
+contents of this file:
+
++
+				printf "\tENTER LINE HERE    >> "
+                    		read com1_1
+                    		until [ "$com1_1" = "cat data" ]
+                    		do
+                       			printf "\thint: cat data\n"
+                       			printf "\tPLEASE TRY AGAIN   >> "
+                       			read com1_1
+                    		done
+                    		$com1_1
+                    		printf "\nPress <ENTER> to continue\n" 
+				read null
+				clear
+				cat <<+
+Let's demonstrate the use of sed to display
+standard output.
+
+Enter the command displayed below:
+
+	sed 'p' data 
+
++
+				printf "\tENTER LINE HERE    >> "
+                    		read com1_1
+                    		until [ "$com1_1" = "sed 'p' data" ]
+                    		do
+                       			printf "\thint: sed 'p' data\n"
+                       			printf "\tPLEASE TRY AGAIN   >> "
+                       			read com1_1
+                    		done
+                    		sed 'p' data
+                    		printf "\nPress <ENTER> to continue\n" 
+				read null
+				cat <<+
+
+YOU SHOULD NOTICE THAT EACH LINE APPEARS TWICE!!
+ 
+ 
+Press <ENTER> to continue
++
+                    		read null
+                    		clear
+                    		cat <<+
+The reason why standard output appears twice
+is that the sed command (without the -n option)
+displays all lines regardless if they had been
+specified as a pattern.
+ 
+This can be useful combined with the "q" or
+"quit" instruction to stop the execution of
+a command at a particular line or pattern.
+
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+To prevent "doubling" of standard output the
+-n option for the sed utility suppresses or
+do NOT display standard output unless the
+command indicates that standard output should
+appear.
+
+To demonstrate, issue the following command below:
+
+	sed -n 'p' data
+
++
+				printf "\tENTER LINE HERE    >> "
+                    		read com1_1
+                    		until [ "$com1_1" = "sed -n 'p' data" ]
+                    		do
+                       			printf "\thint: sed -n 'p' data\n"
+                       			printf "\tPLEASE TRY AGAIN   >> "
+                       			read com1_1
+                    		done
+                    		sed -n 'p' data
+                    		printf "\nPress <ENTER> to continue\n" 
+				read null
+				cat <<+
+
+Now the standard output only appears ONCE
+
+Press <ENTER> to continue
++
+
+				read null
+				clear
+				cat <<+
+You can specify an address (line #, line #s or
+range of line #s) when using the sed utility.
+
+Enter the command below to display the first
+line from file "data":
+
+	sed -n '1 p' data
+
++
+				printf "\tENTER LINE HERE    >> "
+                    		read com1_1
+                    		until [ "$com1_1" = "sed -n '1 p' data" ]
+                    		do
+                       			printf "\thint: sed -n \'1 p\' data\n"
+                       			printf "\tPLEASE TRY AGAIN   >> "
+                       			read com1_1
+                    		done
+                    		sed -n '1 p' data
+                    		printf "\nPress <ENTER> to continue\n" 
+				read null
+				clear
+				cat <<+
+You can select a range of line numbers
+by separating the beginning and ending
+range by a comma ","
+
+Enter the command displayed below to display
+all lines other than lines 2 to 5:
+
+	sed -n '2,5 p' data
+
++
+				printf "\tENTER LINE HERE    >> "
+                    		read com1_1
+                    		until [ "$com1_1" = "sed -n '2,5 p' data" ]
+                    		do
+                       			printf "\thint: sed -n '2,5 p' data\n"
+                       			printf "\tPLEASE TRY AGAIN   >> "
+                       			read com1_1
+                    		done
+                    		sed -n '2,5 p' data
+                    		printf "\nPress <ENTER> to continue\n" 
+				read null
+				clear
+				cat <<+
+The "s" command is used to substitute 
+patters (similar to method demonstrated
+in vi editor).
+
+Usually and address of lines or regular
+expression is used to define matching lines
+and then the "s" command is used followed by
+commands to either display standard output
+or write standard output to a file.
+
+To demonstrate, enter the following command
+to substitute and display all patterns
+"TUTORIAL" with "LESSON" for lines 2 to 5
+in the file "data"
+
+	sed -n '2,5 s/TUTORIAL/LESSON/g p' data
+
++
+				printf "\tENTER LINE HERE    >> "
+                    		read com1_1
+                    		until [ "$com1_1" = "sed -n '2,5 s/TUTORIAL/LESSON/g p' data" ]
+                    		do
+                       			printf "\thint: sed -n '2,5 s/TUTORIAL/LESSON/g p' data\n"
+                       			printf "\tPLEASE TRY AGAIN   >> "
+                       			read com1_1
+                    		done
+                    		sed -n '2,5 s/TUTORIAL/LESSON/g p' data
+                    		printf "\nPress <ENTER> to continue\n" 
+				read null
+				clear
+				cat <<+
+The "w" command allows standard output
+to be saved in a file.
+
+Enter the command displayed below to
+save lines 2 through 5 in from file
+"data" into a file called "sample"
+
+	sed -n '2,5 w sample' data
+
++
+				printf "\tENTER LINE HERE    >> "
+                    		read com1_1
+                    		until [ "$com1_1" = "sed -n '2,5 w sample' data" ]
+                    		do
+                       			printf "\thint: sed -n \'2,5 w sample' data\n"
+                       			printf "\tPLEASE TRY AGAIN   >> "
+                       			read com1_1
+                    		done
+                    		sed -n '2,5 w sample' data
+                    		printf "\nPress <ENTER> to continue\n" 
+				read null
+				cat <<+
+
+To prove that this command worked, enter
+the command "cat sample"
+
++
+				printf "\tENTER LINE HERE    >> "
+                    		read com1_1
+                    		until [ "$com1_1" = "cat sample" ]
+                    		do
+                        		printf "\thint: cat sample\n"
+                        		printf "\tPLEASE TRY AGAIN   >> "
+                        		read com1_1
+                    		done
+                    		$com1_1
+                    		printf "\nPress <ENTER> to continue\n" 
+				read null
+				clear
+				cat <<+
+To demonstrate, enter the following command
+to substitute all patterns "TUTORIAL" with "INSTRUCTION"
+for lines 5 to 15 in the file "data" and store in a file
+called "output":
+
+	sed -n '5,15 s/TUTORIAL/INSTRUCTION/g w output' data
+
++
+				printf "\tENTER LINE HERE    >> "
+                    		read com1_1
+                    		until [ "$com1_1" = "sed -n '5,15 s/TUTORIAL/INSTRUCTION/g w output' data" ]
+                    		do
+                        		printf "\thint: sed -n '5,15 s/TUTORIAL/INSTRUCTION/g w output' data\n"
+                        		printf "\tPLEASE TRY AGAIN   >> "
+                        		read com1_1
+                    		done
+				sed -n '5,15 s/TUTORIAL/INSTRUCTION/g w output' data
+                    		printf "\nPress <ENTER> to continue\n" 
+				read null
+				cat <<+
+
+To prove that this command worked, enter
+the command "cat output"
+
++
+				printf "\tENTER LINE HERE    >> "
+                    		read com1_1
+                    		until [ "$com1_1" = "cat output" ]
+                    		do
+                        		printf "\thint: cat output\n"
+                        		printf "\tPLEASE TRY AGAIN   >> "
+                        		read com1_1
+                    		done
+                    		$com1_1
+                    		printf "\nPress <ENTER> to continue\n" 
+				read null
+				clear
+				cat <<+
+The "q" command terminates or quits
+execution of the sed utility as soon as
+it read in a particular line or matching
+pattern.
+
+For example, enter the command below to
+display contents of file "data" starting
+at line 1 until line 11:
+
+	sed '11 q' data
+
++
+				printf "\tENTER LINE HERE    >> "
+                    		read com1_1
+                    		until [ "$com1_1" = "sed '11 q' data" ]
+                    		do
+                        		printf "\thint: sed '11 q' data\n"
+                        		printf "\tPLEASE TRY AGAIN   >> "
+                        		read com1_1
+                    		done
+                    		sed '11 q' data
+                    		printf "\nPress <ENTER> to continue\n" 
+				read null
+				cat <<+
+
+Note that the -n option was NOT
+used in order to have only lines 1 to 11
+displayed
+
+The command sed -n sed '11 p q' data would NOT work.
+
+
+Press <ENTER> to continue
++
+				read null
+				clear
+				cat <<+
+You can use regular expressions to select
+lines that match a pattern. The rules remain
+the same for using regular expressions as
+demonstrated in lab8 except the regular
+expression must be contained within delimiters
+such as the forward slash "/" when using the
+sed utility.
+
+
+Enter the command displayed below to list
+all lines contained in the file "data" that
+begins with the pattern "The":
+
+	sed -n '/^The/ p' data
+
++
+				printf "\tENTER LINE HERE    >> "
+                    		read com1_1
+                    		until [ "$com1_1" = "sed -n '/^The/ p' data" ]
+                    		do
+                        		printf "\thint: sed -n '/^The/ p' data\n"
+                        		printf "\tPLEASE TRY AGAIN   >> "
+                        		read com1_1
+                    		done
+                    		sed -n '/^The/ p' data
+                    		printf "\nPress <ENTER> to continue\n" 
+				read null
+				clear
+				cat <<+
+Good
+
+For practice, enter the sed utility using
+regular expressions to display all lines
+from the file "data" that end with the
+character "d":
+
++
+				printf "\tENTER LINE HERE    >> "
+                    		read com1_1
+                    		until [ "$com1_1" = "sed -n '/d$/ p' data" ]
+                    		do
+                        		printf "\thint: sed -n '/d$/ p' data\n"
+                        		printf "\tPLEASE TRY AGAIN   >> "
+                        		read com1_1
+                    		done
+                    		sed -n '/d$/ p' data
+                    		printf "\nPress <ENTER> to continue\n" 
+				read null
+				clear
+				cat <<+
+Well Done!
+
+This completes the topic STREAMING EDITOR (SED) - BASIC
+
+Please proceed with STREAMING EDITOR (SED) - ADVANCED
+
+Press <ENTER> to return to SED  UTILITY TUTORIAL MENU
++
+				read null
+;;
+
+### BASIC SUBMENU 2 ###
+
+
+		2) 
+
+
+
+### Copy data files "search1" - "search 2" and
+### "sample-script1" - "sample-script8"
+
+					cp ~murray.saul/bif703/labs/search* .
+					cp ~murray.saul/bif703/labs/sample-* .
+
+### Copy data files data, cars, cars2 and float_point
+
+					cp ~murray.saul/bif703/labs/data .
+					cp ~murray.saul/bif703/labs/cars* .
+					cp ~murray.saul/bif703/labs/float_point .
+
+					clear
+					cat <<+
+ADVANCED SED TUTORIAL
+
+As discussed in the previous section,
+sed reads one line at a time from the input file
+(or standard output if used as a filter) and
+that line is usually compared against a
+pattern-searching and instruction operation.
+
+eg.		sed -n '/pattern p' input-file
+
+Press <ENTER> to continue
++
+					read null
+					clear
+					cat <<+
+What if you want to have sed compare each
+line against several different pattern-searching
+and related instructions?
+
+There are two methods:
+
+  1) Issue sed with multiple expresssions
+  2) Issue sed with reference to a script file
+
+Press <ENTER> to continue
++
+					read null
+					clear
+					cat <<+
+When issuing sed utility with multiple
+expressions, just make certain to include
+the -e option before EACH expression in
+the sed statement...
+
+To demonstrate, issue the following
+sed command:
+
+ sed -e 's/pattern/match/g' -ne '/match/ p' tutorial11
+
++
+				printf "\tENTER LINE HERE    >> "
+                    		read com1_1
+                    		until [ "$com1_1" = "sed -e 's/pattern/match/g' -ne '/match/ p' tutorial11" ]
+                    		do
+                        		printf "\thint: sed  -e 's/pattern/match/g' -ne '/match/ p' tutorial11\n"
+                        		printf "\tPLEASE TRY AGAIN   >> "
+                        		read com1_1
+                    		done
+                                sed  -e 's/pattern/match/g' -ne '/match/ p' tutorial11
+                    		printf "\nPress <ENTER> to continue\n" 
+				read null
+				clear
+                                cat <<+
+                  
+You probabaly notice now that sed sent
+each line to just substitute all occurences
+of the word "pattern" with "match".
+
+The sed sent all lines (some with "match" instead
+of "pattern") to the next expression only to
+display lines containing the pattern "match)...
+
+Press <ENTER> to continue
++
+					read null
+					clear
+					cat <<+
+When issuing sed with multiple expressions
+it would be more efficient to have those
+expressions stored in a script file.
+
+In that way, sed could take each line
+in the input file, and compare them for
+matching against ALL of the expressions
+listed in the script file (to then take
+appropriate editing action...)
+
+Press <ENTER> to continue
++
+					read null
+					clear
+					cat <<+
+Here is an example of a script-file
+called "operation" that the sed utility can read:
+
+/pattern1/  p
+/pattern2/  w file-name
+/pattern3/  q
+
+In this case, the script file is checking
+each line from the input file and performing
+these 3 seperate operations.
+
+Assuming that the input file was "data", the
+command to run sed with this script file is:
+
+	sed -f operation data
+or
+	sed -nf opeartion data
+
+Press <ENTER> to continue
++
+					read null
+					clear
+					cat <<+
+To provide an example, the input file "data"
+and script-files "search1", "search2", "search3"
+and "search4" have been copied to your current directory.
+
+It is assumed that you have already performed
+the previous lab (lab#9), and are familiar with
+the contents of a file called "data".
+
+Issue the command "cat search1" to view the
+contents of the copied script-file:
+
++
+					printf "\tENTER LINE HERE    >> "
+                    read com1_1
+                    until [ "$com1_1" = "cat search1" ]
+                    do
+                        printf "\thint: cat search1\n"
+                        printf "\tPLEASE TRY AGAIN   >> "
+                        read com1_1
+                    done
+                    $com1_1
+                    printf "\nPress <ENTER> to continue\n"
+					read null
+					clear
+					cat <<+
+Now, issue the command below to run sed
+reading the input-file "data" and executing
+operations from the script-file "search1":
+
+	sed -nf search1 data
+
++
+					printf "\tENTER LINE HERE    >> "
+                    read com1_1
+                    until [ "$com1_1" = "sed -nf search1 data" ]
+                    do
+                        printf "\thint: sed -nf search1 data\n"
+                        printf "\tPLEASE TRY AGAIN   >> "
+                        read com1_1
+                    done
+                    sed -nf search1 data
+                    printf "\nPress <ENTER> to continue\n" 
+					read null
+					clear
+					cat <<+
+You may have noticed no standard output,
+but no instructions where given to display
+standard output, only to trap output
+into two files "old_output" and "new_output"
+
+Issue the command "cat old_output" to view
+its contents:
+
++
+					printf "\tENTER LINE HERE    >> "
+                    read com1_1
+                    until [ "$com1_1" = "cat old_output" ]
+                    do
+                        printf "\thint: cat old_output\n"
+                        printf "\tPLEASE TRY AGAIN   >> "
+                        read com1_1
+                    done
+                    $com1_1
+                    printf "\nPress <ENTER> to continue\n"
+					read null
+					cat <<+
+
+The contents contained lines that matched
+the pattern.
+
+Issue the command "cat new_output" to view
+its contents: 
+
++
+					printf "\tENTER LINE HERE    >> "
+                    read com1_1
+                    until [ "$com1_1" = "cat new_output" ]
+                    do
+                        printf "\thint: cat new_output\n"
+                        printf "\tPLEASE TRY AGAIN   >> "
+                        read com1_1
+                    done
+                    $com1_1
+                    printf "\nPress <ENTER> to continue\n"
+					read null
+					cat <<+
+
+Notice that the second operation
+was performed (ie. replace lines
+beginning with "The" with "The particular")
+
+Press <ENTER> to continue
++
+					read null
+					clear
+					cat <<+
+The next script file "search2" is
+identical to "search1" except an additional
+line is added to "quit" if a line beginning
+with the pattern "# Second Last Line" is
+contained in file "data"
+
+Issue the command "cat search2" to view the
+contents of the copied script-file:
+
++
+					printf "\tENTER LINE HERE    >> "
+                    read com1_1
+                    until [ "$com1_1" = "cat search2" ]
+                    do
+                        printf "\thint: cat search2\n"
+                        printf "\tPLEASE TRY AGAIN   >> "
+                        read com1_1
+                    done
+                    $com1_1
+                    printf "\nPress <ENTER> to continue\n"
+
+					read null
+					clear
+					cat <<+
+Now, issue the command below to run sed
+reading the input-file "data" and executing
+operations from the script-file "search2":
+
+	sed -nf search2 data
+
++
+					printf "\tENTER LINE HERE    >> "
+                    read com1_1
+                    until [ "$com1_1" = "sed -nf search2 data" ]
+                    do
+                        printf "\thint: sed -nf search2 data\n"
+                        printf "\tPLEASE TRY AGAIN   >> "
+                        read com1_1
+                    done
+                    sed -nf search2 data
+                    printf "\nPress <ENTER> to continue\n" 
+					read null
+					cat <<+
+
+Now issue the command "cat old_output" to
+view its contents:
+
++
+					printf "\tENTER LINE HERE    >> "
+                    read com1_1
+                    until [ "$com1_1" = "cat old_output" ]
+                    do
+                        printf "\thint: cat old_output\n"
+                        printf "\tPLEASE TRY AGAIN   >> "
+                        read com1_1
+                    done
+                    $com1_1
+                    printf "\nPress <ENTER> to continue\n"
+					read null
+					cat <<+
+
+Because sed was instructed from the
+script-file to quit or "terminate"
+when pattern "# Second Last Line" was
+encountered, the last line was not
+displayed or modified.
+
+Press <ENTER> to continue
++
+					read null
+					clear
+					cat <<+
+I know this will sound strange, but
+you can actually generate a sed
+script (with it's own she-bang line!).
+
+There is an example of this (a video game)
+contained in "Sample Shell scripts" in this
+week's course schedule...
+
+Press <ENTER> to continue
++
+					read null
+					clear
+					cat <<+
+There is no further point in "walking"
+you through examples, it is better
+for you to practice making file-scripts
+and executing them yourselves using sed.
+
+Press <ENTER> to continue
++
+					read null
+					clear
+					cat <<+
+This completes the topic ADVANCED SED TUTORIAL
+
+Please proceed with REVIEW QUESTIONS
+
+Press <ENTER> to return to SED TUTORIAL MENU
++
+					read null
+;;
+
+### BASIC SUBMENU 2 ###
+
+
+2) 
+		clear
+		cat <<+
+
+ADVANCED AWK TUTORIAL
+
+Similar to sed, you can use a script-file
+to have awk contain many search and process
+opeations.
+
+Let's further explore the data processing
+features of the awk command.
+
+To provide an example, the input file "data"
+and script-files "sample-script1" to "sample-scriptr6"
+as well as "float_point" have been copied toi
+your current directory.
+
+Enter the command "cat sample-script1" to view
+it's contents:
+
++
+		printf "\tENTER LINE HERE    >> "
+        read com1_1
+        until [ "$com1_1" = "cat sample-script1" ]
+        do
+        	printf "\thint: cat sample-script1\n"
+        	printf "\tPLEASE TRY AGAIN   >> "
+        	read com1_1
+        done
+		clear
+        $com1_1
+        printf "\nPress <ENTER> to continue\n"
+		read null
+		cat <<+
+
+Take a few moments to read the comments in
+order to understand the syntax & structure of
+this script-file
+
+Press <ENTER> to continue
++
+		read null
+		clear
+		cat <<+
+Let's run this script-file against the
+input file "cars" to create a report.
+
+Issue the command displayed below:
+
+	awk -f sample-script1 cars
+
++
+		printf "\tENTER LINE HERE    >> "
+        read com1_1
+        until [ "$com1_1" = "awk -f sample-script1 cars" ]
+        do
+        	printf "\thint: awk -f sample-script1 cars\n"
+        	printf "\tPLEASE TRY AGAIN   >> "
+        	read com1_1
+        done
+        awk -f sample-script1 cars
+        printf "\nPress <ENTER> to continue\n" 
+		read null
+		clear
+		cat <<+
+We can also contain search and pattern
+processing within braces as well as
+add control-flow statements such as
+the "if" statement.
+
+Please note how the syntax for the 
+control-flow statements resemble the
+syntax for the C programming language.
+
+Issue the command "cat sample-script2" to
+view the next sample script's contents:
+
++
+		printf "\tENTER LINE HERE    >> "
+        read com1_1
+        until [ "$com1_1" = "cat sample-script2" ]
+        do
+        	printf "\thint: cat sample-script2\n"
+        	printf "\tPLEASE TRY AGAIN   >> "
+        	read com1_1
+        done
+		clear
+        $com1_1
+		read null
+		cat <<+
+
+Please note the comments in this script
+to understand the structure of this second
+script-file.
+
+Press <ENTER> to continue
++
+		read null
+		clear
+		cat <<+
+Let's see how the report appear using this
+second script.
+
+Issue the command displayed below:
+
+	awk -f sample-script2 cars
+
++
+		printf "\tENTER LINE HERE    >> "
+        read com1_1
+        until [ "$com1_1" = "awk -f sample-script2 cars" ]
+        do
+            printf "\thint: awk -f sample-script2 cars\n"
+            printf "\tPLEASE TRY AGAIN   >> "
+            read com1_1
+        done
+		clear
+        awk -f sample-script2 cars
+        printf "\nPress <ENTER> to continue\n" 
+		read null
+		cat <<+
+It looks bad doesn't it.
+
+Why?
+
+Because the default delimiter for the
+fields is "space", but the column
+headings are separated by "tab"s
+
+Press <ENTER> to continue
++
+		read null
+		clear
+		cat <<+
+There are a couple of easy methods
+to improve the appearance of data:
+
+	- Use of print or printf statements
+	- Change field separator from "space" to "tab"
+
+Press <ENTER> to continue
++
+		read null
+		clear
+		cat <<+
+We will explore the use of the second
+method.
+
+In order to understand this method,
+we must understand the use of awk
+variables.
+
+Press <ENTER> to continue
++
+		read null
+		clear
+		cat <<+
+As you may have recalled from lab #9,
+some of the following variables can
+be used with the awk command:
+ 
+    \$0 - Current record (entire line)
+    \$1 - First field in record
+    \$n - nth field in record
+    NR - Record Number (order in database)
+    NF - Number of fields in current record
+
+Press <ENTER> to continue
++
+		read null
+		clear
+		cat <<+
+Here are an additional set of variables
+to help us change the rules for delimiting
+fields or records whether for reading or
+displaying purposes:
+
+	FS	-	Input Field Separator
+	OFS	-	Output Field Separator
+	RS	-	Input Record Separator
+	ORS	-	Ouput Record Separator
+
+For "sample-script3" we are changing from
+the default output field separator of a
+"space" to a "tab" to make the report
+easier to understand.
+
+Issue "cat sample-script3" to view it's contents:
+
++
+		printf "\tENTER LINE HERE    >> "
+        read com1_1
+        until [ "$com1_1" = "cat sample-script3" ]
+        do
+        	printf "\thint: cat sample-script3\n"
+        	printf "\tPLEASE TRY AGAIN   >> "
+        	read com1_1
+        done
+		clear
+        $com1_1
+        printf "\nPress <ENTER> to continue\n" 
+		read null
+		cat <<+
+
+Please note the comments in this script
+to understand the structure of this third
+script-file.
+
+Press <ENTER> to continue
++
+		read null
+		clear
+		cat <<+
+Now, issue the command displayed below
+to view the results:
+
+	awk -f sample-script3 cars
+
++
+		printf "\tENTER LINE HERE    >> "
+        read com1_1
+        until [ "$com1_1" = "awk -f sample-script3 cars" ]
+        do
+            printf "\thint: awk -f sample-script3 cars\n"
+            printf "\tPLEASE TRY AGAIN   >> "
+            read com1_1
+        done
+        awk -f sample-script3 cars
+        printf "\nPress <ENTER> to continue\n" 
+		read null
+		cat <<+
+
+Note that the data columns
+now line up with the column 
+headings
+
+Press <ENTER> to continue
++
+		read null
+		clear
+		cat <<+
+Likewise, what if we would like to
+read a file whose fields are delimited
+by another symbol such as a semi-colon
+as opposed to a tab?
+
+Issue the command to view the contents
+of the file "cars2"
+
++
+		printf "\tENTER LINE HERE    >> "
+        read com1_1
+        until [ "$com1_1" = "cat cars2" ]
+        do
+        	printf "\thint: cat cars2\n"
+        	printf "\tPLEASE TRY AGAIN   >> "
+        	read com1_1
+        done
+		clear
+        $com1_1
+        printf "\nPress <ENTER> to continue\n" 
+		read null
+		cat <<+
+
+Notice that it is identical to "cars"
+except the delimiter has been changed.
+
+Press <ENTER> to continue
++
+		read null
+		clear
+		cat <<+
+Let's now issue the previous awk command
+using "cars2" instead of "cars"
+
+	awk -f sample-script3 cars2
+
++
+		printf "\tENTER LINE HERE    >> "
+        read com1_1
+        until [ "$com1_1" = "awk -f sample-script3 cars2" ]
+        do
+            printf "\thint: awk -f sample-script3 cars2\n"
+            printf "\tPLEASE TRY AGAIN   >> "
+            read com1_1
+        done
+		clear
+        awk -f sample-script3 cars2
+        printf "\nPress <ENTER> to continue\n" 
+		read null
+		cat <<+
+
+Notice that we do not get the same results
+because the default FS or "input field
+separator that awk is reading from is space
+or tab, and does not recognize ";"
+
+Press <ENTER> to continue
++
+		read null
+		clear
+		cat <<+
+View the next script-file "sample-script4"
+to see how the FS variable is changed
+to ";" to fix the problem:
+
+Issue the command "cat sample-script4"
+
++
+		printf "\tENTER LINE HERE    >> "
+        read com1_1
+        until [ "$com1_1" = "cat sample-script4" ]
+        do
+        	printf "\thint: cat sample-script4\n"
+        	printf "\tPLEASE TRY AGAIN   >> "
+        	read com1_1
+        done
+		clear
+        $com1_1
+        printf "\nPress <ENTER> to continue\n" 
+		read null
+		clear
+		cat <<+
+Now,now issue the previous awk command
+but use this new script-file for input file
+"cars2"
+
+	awk -f sample-script4 cars2
+
++
+		printf "\tENTER LINE HERE    >> "
+        read com1_1
+        until [ "$com1_1" = "awk -f sample-script4 cars2" ]
+        do
+            printf "\thint: awk -f sample-script4 cars2\n"
+            printf "\tPLEASE TRY AGAIN   >> "
+            read com1_1
+        done
+		clear
+        awk -f sample-script4 cars2
+        printf "\nPress <ENTER> to continue\n" 
+		read null
+		cat <<+
+
+The display should now look better
+than in the previous example.
+
+Press <ENTER> to continue
++
+		read null
+		clear
+		cat <<+
+It would be nice to have a total
+of all quantities of cars.
+
+In order to do this, we need to
+accumulate the fourth field
+"Quantity" for each line displayed
+into a variable, and then display
+its value near the bottom of the
+report
+
+Press <ENTER> to continue
++
+		read null
+		clear
+		cat <<+
+Here are some addition mathematical
+operators that can be used with the
+awk command (in addition to + - * / %):
+
+	++	Increments variable preceeding operator
+	--	Decrements variable preceeding operator
+	+=	Adds to variable the value of preceeding operator
+	-=	Subtracts from variable the value of preceeding operator
+
+Press <ENTER> to continue
++
+		read null
+		clear
+		cat <<+
+The script-file "sample-script5" contains
+the use of accumulating quantities and
+displays the sum at the end of the report
+
+Issue "cat sample-script5" to view it's contents:
+
++
+		printf "\tENTER LINE HERE    >> "
+        read com1_1
+        until [ "$com1_1" = "cat sample-script5" ]
+        do
+        	printf "\thint: cat sample-script5\n"
+        	printf "\tPLEASE TRY AGAIN   >> "
+        	read com1_1
+        done
+		clear
+        $com1_1
+        printf "\nPress <ENTER> to continue\n" 
+		read null
+		clear
+		cat <<+
+Now, issue the command displayed below
+to view the results:
+
+	awk -f sample-script5 cars
+
++
+		printf "\tENTER LINE HERE    >> "
+        read com1_1
+        until [ "$com1_1" = "awk -f sample-script5 cars" ]
+        do
+            printf "\thint: awk -f sample-script5 cars\n"
+            printf "\tPLEASE TRY AGAIN   >> "
+            read com1_1
+        done
+        awk -f sample-script5 cars
+		read null
+		clear
+		cat <<+
+It can be "tricky" to add other features
+to this report such as placing the current
+date near the top of the report.
+
+Regular commands such as "date" do not
+work WITHIN the awk command.
+
+Press <ENTER> to continue
++
+		read null
+		clear
+		cat <<+
+On the other hand, there is an interesting
+method to accomplish the task.
+
+Standard output from several commands can
+be passed to the awk command via pipe.
++
+		read null
+		clear
+		cat <<+
+For Example:
+
+	(date ; cat cars) | awk -f script-file
+
+Notice that standard output all gets sent
+to awk. In addition, standard output from
+the "date" command will be the first record
+number in the standard output, and all
+other record numbers represent the contents
+of the "cars" database.
+
+Press <ENTER> to continue
++
+		read null
+		clear
+		cat <<+
+Issue the command below to see how the
+modified script-file "sample-script6"
+solves the problem.
+
+	cat sample-script6
+
++
+		printf "\tENTER LINE HERE    >> "
+        read com1_1
+        until [ "$com1_1" = "cat sample-script6" ]
+        do
+        	printf "\thint: cat sample-script6\n"
+        	printf "\tPLEASE TRY AGAIN   >> "
+        	read com1_1
+        done
+		clear
+        $com1_1
+        printf "\nPress <ENTER> to continue\n" 
+		read null
+		clear
+		cat <<+
+Now, issue the command displayed below
+to get the report with current date:
+
+	(date ; cat cars) | awk -f sample-script6
+
++
+		printf "\tENTER LINE HERE    >> "
+        read com1_1
+        until [ "$com1_1" = "(date ; cat cars) | awk -f sample-script6" ]
+        do
+            printf "\thint: (date ; cat cars) | awk -f sample-script6\n"
+            printf "\tPLEASE TRY AGAIN   >> "
+            read com1_1
+        done
+        (date ; cat cars) | awk -f sample-script6
+        printf "\nPress <ENTER> to continue\n" 
+		read null
+		clear
+		cat <<+
+The last issue that we will discuss in
+this section is how to use the awk
+command to perform floating point calculations.
+
+In many shells, there is no simple method
+to perform floating-point calculations to
+be stored into and displayed from a variable.
+
+Press <ENTER> to continue
++
+		read null
+		clear
+		cat <<+
+We can use the technique previously demonstrated
+to display the current date in the report.
+
+To demonstrate how to perform calculations
+involving floating-point decimals, issue the
+command "cat float_point" below:
+
++
+		printf "\tENTER LINE HERE    >> "
+        read com1_1
+        until [ "$com1_1" = "cat float_point" ]
+        do
+        	printf "\thint: cat float_point\n"
+        	printf "\tPLEASE TRY AGAIN   >> "
+        	read com1_1
+        done
+		clear
+        $com1_1
+        printf "\nPress <ENTER> to continue\n" 
+		read null
+		cat <<+
+
+Take time to note the structure of this
+script-file.
+
+
+Press <ENTER> to continue
++
+	read null
+	clear
+	cat <<+
+Now, we will send 3 variables which are
+floating-point decimal to be calculated.
+	
+Issue the following command display below:
+
+	(set 23.456 2.5436 3.0076 ; echo \$*) | awk -f float_point
+
++
+		printf "\tENTER LINE HERE    >> "
+        read com1_1
+        until [ "$com1_1" = "(set 23.456 2.5436 3.0076 ; echo \$*) | awk -f float_point" ]
+        do
+            printf "\thint: (set 23.456 2.5436 3.0076 ; echo \$*) | awk -f float_point\n"
+            printf "\tPLEASE TRY AGAIN   >> "
+            read com1_1
+        done
+	(set 23.456 2.5436 3.0076 ; echo $*) | awk -f float_point
+        printf "\nPress <ENTER> to continue\n" 
+		read null
+		clear
+		cat <<+
+Well Done!
+
+This completes the topic ADVANCED SED
+
+Please proceed with the REVIEW TUTORIAL
+
+Press <ENTER> to return to SED UTILITY TUTORIAL MENU
++
+				read null
+				;;
+
+				esac
+				done
+				unset snum
+				;;
+
+### Intermediate Tutorial Level ###
+
+2)
+	until [ "$snum" = "3" ] 2> /dev/null
+	do
+	        clear
+			cat <<+
+    PRACTICAL APPLICATION TUTORIAL MENU
+
+1.  SED & AWK UTILITY - PRACTICAL APPLICATION
+
+2.  REVIEW QUESTIONS
+
+3.  RETURN TO MAIN MENU
+ 
++
+
+### Error Checking ###
+
+	printf "Please Enter a Number >> "
+	read snum
+
+	while [ $snum -le 0 -o $snum -ge 4 ] 2> /dev/null
+	do
+		printf "Enter a number 1 to 3 >> "
+		read snum
+	done
+
+
+		case $snum in
+
+### FIRST PRACTICAL APPLICATION SUBMENU ###
+
+		1)
+
+### Copy practice file in case user skipped tutorial
+
+			cp ~murray.saul/bif703//labs/data .
+			cp ~murray.saul/bif703//labs/cars .
+
+			count=0
+			clear
+		cat <<+
+If you are not able to provide the Linux command
+to accomplish the task after 3 tries, a "hint" with
+the actual command will appear.
+
+We will use the same file "data" which was
+copied to your current directory for practice.
+
+Press <ENTER> to continue
++
+			read null
+			clear
+			cat <<+
+SED UTILITY - PRACTICAL APPLICATION
+
+Display all lines in file "data" until the 25th line:
+
++
+		 	printf "\tENTER COMMAND HERE >>  "
+         		read com1_1
+         		until [ "$com1_1" = "sed '25 q' data" ]
+         		do
+                 		if [ "$count" -ge "2" ]
+                        	then
+                                	printf "\thint: sed '25 q' data\n"
+                 		fi
+                 		printf "\tPLEASE TRY AGAIN   >> "
+                 		read com1_1
+                 		count=`expr $count + 1`
+         		done
+         		count=0
+			echo "PRACTICAL APPLICATION" >> output
+			echo >> output
+		 	sed '11 g' data
+		 	echo "$com1_1" >> output
+			echo >> output
+         		printf "\nPress <ENTER> to continue" 
+		 	read null
+		 	clear
+		 	cat <<+
+Store lines from "data" that begin with "the"
+into a file called "results":
+
++
+		 	printf "\tENTER COMMAND HERE >>  "
+         		read com1_1
+         		until [ "$com1_1" = "sed -n '/^the/ w results' data" ]
+         		do
+                 		if [ "$count" -ge "2" ]
+                         	then
+                                 	printf "\thint: sed -n '/^the/ w results' data\n"
+                 		fi
+                 		printf "\tPLEASE TRY AGAIN   >> "
+                 		read com1_1
+                 		count=`expr $count + 1`
+         		done
+         		count=0
+		 	sed -n '/^the/ w results' data
+		 	echo "$com1_1" >> output
+			echo >> output
+         		printf "\nPress <ENTER> to continue" 
+			cat <<+
+
+Done.
+
+View results?
+
++
+		 	printf "\tENTER (y/n) >>  "
+         		read com1_1
+         		if [ "$com1_1" = "y" -o "$com1_1" = "Y" ]
+		 	then
+				cat results 
+		 	fi	
+         		printf "\nPress <ENTER> to continue" 
+		 	read null
+		 	clear
+		 	cat <<+
+Display lines from the file "data" that begin
+with "therefore" and modify standard output
+to replace all occurences with "therefore" with
+"thus":
+
++
+		 	printf "\tENTER COMMAND HERE >>  "
+         		read com1_1
+         		until [ "$com1_1" = "sed -n '/^therefore/ s/therefore/thus/g p' data" ]
+         		do
+                 		if [ "$count" -ge "2" ]
+                         	then
+         				printf "\thint: sed -n '/^therefore/ s/therefore/thus/g p' data\n"
+
+                 		fi
+                 		printf "\tPLEASE TRY AGAIN   >> "
+                 		read com1_1
+                 		count=`expr $count + 1`
+         		done
+         		count=0
+		 	sed -n '/^therefore/ s/therefore/thus/g p' data
+         		echo "$com1_1" >> output
+			echo >> output	
+			printf "\nPress <ENTER> to continue" 
+		 	read null
+		 	clear
+		 	cat <<+
+Display lines from file "data" that end
+with the character "e":
+
+
++
+		 	printf "\tENTER COMMAND HERE >>  "
+         		read com1_1
+         		until [ "$com1_1" = "sed -n '/e$/ p' data" ]
+         		do
+                 		if [ "$count" -ge "2" ]
+                         	then
+                                 	printf "\thint: sed -n '/e$/ p' data\n"
+                 		fi
+                 		printf "\tPLEASE TRY AGAIN   >> "
+                 		read com1_1
+                 		count=`expr $count + 1`
+         		done
+         		count=0
+		 	sed -n '/e$/ p' data
+         		echo "$com1_1" >> output
+			echo >> output	
+         		printf "\nPress <ENTER> to continue" 
+		 	read null
+		 	clear
+		 	cat <<+
+AWK UTILITY - PRACTICAL APPLICATION
+
+List the quantity and make of all cars
+that have a price of \$3,000 or more:
+
++
+		 	printf "\tENTER COMMAND HERE >>  "
+         		read com1_1
+         		until [ "$com1_1" = "awk '\$5 >= 3000 {print \$4,\$1}' cars" ]
+         		do
+                 		if [ "$count" -ge "2" ]
+                         	then
+                                 	printf "\thint: awk '\$5 >= 3000 {print \$4,\$1}' cars\n"
+                 		fi
+                 		printf "\tPLEASE TRY AGAIN   >> "
+                 		read com1_1
+                 		count=`expr $count + 1`
+         		done
+        		count=0
+	 		awk '$5 >= 3000 {print $4,$1}' cars
+         		echo "$com1_1" >> output
+			echo >> output	
+         		printf "\nPress <ENTER> to continue" 
+			read null
+			clear
+			cat <<+
+Store the listing of all "fords" that are
+newer than 1983 by model name, year, price
+and quantity in a file called "new_fords":
+
+
+
++
+		 	printf "\tENTER COMMAND HERE >>  "
+         		read com1_1
+         		until [ "$com1_1" = "awk '\$1 ~ /ford/ && \$3 > 83 {print \$1,\$3,\$5,\$4}' cars > new_fords" ]
+         		do
+                 		if [ "$count" -ge "2" ]
+                         	then
+                                 	printf "\thint: awk '\$1 ~ /ford/ && \$3 > 83 {print \$1,\$3,\$5,\$4}' cars > new_fords\n"
+                 		fi
+                 		printf "\tPLEASE TRY AGAIN   >> "
+                 		read com1_1
+                 		count=`expr $count + 1`
+         		done
+         		count=0
+		 	awk '$1 ~ /ford/ && $3 > 83 {print $1,$3,$5,$4}' cars > new_fords
+         		echo "$com1_1" >> output
+			echo >> output	
+         		printf "\nPress <ENTER> to continue" 
+			read null
+			cat <<+
+
+Done.
+
+View results?
+
++
+		 	printf "\tENTER (y/n) >>  "
+         		read com1_1
+         		if [ "$com1_1" = "y" -o "$com1_1" = "Y" ]
+		 		then
+					cat new_fords
+		 	fi	
+         		printf "\nPress <ENTER> to continue" 
+		 	read null
+		 	clear
+		 	cat <<+
+You have completed SED & AWK UTILITY - PRACTICAL APPLICATION
+
+You may proceed to the REVIEW QUESTIONS
+
+Press <ENTER> to return to the REVIEW TUTORIAL MENU
++
+		read null
+;;
+
+
+### REVIEW QUESTIONS SUBMENU ###
+
+		2)
+		clear
+		cat <<+
+		<<< REVIEW >>>
+SED - REVIEW QUESTIONS
+
+Use the sed command to answer the following questions:
+
+QUESTION 1
+
+Issue a command to display all lines in
+the file "dbase" until a sentence that begins
+the the letter "A" appears.
+
+Hint: think of quitting sed when letter "A" appears...
+
++
+		printf "\tENTER COMMAND HERE >>  "
+            	read com1_1
+            	until [ "$com1_1" = "sed \"/^A/ q\" dbase" -o "$com1_1" = "sed '/^A/ q' dbase" ]
+            	do
+                    printf "\tPLEASE TRY AGAIN   >> "
+                    read com1_1
+            	done
+            	printf "You are correct\n\n"
+		echo "<<< REVIEW QUESTIONS >>>" >> output
+		echo >> output            	
+		echo "$com1_1" >> output
+		echo >> output
+		printf "Press <ENTER> to continue"
+		read null
+		clear
+		cat <<+
+QUESTION 2
+
+Issue a command to save all lines
+contained in the file "dbase" that begin with
+a double quote in a file called "data"
+
++
+		printf "\tENTER COMMAND HERE >>  "
+            	read com1_1
+            	until [ "$com1_1" = "sed -n \"/^\"/ w data\" dbase" -o "$com1_1" = "sed -n '/^\"/ w data' dbase" ]
+            	do
+                    printf "\tPLEASE TRY AGAIN   >> "
+                    read com1_1
+            	done
+            	printf "You are correct\n\n"
+		echo "$com1_1" >> output
+		echo >> output
+            	printf "Press <ENTER> to continue"
+		read null
+		clear
+		cat <<+
+QUESTION 3
+
+Issue a command to display all lines contained
+in the file "dbase" to be displayed except for
+lines that end with "ard"
+
++
+		printf "\tENTER COMMAND HERE >>  "
+            	read com1_1
+            	until [ "$com1_1" = "sed \"/ard$/ d\" dbase" -o "$com1_1" = "sed '/ard$/ d' dbase" ]
+            	do
+                    printf "\tPLEASE TRY AGAIN   >> "
+                    read com1_1
+            	done
+            	printf "You are correct\n\n"
+		echo "$com1_1" >> output
+		echo >> output
+            	printf "Press <ENTER> to continue"
+		read null
+		clear
+		cat <<+
+QUESTION 4
+
+Issue a command to display all lines in the file
+"dbase" from line number 3 to 16
+
++
+		printf "\tENTER COMMAND HERE >>  "
+            	read com1_1
+            	until [ "$com1_1" = "sed -n \"3,16 p\" dbase" -o "$com1_1" = "sed -n '3,16 p' dbase" ]
+            	do
+                    printf "\tPLEASE TRY AGAIN   >> "
+                    read com1_1
+            	done
+            	printf "You are correct\n\n"
+		echo "$com1_1" >> output
+		echo >> output
+            	printf "Press <ENTER> to continue"
+		read null
+		clear
+		cat <<+
+QUESTION 5
+
+Issue a command to display the lines in the
+file "dbase" that contain the pattern "because",
+and substitute this pattern with the pattern "since"
+for all occurences on the line
+
++
+		printf "\tENTER COMMAND HERE >>  "
+            	read com1_1
+            	until [ "$com1_1" = "sed -n \"/because/ s/because/since/g p\" dbase" -o "$com1_1" = "sed -n '/because/ s/because/since/g p' dbase" -o "$com1_1" = "sed 's/because/since/g' dbase" ]
+            	do
+                    printf "\tPLEASE TRY AGAIN   >> "
+                    read com1_1
+            	done
+            	printf "You are correct\n\n"
+		echo "$com1_1" >> output
+		echo >> output
+            	printf "Press <ENTER> to continue"
+		read null
+		clear
+		cat <<+
+AWK - REVIEW QUESTIONS
+
+Use the awk command to answer the following questions:
+
+The following questions use the "cars"
+database where:
+
+	field1 = Make of Car
+	field2 = Model of Car
+	field3 = Year of Car
+	field4 = Quantity Available
+	field5 = Price of Car
+
+QUESTION 1
+
+Issue a command to display all
+"ford"s in the "cars" database by
+Model, Year, Quantity Available, and Price
+
++
+		printf "\tENTER COMMAND HERE >>  "
+            	read com1_1
+            	until [ "$com1_1" = "awk \"/ford/ {print \$2,\$3,\$4,\$5}\" cars" -o "$com1_1" = "awk '/ford/ {print \$2,\$3,\$4,\$5}' cars" ]
+            	do
+                    printf "\tPLEASE TRY AGAIN   >> "
+                    read com1_1
+            	done
+            	printf "You are correct\n\n"
+		echo "$com1_1" >> output
+		echo >> output
+            	printf "Press <ENTER> to continue"
+		read null
+		clear
+		cat <<+
+
+
+Use the awk command to answer the following questions:
+
+The following questions use the "cars"
+database where:
+
+	field1 = Make of Car
+	field2 = Model of Car
+	field3 = Year of Car
+	field4 = Quantity Available
+	field5 = Price of Car
+
+QUESTION 2
+
+Issue a command to display all "chevy"s
+in the "cars" database that are older than
+"88" by Model, Year, Price and Quantity
+
++
+		printf "\tENTER COMMAND HERE >>  "
+            	read com1_1
+            	until [ "$com1_1" = "awk \"\$1 ~ /chevy/ && \$3 < 88 {print \$2,\$3,\$5,\$4}\" cars" -o "$com1_1" = "awk '\$1 ~ /chevy/ && \$3 < 88 {print \$2,\$3,\$5,\$4}' cars" ]
+            	do
+                    printf "\tPLEASE TRY AGAIN   >> "
+                    read com1_1
+            	done
+            	printf "You are correct\n\n"
+		echo "$com1_1" >> output
+		echo >> output
+            	printf "Press <ENTER> to continue"
+		read null
+		clear
+		cat <<+
+
+
+Use the awk command to answer the following questions:
+
+The following questions use the "cars"
+database where:
+
+	field1 = Make of Car
+	field2 = Model of Car
+	field3 = Year of Car
+	field4 = Quantity Available
+	field5 = Price of Car
+
+QUESTION 3
+
+Issue a command to display all cars in the
+"cars" database that are greater than 84
+and are less than \$5,000 by car make, car model,
+and quantity
+
++
+		printf "\tENTER COMMAND HERE >>  "
+            	read com1_1
+            	until [ "$com1_1" = "awk \"\$3 > 84 && \$5 < 5000 {print \$1,\$2,\$4}\" cars" -o "$com1_1" = "awk '\$3 > 84 && \$5 < 5000 {print \$1,\$2,\$4}' cars" ]
+            	do
+                    printf "\tPLEASE TRY AGAIN   >> "
+                    read com1_1
+            	done
+            	printf "You are correct\n\n"
+		echo "$com1_1" >> output
+		echo >> output
+		echo "$USER" >> output
+            	printf "Press <ENTER> to continue"
+		read null
+		clear
+		cat <<+
+You have completed the REVIEW TUTORIAL
+
+Go can Send Feedback and exit this tutorial
+
+Press <ENTER> to return to the REVIEW TUTORIAL MENU
++
+		read null
+		;;
+		esac
+		done
+		unset snum
+
+;;
+
+esac
+done
+
