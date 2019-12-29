@@ -1,6 +1,6 @@
 # OPS235 Faculty - Instructions
 ----
-GitHub is used for version control. Do not directly modify files in the following directory:
+GitHub is used here for version control. Do not directly modify files in the following directory:
 * ~ops235/
 
 This directory has a corresponding git repository. You can find it at:
