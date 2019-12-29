@@ -1,6 +1,4 @@
-# scripts
-
-OPS235 Faculty - Instructions
+# OPS235 Faculty - Instructions
 ----
 GitHub is used for version control. Do not directly modify files in the following directory:
 * ~ops235/
